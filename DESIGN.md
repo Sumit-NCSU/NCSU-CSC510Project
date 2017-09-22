@@ -8,8 +8,9 @@ Our project aims to help in reducing all the manual work that most software deve
   * Code-review and merge branch,
   * Then finally deploying it on the server.
 
-Also, while doing going through this entire process, especially in large teams, they need to make sure that other people in the team are also aware of the deployments and downtimes associated with the deployments so that the teams do not face problems such as two people trying to deploy their code at the same time to the same server, etc.
+Especially in large developing group, while going through this entire process, they need to make sure that other members are aware of the current status of the deployments. Also the downtimes associated with the deployments, so that the team members do not face any kind of problems while deploying simultaneously (not just within a team, but across teams as well).
 
+* ## Our Proposal
 In order to solve these problems, we have decided to build a slack bot that helps in automating the entire process while also providing the notifications and live status updates of the process to the entire team on slack, which would help in avoiding the manual process of going to various systems and/or teams to get the deployment done and to allow the teams to coordinate together on one platform - Slack.
 
 * ## Bot Description
