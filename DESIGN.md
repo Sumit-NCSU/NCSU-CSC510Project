@@ -99,16 +99,27 @@ The Platform we would be using to do our Project would be Slack.
 
 Components within the BOT include:
 
-1.Core processor - Its main objective would be to route and schedule which part of Bot does what and when. It would be the one controlling the 4 interfaces as shown in the diagram i.e. Slack Interface, GIT interface, Jenkins interface and Heroku interface.
-2.Slack interface - This would be the interface that would connect the BOT with the slack platform. Its main usage would be to post on slack the details of the Git commit, the status of the testing performed by Jenkins and the time it has taken to deploy on Heroku. This would have an NLP procedure within it which would be used while posting and getting the data from Slack  
+1.Core processor - Its main objective would be to route and schedule which part of Bot does what and when. It would be the one controlling the 4 interfaces as shown in the diagram i.e. Slack Interface, GIT interface, Jenkins interface and Heroku interface. 
+
+2.Slack interface - This would be the interface that would connect the BOT with the slack platform. Its main usage would be to post on slack the details of the Git commit, the status of the testing performed by Jenkins and the time it has taken to deploy on Heroku. This would have an NLP procedure within it which would be used while posting and getting the data from Slack.  
+
 3.NLP - This would be used to process and get the key words like the repository name for example, the commit details from GIT so that the bot would know what it has to push to Jenkins as a job.
+
 4.GIT interface : This interface would be listening for any event from the GIT and tell the Core Processor about it.
-5.Jenkins Interface :Depending upon the event received by the GIT interface and what the Core processor makes of it, the Jenkins interface would then interact with Jenkins to start the job. On completion of the job, the interface would be returned the summary, which it would then pass it on to the Core Processor 
+
+5.Jenkins Interface :Depending upon the event received by the GIT interface and what the Core processor makes of it, the Jenkins interface would then interact with Jenkins to start the job. On completion of the job, the interface would be returned the summary, which it would then pass it on to the Core Processor.
+
 6.Heroku interface: This interface would be responsible for commuincation with the Heroku server.
 
 3rd Party in our project include Git, Jenkins and Heroku.
 
 The type of architecture we are looking at is a hybrid of Event Driven and DataFlow i.e. it will be event driven between the GIT and the Bot and once the BOT gets the event, after it would be DataFlow architecture.
+
+Constraints in design:
+
+1. The slack bot should not send anything to Git. It should only be listening on the Git interface.
+
+2.The only ineraction that the user will have with slack is when he/she gets the status updates. The user shall not send anything to the Bot.
 
 
 
