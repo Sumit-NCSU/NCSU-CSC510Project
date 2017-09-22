@@ -89,3 +89,4 @@ Among the categories discussed in class, this bot fits into the *DevOps* bot cat
 * ## Design Sketches
 
 * ## Architecture Design + Additional Patterns
+![img](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/sindhu/Images/Architecture%20diagram.png)
