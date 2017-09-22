@@ -109,7 +109,7 @@ Components within the BOT include:
 
 5. Jenkins Interface :Depending upon the event received by the GIT interface and what the Core processor makes of it, the Jenkins interface would then interact with Jenkins to start the job. On completion of the job, the interface would be returned the summary, which it would then pass it on to the Core Processor.
 
-6. Heroku interface: This interface would be responsible for commuincation with the Heroku server.
+6. Heroku interface: This interface would be responsible for communication with the Heroku server.
 
 3rd Party in our project include Git, Jenkins and Heroku.
 
@@ -119,7 +119,7 @@ Constraints in design:
 
 1. The slack bot should not send anything to Git. It should only be listening on the Git interface.   
 
-2. The only ineraction that the user will have with slack is when he/she gets the status updates. The user shall not send anything to the Bot.
+2. The only interaction that the user will have with slack is when he/she gets the status updates. The user shall not send anything to the Bot.
 
 
 
