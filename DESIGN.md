@@ -36,16 +36,16 @@ Among the categories discussed in class, this bot fits into the *DevOps* bot cat
 1. Preconditions:
    * User must know the name of the Git Repository. 
 2. Main Flow:
-   * User will request the pull requests and provide name of the repository [S1]. Bot will provide a list of the Pull requests pending for merge with their status (i.e. checks passing or failing), code-reviews by oother users and ask the user if he wants to merge a pull request [S2]. User replies Yes for Merge [S3]. Bot merges the pull request specified, if all checks have passed [S4]. In case of a merge conflict, the necessary parties will be notified on channel [S5]. 
+   * User will request the pull requests and provide name of the repository [S1]. Bot will provide a list of the Pull requests pending for merge with their status (i.e. checks passing or failing), code-reviews by other users and ask the user for the PR number to be merged [S2]. User replies the PR number of the PR to be merged [S3]. Bot merges the pull request specified, if all checks have passed and posts the status on Slack [S4].
 3. Subflows:
     * [S1] User will type sentence like `@slackbot show pull requests for <Repo Name>`.
     * [S2] Bot will return list of pending pull requests for the given repo and ask for the if user wants to merge.
-    * [S3] User will reply with Pull Request number for merging or No for not merging.
-    * [S4] Bot will merge the pull request if all the checks for merging have passed and PR can be merged.
-    * [S5] Bot will post a message to channel informing the owner of the repository and the user who made changes about the merge conflict.
+    * [S3] User will reply with Pull Request number which needs to be merged.
+    * [S4] Bot will merge the pull request if it can be merged and post a message to slack.
 4. Alternative Flows:
     * [E1] Repo is unavailable: Bot will reply `Repo Unavailable`.
     * [E2] Pull Request number requested is unavailable or it cannot be merged: Bot will reply `PR Unavailable` or a reason why the PR cannot be merged.
+    * [E3] In case of a merge conflict, the PR will not be merged and the necessary parties will be notified on Slack. 
 
 ### Use Case 2: View status of a particular build number of a Job in Jenkins and rebuild
 1. Preconditions
@@ -87,6 +87,10 @@ Among the categories discussed in class, this bot fits into the *DevOps* bot cat
    
 
 * ## Design Sketches
+### Wireframes
+![wireframe](Images/wireframe.png)
+
+### Storyboard
 
 * ## Architecture Design + Additional Patterns
 ![img](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/sindhu/Images/Architecture%20diagram.png)
