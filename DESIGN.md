@@ -156,7 +156,8 @@ changes made to a repo, Jenkins job status, etc..
 
 6. Logging: This component manages all the logs for the slack bot which the slack bot will create. These logs can be used for debugging purposes later if some issue occurs.
 
-Architectural pattern appears to be Event driven, as the botCiCd is continuously monitoring for changes in the slack channel and the repository, triggering jobs accordingly. The botCiCd reacts to changes to either repository or the messages posted in channel. 
+The application follows Data Flow architecture, as the data is flowing from various components - Jenkins, and Git to the User, via our Slack bot. The source of the information is Jenkins and the Sink is the slack user to which the data is ultimately flowing.
+It also follows the Event driven architecture, as the botCiCd is continuously monitoring for changes in the slack channel and the repository, triggering jobs accordingly. The botCiCd reacts to changes to either repository or the messages posted in channel. 
 
 
 #### Constraints:
