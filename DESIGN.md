@@ -33,6 +33,11 @@ All the commands for the bot are to be designed in such a way that the users can
 Among the categories discussed in class, this bot fits into the *DevOps* bot category, because it is helping the developers access various tools from within a conversation with the bot and allows the users to manage deployments and receive notifications.
 
 * ## Use Cases
+Common Pre conditions for all the use cases are:
+  * Slack bot must be configured with the API token for Git and Jenkins
+  * Slack bot must have deployment access to the server.
+  * Jobs must be pre-configured in Jenkins for the slack bot to use.
+
 ### Use Case 1: View and merge Pending Pull requests from Git repository on Slack
 1. Preconditions:
    * User must know the name of the Git Repository. 
@@ -117,17 +122,24 @@ Among the categories discussed in class, this bot fits into the *DevOps* bot cat
    * Once job gets completed, the status is thrown to slackbot (botCiCd), to push notifications for that pull request number (current code quality count) on Slack Channel.
 
 * ## Architecture Design + Additional Patterns
+### High Level Architecture Design
+The following diagram describes the high level architecture design of our project:
 
-Higher level Architecture design
+![High Level Design](Images/Architecture_HL.png)
 
-
-![img](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/Images/Architecture_HL.png)
-
-
-### Architecture Components:
-
+Our Slack bot interacts with following third party services:
+  * Git
+  * Jenkins
+  * Deployment Server
 
 The Platform we would be using to do our Project would be Slack.
+
+Our Slack bot also interacts with a data storage service as descibed in the component architecture below.
+
+### Architecture Components:
+The following diagram describes the component level design of our Project:
+
+![Component Design](Images/ArchitectureLLD.png)
 
 Components include:
 
@@ -142,7 +154,7 @@ changes made to a repo, Jenkins job status, etc..
 
 5. Datastore: The datastore will hold the data related to voting and other details that help relating a build number to the user who issued the pull request. botCiCd interacts with datastore whenever a user votes on a particular pull request, and it sends data that is stored in datastore. botCiCd can also access the data stored. Currently, we're looking at using a datastore like Redis but can also use conventional database like cockroachDB. 
 
-3rd Party in our project include Git, Jenkins and Heroku.
+6. Logging: This component manages all the logs for the slack bot which the slack bot will create. These logs can be used for debugging purposes later if some issue occurs.
 
 The type of architecture we are looking at is a hybrid of Event Driven and DataFlow i.e. it will be event driven between the GIT and the Bot and once the BOT gets the event, after it would be DataFlow architecture.
 
@@ -151,5 +163,5 @@ Data Store
 Constraints in design:
 
 1. The slack bot should not send anything to Git. It should only be listening on the Git interface.   
-
 2. The only interaction that the user will have with slack is when he/she gets the status updates. The user shall not send anything to the Bot.
+3. 
