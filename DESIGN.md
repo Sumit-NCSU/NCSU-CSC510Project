@@ -119,6 +119,8 @@ Among the categories discussed in class, this bot fits into the *DevOps* bot cat
 * ## Architecture Design + Additional Patterns
 
 Higher level Architecture design
+
+
 ![img](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/Images/Architecture_HL.png)
 
 
