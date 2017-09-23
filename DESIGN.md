@@ -1,20 +1,21 @@
 # CSC510 Project Design
 
 * ## Problem Statement
-Our project aims to help in reducing all the manual work that most software developments teams have to go through for getting the code from their machines deployed to the server. Typically, it involves: 
-  * Pushing their code to GitHub,
-  * Building the project through Jenkins,
-  * Running all the test cases/code coverage/code quality tools and making sure none of them are failing,
-  * Code-review and merge branch,
-  * Then finally deploying it on the server.
 
-Especially in large developing group, while going through this entire process, they need to make sure that other members are aware of the current status of the deployments. Also the downtimes associated with the deployments, so that the team members do not face any kind of problems while deploying simultaneously (not just within a team, but across teams as well).
+Developers tend to work on multiple projects at once and collaborate with other contributors where it's important to
+establish a line of communication so that everyone in the team is updated of changes that happen. There are multiple
+services like Git, Jenkins(automation server) and sometimes deployment to PaaS service like Heroku. Building a pipeline
+requires a lot of co-ordination between all the services, but at the same time there's no one common line of communication
+that exists to keep users updated of what is happening and provide a one-stop platform to monitor pipeline, trigger certain
+aspects of pipeline and provide for interaction with peers facilitating voting on code review. 
 
-* ## Our Proposal
-In order to solve these problems, we have decided to build a slack bot that helps in automating the entire process while also providing the notifications and live status updates of the process to the entire team on slack, which would help in avoiding the manual process of going to various systems and/or teams to get the deployment done and to allow the teams to coordinate together on one platform - Slack.
+Our project botCiCd aims to help in reducing all the manual work that most software developments teams have to go through for getting the code from their machines deployed to the server, while ensuring that all communication takes place on slack 
+channel and providing the user to perfom actions by simply asking Bot to perform task.
 
 * ## Bot Description
-Our CICD bot has the following features:
+
+botCiCd essentially provides a simple command based interface for performing simple tasks like:
+
   * Get notifications on Slack whenever someone pushes code in Git.
   * View and merge Pending Pull requests from Git repository on Slack.
   * Trigger auto-builds and execute test cases/code quality tools in Jenkins.
@@ -93,4 +94,40 @@ Among the categories discussed in class, this bot fits into the *DevOps* bot cat
 ### Storyboard
 
 * ## Architecture Design + Additional Patterns
-![img](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/sindhu/Images/Architecture%20diagram.png)
+
+Higher level Architecture design
+![img](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/Images/Architecture_HL.png)
+
+
+### Architecture Components:
+
+
+The Platform we would be using to do our Project would be Slack.
+
+Components include:
+
+1. botCiCd - Its main objective would be interfacing with Slack, monitor the git repository, interfacing with Jenkins and the Datastore. It acts as the logic and will relay information and co-ordinate tasks between other services like Slack
+
+2. Slack interface - This would be the interface that would connect the BOT with the slack platform. Its main usage would be to act as a platform for botCiCd to post updates and facilitate interaction with user. The user can give commands to merge a pull request, request details of a jenkins job build, vote on a particular pull request etc. The botCiCd posts updates about 
+changes made to a repo, Jenkins job status, etc..
+
+3. Git server : This is where the repository is situated remotely. The repositories are configured with necessary webhooks to integrate with jenkins and trigger a build when a new pull request is submitted. Jenkins will also have a job and have the tokens to merge branches for the given git repository. 
+
+4. Jenkins: When a pull request is issued, it'll trigger the jenkins to build the job. It'll notify the botCiCd that a build has been triggered and it'll also report the status to botCiCd. When requested by botCiCd, it'll build a job or a particular build, and also return the details requested about a particular job. Some of the jobs that the botCiCd will trigger are merging the repositories, running test suite etc..
+
+5. Datastore: The datastore will hold the data related to voting and other details that help relating a build number to the user who issued the pull request. botCiCd interacts with datastore whenever a user votes on a particular pull request, and it sends data that is stored in datastore. botCiCd can also access the data stored. Currently, we're looking at using a datastore like Redis but can also use conventional database like cockroachDB. 
+
+3rd Party in our project include Git, Jenkins and Heroku.
+
+The type of architecture we are looking at is a hybrid of Event Driven and DataFlow i.e. it will be event driven between the GIT and the Bot and once the BOT gets the event, after it would be DataFlow architecture.
+
+Data Store
+
+Constraints in design:
+
+1. The slack bot should not send anything to Git. It should only be listening on the Git interface.   
+
+2. The only interaction that the user will have with slack is when he/she gets the status updates. The user shall not send anything to the Bot.
+
+
+
