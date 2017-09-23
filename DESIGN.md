@@ -159,9 +159,10 @@ changes made to a repo, Jenkins job status, etc..
 The type of architecture we are looking at is a hybrid of Event Driven and DataFlow i.e. it will be event driven between the GIT and the Bot and once the BOT gets the event, after it would be DataFlow architecture.
 
 
-Constraints in design:
+Constraints:
 
 1. The slack bot cannot send anything to Git. It has to trigger a jenkins job to merge.    
 2. Jenkins need to have a job for everything including merging pull request
 3. The bot can't perform more than one task at a time.
 4. The users need to message the bot following particular format. ( Future design may include using wit.ai to perform NLP to allow users to interact with bot)
+5. Heavy reliance on slackbot as it'll be the only common platform to provide updates, and also it gives every user on the channel permission to start any job on jenkins or rebuild and also merge pull requests irrespective of whether it passed tests.
