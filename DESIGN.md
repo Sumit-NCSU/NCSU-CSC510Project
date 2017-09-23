@@ -156,7 +156,7 @@ changes made to a repo, Jenkins job status, etc..
 
 6. Logging: This component manages all the logs for the slack bot which the slack bot will create. These logs can be used for debugging purposes later if some issue occurs.
 
-The type of architecture we are looking at is a hybrid of Event Driven and DataFlow i.e. it will be event driven between the GIT and the Bot and once the BOT gets the event, after it would be DataFlow architecture.
+Architectural pattern appears to be Event driven, as the botCiCd is continuously monitoring for changes in the slack channel and the repository, triggering jobs accordingly. The botCiCd reacts to changes to either repository or the messages posted in channel. 
 
 
 Constraints:
