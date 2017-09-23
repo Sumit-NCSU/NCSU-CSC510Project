@@ -33,6 +33,11 @@ All the commands for the bot are to be designed in such a way that the users can
 Among the categories discussed in class, this bot fits into the *DevOps* bot category, because it is helping the developers access various tools from within a conversation with the bot and allows the users to manage deployments and receive notifications.
 
 * ## Use Cases
+Common Pre conditions for all the use cases are:
+  * Slack bot must be configured with the API token for Git and Jenkins
+  * Slack bot must have deployment access to the server.
+  * Jobs must be pre-configured in Jenkins for the slack bot to use.
+
 ### Use Case 1: View and merge Pending Pull requests from Git repository on Slack
 1. Preconditions:
    * User must know the name of the Git Repository. 
@@ -151,8 +156,6 @@ changes made to a repo, Jenkins job status, etc..
 
 6. Logging: This component manages all the logs for the slack bot which the slack bot will create. These logs can be used for debugging purposes later if some issue occurs.
 
-3rd Party in our project include Git, Jenkins and Heroku.
-
 The type of architecture we are looking at is a hybrid of Event Driven and DataFlow i.e. it will be event driven between the GIT and the Bot and once the BOT gets the event, after it would be DataFlow architecture.
 
 Data Store
@@ -160,5 +163,5 @@ Data Store
 Constraints in design:
 
 1. The slack bot should not send anything to Git. It should only be listening on the Git interface.   
-
 2. The only interaction that the user will have with slack is when he/she gets the status updates. The user shall not send anything to the Bot.
+3. 
