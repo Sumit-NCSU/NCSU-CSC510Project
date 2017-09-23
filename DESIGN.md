@@ -117,17 +117,24 @@ Among the categories discussed in class, this bot fits into the *DevOps* bot cat
    * Once job gets completed, the status is thrown to slackbot (botCiCd), to push notifications for that pull request number (current code quality count) on Slack Channel.
 
 * ## Architecture Design + Additional Patterns
+### High Level Architecture Design
+The following diagram describes the high level architecture design of our project:
 
-Higher level Architecture design
+![High Level Design](Images/Architecture_HL.png)
 
-
-![img](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/Images/Architecture_HL.png)
-
-
-### Architecture Components:
-
+Our Slack bot interacts with following third party services:
+  * Git
+  * Jenkins
+  * Deployment Server
 
 The Platform we would be using to do our Project would be Slack.
+
+Our Slack bot also interacts with a data storage service as descibed in the component architecture below.
+
+### Architecture Components:
+The following diagram describes the component level design of our Project:
+
+![Component Design](Images/ArchitectureLLD.png)
 
 Components include:
 
@@ -141,6 +148,8 @@ changes made to a repo, Jenkins job status, etc..
 4. Jenkins: When a pull request is issued, it'll trigger the jenkins to build the job. It'll notify the botCiCd that a build has been triggered and it'll also report the status to botCiCd. When requested by botCiCd, it'll build a job or a particular build, and also return the details requested about a particular job. Some of the jobs that the botCiCd will trigger are merging the repositories, running test suite etc..
 
 5. Datastore: The datastore will hold the data related to voting and other details that help relating a build number to the user who issued the pull request. botCiCd interacts with datastore whenever a user votes on a particular pull request, and it sends data that is stored in datastore. botCiCd can also access the data stored. Currently, we're looking at using a datastore like Redis but can also use conventional database like cockroachDB. 
+
+6. Logging: This component manages all the logs for the slack bot which the slack bot will create. These logs can be used for debugging purposes later if some issue occurs.
 
 3rd Party in our project include Git, Jenkins and Heroku.
 
