@@ -13,7 +13,7 @@ botCiCd essentially provides a simple command based interface for performing sim
   * Trigger builds in Jenkins.
   * Report the build status on Slack after the Jenkins build is complete.
   * View status of old builds from Jenkins.
-  * Allow for team members to vote on pull requests through slack messages. 
+  * Allow for team members to vote on pull requests through slack messages.
 
 Having these features in our bot helps solve the problem of coordination within the team as all the notifications are received on Slack and thus the entire team is aware of the changes going on. Also, it helps the developers avoid the manual process of going to multiple parties to get the job done.
 
