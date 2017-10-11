@@ -2,15 +2,7 @@
 
 * ## Problem Statement
 
-Developers tend to work on multiple projects at once and collaborate with other contributors where it's important to
-establish a line of communication so that everyone in the team is updated of changes that happen. There are multiple
-services like Git, Jenkins(automation server) and sometimes deployment to PaaS service like Heroku. Building a pipeline
-requires a lot of co-ordination between all the services, but at the same time there's no one common line of communication
-that exists to keep users updated of what is happening and provide a one-stop platform to monitor pipeline, trigger certain
-aspects of pipeline and provide for interaction with peers facilitating voting on code review. 
-
-Our project botCiCd aims to help in reducing all the manual work that most software developments teams have to go through for getting the code from their machines deployed to the server, while ensuring that all communication takes place on slack 
-channel and providing the user to perfom actions by simply asking Bot to perform task.
+Developers often work on multiple projects, which may involve multiple services, such as Github, Jenkins or production environments. Each project and service provides a separate interface for monitoring events and managing actions, meaning ofthen there is no one-stop platform. This project aims to reduce the scattered workflow by providing a single platform for monitoring events and managing actions for multiple services.
 
 * ## Bot Description
 
