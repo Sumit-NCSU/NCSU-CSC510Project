@@ -2,7 +2,7 @@
 
 * ## Problem Statement
 
-Developers often work on multiple projects, which may involve multiple services, such as Github, Jenkins or production environments. Each project and service provides a separate interface for monitoring events and managing actions, meaning ofthen there is no one-stop platform. This project aims to reduce the scattered workflow by providing a single platform for monitoring events and managing actions for multiple services.
+Developers often work on multiple projects, which may involve multiple services, such as Github, Jenkins or production environments. Each project and service provides a separate interface for monitoring events and managing actions, meaning ofthen there is no one-stop platform where everything can be tracked by everyone. This project aims to reduce the scattered workflow by providing a single platform for monitoring events and managing actions for multiple services.
 
 * ## Bot Description
 
