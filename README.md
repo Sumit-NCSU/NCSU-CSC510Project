@@ -11,3 +11,6 @@ Repository for CSC 510 Software Engineering Project
 ### Project Design: [Design](DESIGN.md)
 
 ### Task Tracking: [Tracker](WORKSHEET.md)
+
+### Instructions for Initial Setup: [Setup]()
+
