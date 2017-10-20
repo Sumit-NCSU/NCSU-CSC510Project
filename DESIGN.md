@@ -34,7 +34,7 @@ Among the categories discussed in class, this bot fits into the *DevOps* bot cat
 
 * ## Use Cases
 Common Pre conditions for all the use cases are:
-  * Slack bot must be configured with the API token for Git and Jenkins
+  * Slack bot must be configured with the API token for Git and Jenkins.
   * Slack bot must have deployment access to the server.
   * Jobs must be pre-configured in Jenkins for the slack bot to use.
 
@@ -141,7 +141,7 @@ The following diagram describes the component level design of our Project:
 
 ![Component Design](Images/ArchitectureLLD.png)
 
-Components include:
+#### Components include:
 
 1. botCiCd - Its main objective would be interfacing with Slack, monitor the git repository, interfacing with Jenkins and the Datastore. It acts as the logic and will relay information and co-ordinate tasks between other services like Slack
 
@@ -156,13 +156,19 @@ changes made to a repo, Jenkins job status, etc..
 
 6. Logging: This component manages all the logs for the slack bot which the slack bot will create. These logs can be used for debugging purposes later if some issue occurs.
 
-The type of architecture we are looking at is a hybrid of Event Driven and DataFlow i.e. it will be event driven between the GIT and the Bot and once the BOT gets the event, after it would be DataFlow architecture.
+The application follows Data Flow architecture, as the data is flowing from various components - Jenkins, and Git to the User, via our Slack bot. The source of the information is Jenkins and the Sink is the slack user to which the data is ultimately flowing.
+It also follows the Event driven architecture, as the botCiCd is continuously monitoring for changes in the slack channel and the repository, triggering jobs accordingly. The botCiCd reacts to changes to either repository or the messages posted in channel. 
 
 
-Constraints:
+#### Constraints:
 
 1. The slack bot cannot send anything to Git. It has to trigger a jenkins job to merge.    
 2. Jenkins need to have a job for everything including merging pull request
 3. The bot can't perform more than one task at a time.
 4. The users need to message the bot following particular format. ( Future design may include using wit.ai to perform NLP to allow users to interact with bot)
 5. Heavy reliance on slackbot as it'll be the only common platform to provide updates, and also it gives every user on the channel permission to start any job on jenkins or rebuild and also merge pull requests irrespective of whether it passed tests.
+6. The Slack bot must be configured with the API token for Git and Jenkins.
+
+
+#### Additional Design Patterns
+1. Observer pattern (behavioral): Our application follows the observer pattern as the slack bot is observing the changes in Git repository and notifying the users of the changes in the slack changes.
