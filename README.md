@@ -9,3 +9,7 @@ Repository for CSC 510 Software Engineering Project
 * Ruchika Verma (rverma5)
 
 ### Project Design: [Design](DESIGN.md)
+
+### Instructions for Initial Setup: 
+
+[Click Here]()
