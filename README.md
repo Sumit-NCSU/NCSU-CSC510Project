@@ -12,5 +12,5 @@ Repository for CSC 510 Software Engineering Project
 
 ### Task Tracking: [Tracker](WORKSHEET.md)
 
-### Instructions for Initial Setup: [Setup]()
+### Instructions for Initial Setup: [Setup](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/SlackBot/SlackBotWorkshop.md)
 
