@@ -42,80 +42,6 @@ public class WebTest
 	}
 
 	
-/*	@Test
-	public void googleExists() throws Exception
-	{
-		driver.get("http://www.google.com");
-        assertEquals("Google", driver.getTitle());		
-	}
-	
-
-	@Test
-	public void FrustrationCount() throws Exception
-	{
-		driver.get("http://www.checkbox.io/studies.html");
-		
-		// http://geekswithblogs.net/Aligned/archive/2014/10/16/selenium-and-timing-issues.aspx
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='span8']/h3/span[.='Frustration of Software Developers']/../../../div[@class='span4']/p/span[.='55']")));
-		List<WebElement> spans = driver.findElements(By.xpath("//div[@class='span8']/h3/span[.='Frustration of Software Developers']/../../../div[@class='span4']/p/span[.='55']"));
-		assertNotNull(spans);
-		assertEquals(1, spans.size());
-		
-		}
-	
-	@Test
-	public void ClosedCount() throws Exception
-	{
-		driver.get("http://www.checkbox.io/studies.html");
-		
-		// http://geekswithblogs.net/Aligned/archive/2014/10/16/selenium-and-timing-issues.aspx
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='status']/span[.='CLOSED']")));
-		List<WebElement> spans1 = driver.findElements(By.xpath("//a[@class='status']/span[.='CLOSED']"));
-		assertNotNull(spans1);
-		assertEquals(5, spans1.size());
-		
-	}
-	@Test
-	public void StatusButtonClick() throws Exception
-	{
-		driver.get("http://www.checkbox.io/studies.html");
-		
-		// http://geekswithblogs.net/Aligned/archive/2014/10/16/selenium-and-timing-issues.aspx
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='status']/span[.='OPEN']/../../div/button[.='Participate']")));
-		List<WebElement> spans = driver.findElements(By.xpath("//a[@class='status']/span[.='OPEN']/../../div/button[.='Participate']"));
-		assertNotNull(spans);
-		int countTrue =0;
-		for (int i=0;i<spans.size();i++) {
-			assertEquals(spans.get(i).isEnabled(),true); 
-			
-			if (spans.get(i).isEnabled()) {
-				 countTrue ++;
-				 //spans.get(i).click();		// Uncomment this statement to click on the participate button
-			 }
-			 
-			}
-		assertEquals(spans.size(),countTrue); 		// This ensures that all the buttons are enabled and you can click on them
-		}
-	
-		
-	@Test
-	public void AmazonImage() throws Exception
-	{
-		driver.get("http://www.checkbox.io/studies.html");
-		
-		// http://geekswithblogs.net/Aligned/archive/2014/10/16/selenium-and-timing-issues.aspx
-		WebDriverWait wait = new WebDriverWait(driver, 60);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='span8']/h3/span[.='Software Changes Survey']/../../div[@class='award']/div/span/img")));
-		List<WebElement> spans = driver.findElements(By.xpath("//div[@class='span8']/h3/span[.='Software Changes Survey']/../../div[@class='award']/div/span/img"));
-		assertNotNull(spans);
-		String elementText = spans.get(0).getAttribute("src");
-		System.out.println(elementText);
-		assertEquals("http://www.checkbox.io/media/amazongc-micro.jpg",spans.get(0).getAttribute("src"));
-	}
-*/	
 	@Test
 	public void postMessage()
 	{
@@ -131,8 +57,8 @@ public class WebTest
 
 		// Enter our email and password
 		// If running this from Eclipse, you should specify these variables in the run configurations.
-		email.sendKeys("WRITE YOUR EMAIL ID");
-		pw.sendKeys("PASSWORD");
+		email.sendKeys("rverma5@ncsu.edu");
+		pw.sendKeys("Msian19(#&");
 
 		// Click
 		WebElement signin = driver.findElement(By.id("signin_btn"));
@@ -161,6 +87,30 @@ public class WebTest
 		WebElement msg = driver.findElement(
 				By.xpath("//span[@class='message_body' and text() = 'hello world, from Selenium']"));
 		assertNotNull(msg);
+		
+		//WebDriverWait wait = new WebDriverWait(driver, 60);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-channel_sidebar__close_container']/a")));
+		List<WebElement> spans = driver.findElements(By.xpath("//div[@class='p-channel_sidebar__close_container']/a"));
+		assertNotNull(spans);
+		//String elementText = spans.get(5).getAttribute("innerText");
+		
+		for (int i=0;i<spans.size();i++) {
+			String elementText = spans.get(i).getAttribute("innerText");
+			if ("bleh".equals(elementText)) {
+				System.out.println(elementText);
+				String status = spans.get(i).getAttribute("innerHTML");
+				System.out.println(status);
+				
+				assertTrue(status.contains("presence--away"));
+				
+					
+			}
+					
+			}
+		
+		//System.out.println(elementText);
+		
+		
 	}
 }	
 
