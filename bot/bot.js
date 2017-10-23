@@ -12,7 +12,7 @@ var controller = Botkit.slackbot({
 
 // connect the bot to a stream of messages
 controller.spawn({
-  token: 'xoxb-261568621879-G2H3sbqTATOsiYsMIGvb9oRK',
+  token: process.env.SLACKTOKEN,
 }).startRTM()
 
 controller.hears('call',['mention', 'direct_mention','direct_message'], function(bot,message) 
