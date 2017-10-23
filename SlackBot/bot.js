@@ -27,8 +27,6 @@ controller.hears('call',['mention', 'direct_mention','direct_message'], function
   getWeather(function(response){
     bot.reply(message,"Do Something");
   });
-  
-
 });
 
 

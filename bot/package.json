@@ -1,0 +1,14 @@
+{
+  "name": "cicdbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "sumit",
+  "license": "ISC",
+  "dependencies": {
+    "botkit": "^0.6.4"
+  }
+}
