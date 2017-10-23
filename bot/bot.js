@@ -2,7 +2,7 @@ var Botkit = require('botkit');
 var nock = require("nock");
 //var main = require("../bot.js");
 // Load mock data
-var data = require("../mock.json")
+var data = require("./mock.json")
 
 var controller = Botkit.slackbot({
     debug: false
