@@ -1,4 +1,8 @@
 var Botkit = require('botkit');
+var nock = require("nock");
+//var main = require("../bot.js");
+// Load mock data
+var data = require("../mock.json")
 
 var controller = Botkit.slackbot({
     debug: false
@@ -19,5 +23,10 @@ controller.hears('call',['mention', 'direct_mention','direct_message'], function
 });
 
 function processMessage(message) {
-    return "reply";
+    var create_hook = nock("https://api.github.com")
+      .get("/repos/repos/octocat/Hello-World/hooks")
+      .reply(200, JSON.stringify(data.webhook) );
+ 
+	var payload = data.pull_request_payload;
+	return "reply";
 }
