@@ -23,10 +23,42 @@ controller.hears('call',['mention', 'direct_mention','direct_message'], function
 });
 
 function processMessage(message) {
-    var create_hook = nock("https://api.github.com")
+    
+	return "reply";
+}
+
+function createwebhook(){
+	var create_hook = nock("https://api.github.com")
       .get("/repos/repos/octocat/Hello-World/hooks")
       .reply(200, JSON.stringify(data.webhook) );
- 
+}
+
+function getPayLoad(){
 	var payload = data.pull_request_payload;
-	return "reply";
+}
+
+// Lists all pull requests of a repo
+function listPullRequests(){
+	var pull_requests = nock("https://api.github.com")
+      .get("/repos/octocat/Hello-World/pulls")
+      .reply(200, JSON.stringify(data.pull_requests));
+	  
+	return pull_requests; 
+}
+
+//List files of a specific pullrequest
+function listPullRequestFiles(number){
+	var files = nock("https://api.github.com")
+      .get("/repos/octocat/Hello-World/pulls/1")
+      .reply(200, JSON.stringify(data.pull_req_files) );
+	  
+	return files;
+}
+
+function mergePullRequest(){
+    var merge_resp = nock("https://api.github.com")
+      .get("/repos/octocat/Hello-World/pulls/1/merge")
+      .reply(200, JSON.stringify(data.merge_pull_req) );
+	  
+	return merge_resp;
 }
