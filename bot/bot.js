@@ -15,15 +15,27 @@ controller.spawn({
   token: process.env.SLACKTOKEN,
 }).startRTM()
 
-controller.hears('call',['mention', 'direct_mention','direct_message'], function(bot,message) 
+controller.hears(/\bpull.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
 {
   console.log(message); 
   var reply = processMessage(message);
   bot.reply(message, reply);
 });
 
+controller.hears(/\bhow.*ur.*day.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
+{
+  console.log(message); 
+  var reply = processMessage(message);
+  bot.reply(message, "Great.! I hope yours is going fine as well.! ");
+});
+
+controller.hears(['hi', 'hello', 'greetings'],['mention', 'direct_mention','direct_message'], function(bot,message) 
+{
+  console.log(message); 
+  bot.reply(message, "Greetings ");
+});
+
 function processMessage(message) {
-    
 	return "reply";
 }
 
