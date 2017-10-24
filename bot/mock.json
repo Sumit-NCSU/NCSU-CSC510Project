@@ -832,5 +832,19 @@
   "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
   "merged": true,
   "message": "Pull Request successfully merged"
+},
+
+//Status code: 405
+"merge_error":
+{
+  "message": "Pull Request is not mergeable",
+  "documentation_url": "https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button"
+},
+
+// Status code: 409
+"merge_conflict":
+{
+  "message": "Head branch was modified. Review and try the merge again.",
+  "documentation_url": "https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button"
 }
 }

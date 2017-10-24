@@ -16,6 +16,19 @@ controller.spawn({
   token: process.env.SLACKTOKEN,
 }).startRTM()
 
+// Greetings
+controller.hears(['hi', 'hello', 'greetings'],['mention', 'direct_mention','direct_message'], function(bot,message) 
+{
+  console.log(message); 
+  bot.reply(message, "Greetings ");
+});
+
+controller.hears(/\bhow.*ur.*day.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
+{
+  console.log(message); 
+  var reply = processMessage(message);
+  bot.reply(message, "Great.! I hope yours is going fine as well.! ");
+});
 
 //Show all pull requests
 controller.hears(/\bpull.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
@@ -27,27 +40,31 @@ controller.hears(/\bpull.*request.*\b/,['mention', 'direct_mention','direct_mess
   bot.reply(message, reply);
 });
 
-controller.hears(/\bhow.*ur.*day.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
-{
-  console.log(message); 
-  var reply = processMessage(message);
-  bot.reply(message, "Great.! I hope yours is going fine as well.! ");
-});
+//
 
-controller.hears(['hi', 'hello', 'greetings'],['mention', 'direct_mention','direct_message'], function(bot,message) 
-{
-  console.log(message); 
-  bot.reply(message, "Greetings ");
-});
 
 function processMessage(message) {
 	return "reply";
 }
 
+function checkRepo(repo){
+}
+
 function createwebhook(){
 	var create_hook = nock("https://api.github.com")
-      .get("/repos/repos/octocat/Hello-World/hooks")
-      .reply(200, JSON.stringify(data.webhook) );
+      .post("/repos/repos/octocat/Hello-World/hooks", {
+  "name": "web",
+  "active": true,
+  "events": [
+    "push",
+    "pull_request"
+  ],
+  "config": {
+    "url": "http://example.com/webhook",
+    "content_type": "json"
+  }
+})
+      .reply(201, JSON.stringify(data.webhook) );
 }
 
 function getPayLoad(){
@@ -66,7 +83,7 @@ function listPullRequests(){
 //List files of a specific pullrequest
 function listPullRequestFiles(number){
 	var files = nock("https://api.github.com")
-      .get("/repos/octocat/Hello-World/pulls/1")
+      .get("/repos/octocat/Hello-World/pulls/" + number)
       .reply(200, JSON.stringify(data.pull_req_files) );
 	  
 	return files;
@@ -74,7 +91,7 @@ function listPullRequestFiles(number){
 
 function mergePullRequest(){
     var merge_resp = nock("https://api.github.com")
-      .get("/repos/octocat/Hello-World/pulls/1/merge")
+      .put("/repos/octocat/Hello-World/pulls/1/merge")
       .reply(200, JSON.stringify(data.merge_pull_req) );
 	  
 	return merge_resp;
