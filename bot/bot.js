@@ -2,7 +2,7 @@
 var Botkit = require('botkit');
 var nock = require("nock");
 // Load mock data
-var data = require("./mock.json")
+//var data = require("./mock.json")
 
 if (!process.env.SLACKTOKEN) {
   console.log('Error: Specify token in environment');
