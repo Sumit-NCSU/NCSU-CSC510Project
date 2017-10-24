@@ -29,7 +29,7 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
  */
 public class SeleniumTest {
 	private static final String USERNAME = System.getenv("SLACKXUSER");
-  	private static final String PASSWORD = System.getenv("SLACKXPWD");
+	private static final String PASSWORD = System.getenv("SLACKXPWD");
 	private static WebDriver driver;
 
 	/**
@@ -131,34 +131,41 @@ public class SeleniumTest {
 	}
 
 	/**
+	 * @throws InterruptedException
 	 * 
 	 */
 	@Test
-	public void testBotReplies() {
+	public void testBotReplies() throws InterruptedException {
 		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.titleContains("selenium-bot"));
 
 		// Type something
-		WebElement messageBot = driver.findElement(By.id("msg_input"));
-		assertNotNull(messageBot);
+		WebElement messageBox = driver.findElement(By.id("msg_input"));
+		assertNotNull(messageBox);
 
 		Actions actions = new Actions(driver);
-		actions.moveToElement(messageBot);
+		actions.moveToElement(messageBox);
 		actions.click();
-		actions.sendKeys("@cicdbot hello");
+		actions.sendKeys("@cicdbot hi");
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
 
-		wait.withTimeout(3, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'Greetings']"));
+		wait.withTimeout(60, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = \"Hello\"]"));
 		assertNotNull(msg);
+		Thread.sleep(3000);
 	}
-	
+
+	/**
+	 * test for use case 2: view details of open PRs
+	 * 
+	 * @throws InterruptedException
+	 */
 	@Test
-	public void Usecase1() {
+	public void Usecase2() throws InterruptedException {
 		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.titleContains("selenium-bot"));
 
 		// Type something
@@ -168,34 +175,70 @@ public class SeleniumTest {
 		Actions actions = new Actions(driver);
 		actions.moveToElement(messageBot);
 		actions.click();
-		actions.sendKeys("@botCiCd merge #1 pull request for aakarshg/serverprovision"); // pull request syntax
+		actions.sendKeys("@cicdbot List pull requests for octat/Hello-World");
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
 
-		wait.withTimeout(3, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'Yes, Admin, merged!']")); //initial details like of pull request
+		wait.withTimeout(60, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		WebElement msg = null;
+
+		msg = driver.findElement(
+				By.xpath("//span[@class='message_body' and text() = \"PRNumber: 1347, title: new-feature\"]"));
+
 		assertNotNull(msg);
+		Thread.sleep(3000);
 	}
-	
+
+	/**
+	 * test for use case 3: merging a pull request.
+	 * 
+	 * @throws InterruptedException
+	 */
 	@Test
-	public void Usecase3() {
+	public void Usecase3() throws InterruptedException {
 		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.titleContains("selenium-bot"));
-
-		// Type something
 		WebElement messageBot = driver.findElement(By.id("msg_input"));
 		assertNotNull(messageBot);
 
 		Actions actions = new Actions(driver);
 		actions.moveToElement(messageBot);
 		actions.click();
-		actions.sendKeys("@botCiCd merge #1 pull request for aakarshg/serverprovision");
+		actions.sendKeys("@cicdbot merge #1 pull request for aakarshg/serverprovision");
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
 
-		wait.withTimeout(3, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'Yes, Admin, merged!']"));
+		wait.withTimeout(60, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		WebElement msg = driver.findElement(
+				By.xpath("//span[@class='message_body' and text() = \"Pull Request successfully merged\"]"));
 		assertNotNull(msg);
+		Thread.sleep(3000);
 	}
+
+	// @Test
+	// public void Usecase1() {
+	// driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+	// WebDriverWait wait = new WebDriverWait(driver, 30);
+	// wait.until(ExpectedConditions.titleContains("selenium-bot"));
+	//
+	// // Type something
+	// WebElement messageBot = driver.findElement(By.id("msg_input"));
+	// assertNotNull(messageBot);
+	//
+	// Actions actions = new Actions(driver);
+	// actions.moveToElement(messageBot);
+	// actions.click();
+	// actions.sendKeys("@botCiCd merge #1 pull request for
+	// aakarshg/serverprovision"); // pull request syntax
+	// actions.sendKeys(Keys.RETURN);
+	// actions.build().perform();
+	//
+	// wait.withTimeout(3,
+	// TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+	// WebElement msg = driver.findElement(By.xpath("//span[@class='message_body'
+	// and text() = 'Yes, Admin, merged!']")); //initial details like of pull
+	// request
+	// assertNotNull(msg);
+	// }
 }
