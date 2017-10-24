@@ -18,7 +18,7 @@ Repository for CSC 510 Software Engineering Project
 
 ### Trello Board:
 
-https://trello.com/b/h193q9wx/week-1
+[Milestone 1](https://trello.com/b/h193q9wx/milestone-1)
 
 ### Instructions for Initial Setup: 
 
