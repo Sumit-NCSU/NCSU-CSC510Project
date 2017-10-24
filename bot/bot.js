@@ -22,11 +22,11 @@ var bot = controller.spawn({
 controller.hears([ 'hi' ], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	controller.storage.users.get(message.user, function(err, user) {
     console.log('inside hi');
-		if (user && user.name) {
-			bot.reply(message, 'Hello ' + user.name + '!!');
-		} else {
-			bot.reply(message, 'Hello!');
-		}
+		// if (user && user.name) {
+		// 	bot.reply(message, 'Hello ' + user.name + '!!');
+		// } else {
+			bot.reply(message, 'Hello');
+		// }
 	});
 });
 
@@ -56,7 +56,7 @@ controller.hears('List pull requests for octat for repo Hello-World',
 ['mention', 'direct_mention', 'direct_message' ], function(bot, message) {
     var repo = "Hello-World"
     console.log('inside octocat');
-    var pull_req = listPullRequests();
+    var pull_req = listPullRequests();//PRNumber: 1347, title: new-feature
     var msg = "PRNumber: " + pull_req.number+ ", title: " + pull_req.title
     bot.reply(message, msg);
 });
