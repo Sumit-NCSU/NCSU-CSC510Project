@@ -1,23 +1,28 @@
+if (!process.env.token) {
+    console.log('Error: Specify token in environment');
+    process.exit(1);
+}
 var Botkit = require('botkit');
 var nock = require("nock");
-//var main = require("../bot.js");
 // Load mock data
 var data = require("./mock.json")
 
 var controller = Botkit.slackbot({
     debug: false
-    //include "log: false" to disable logging
-    //or a "logLevel" integer from 0 to 7 to adjust logging verbosity
-  });
+});
 
 // connect the bot to a stream of messages
 controller.spawn({
   token: process.env.SLACKTOKEN,
 }).startRTM()
 
+
+//Show all pull requests
 controller.hears(/\bpull.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
 {
   console.log(message); 
+  var pull_reqs = listPullRequests();
+  
   var reply = processMessage(message);
   bot.reply(message, reply);
 });
