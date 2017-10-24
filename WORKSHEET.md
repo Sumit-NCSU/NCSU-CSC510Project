@@ -4,7 +4,7 @@
 
 | Deliverable        | Item/Status   |  Issues/Tasks
 | ------------------ | ------------  |  ------------
-| Use Case Refinement| In Progress   | &nbsp;
+| Use Case Refinement| Completed     | &nbsp;
 | Use Case 1         | Incomplete    | &nbsp;
 | Use Case 2         | Incomplete    | &nbsp;
 | Use Case 3         | Incomplete    | &nbsp;
