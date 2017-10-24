@@ -140,18 +140,40 @@ public class SeleniumTest {
 		wait.until(ExpectedConditions.titleContains("selenium-bot"));
 
 		// Type something
-		WebElement messageBot = driver.findElement(By.id("msg_input"));
-		assertNotNull(messageBot);
+		WebElement messageBox = driver.findElement(By.id("msg_input"));
+		assertNotNull(messageBox);
 
 		Actions actions = new Actions(driver);
-		actions.moveToElement(messageBot);
+		actions.moveToElement(messageBox);
 		actions.click();
-		actions.sendKeys("@cicdbot hello");
+		actions.sendKeys("@cicdbot hi");
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
 
 		wait.withTimeout(3, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
 		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'Greetings']"));
+		assertNotNull(msg);
+	}
+
+	@Test
+	public void testPendingPR() {
+		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+
+		// Type something
+		WebElement messageBox = driver.findElement(By.id("msg_input"));
+		assertNotNull(messageBox);
+
+		Actions actions = new Actions(driver);
+		actions.moveToElement(messageBox);
+		actions.click();
+		actions.sendKeys("@cicdbot show pending pull requests for myrepo");
+		actions.sendKeys(Keys.RETURN);
+		actions.build().perform();
+
+		wait.withTimeout(3, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'Here is a list of pull requests: ']"));
 		assertNotNull(msg);
 	}
 }
