@@ -81,10 +81,10 @@ public class SeleniumTest {
 	 * Test case to check that the channel is active and receiving messages.
 	 */
 	@Test
-	public void testChannelActive() {
-		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+	public void testChannelActive() throws Exception {
+		driver.get("https://se-project2017.slack.com/messages/selenium-test");
 		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+		wait.until(ExpectedConditions.titleContains("selenium-test"));
 
 		// Type something
 		WebElement messageBox = driver.findElement(By.id("msg_input"));
@@ -102,16 +102,19 @@ public class SeleniumTest {
 		WebElement msg = driver
 				.findElement(By.xpath("//span[@class='message_body' and text() = 'hello world, from Selenium']"));
 		assertNotNull(msg);
+		Thread.sleep(5000);
 	}
 
 	/**
 	 * test case to test that slackBot is active.
+	 * 
+	 * throws Exception
 	 */
 	@Test
-	public void testBotActive() {
-		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+	public void testBotActive() throws Exception {
+		driver.get("https://se-project2017.slack.com/messages/selenium-test");
 		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+		wait.until(ExpectedConditions.titleContains("selenium-test"));
 
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.xpath("//div[@class='p-channel_sidebar__close_container']/a")));
@@ -126,6 +129,7 @@ public class SeleniumTest {
 				assertTrue(status.contains("presence--active"));
 			}
 		}
+		Thread.sleep(5000);
 	}
 
 	/**
@@ -136,9 +140,9 @@ public class SeleniumTest {
 	 */
 	@Test
 	public void testBotReplies() throws Exception {
-		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+		driver.get("https://se-project2017.slack.com/messages/selenium-test");
 		WebDriverWait wait = new WebDriverWait(driver, 60);
-		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+		wait.until(ExpectedConditions.titleContains("selenium-test"));
 
 		// Type something
 		WebElement messageBox = driver.findElement(By.id("msg_input"));
@@ -154,7 +158,7 @@ public class SeleniumTest {
 		wait.withTimeout(60, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
 		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = \"Hello\"]"));
 		assertNotNull(msg);
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 	}
 
 	/**
@@ -164,9 +168,9 @@ public class SeleniumTest {
 	 */
 	@Test
 	public void testGetPRDetais() throws Exception {
-		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+		driver.get("https://se-project2017.slack.com/messages/selenium-test");
 		WebDriverWait wait = new WebDriverWait(driver, 60);
-		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+		wait.until(ExpectedConditions.titleContains("selenium-test"));
 
 		// Type something
 		WebElement messageBot = driver.findElement(By.id("msg_input"));
@@ -182,7 +186,7 @@ public class SeleniumTest {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='message_body']")));
 		List<WebElement> messages = driver.findElements(By.xpath("//span[@class='message_body']"));
 		boolean notFound = true;
-		wait.withTimeout(60, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		wait.withTimeout(80, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
 		for (WebElement message : messages) {
 			if (message.getText().contains("Id  State      Title            Description")) {
 				notFound = false;
@@ -191,7 +195,7 @@ public class SeleniumTest {
 		}
 		if (notFound)
 			assertTrue(false);
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 	}
 
 	/**
@@ -201,9 +205,9 @@ public class SeleniumTest {
 	 */
 	@Test
 	public void testviewPRs() throws Exception {
-		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+		driver.get("https://se-project2017.slack.com/messages/selenium-test");
 		WebDriverWait wait = new WebDriverWait(driver, 60);
-		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+		wait.until(ExpectedConditions.titleContains("selenium-test"));
 
 		// Type something
 		WebElement messageBot = driver.findElement(By.id("msg_input"));
@@ -219,7 +223,7 @@ public class SeleniumTest {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='message_body']")));
 		List<WebElement> messages = driver.findElements(By.xpath("//span[@class='message_body']"));
 		boolean notFound = true;
-		wait.withTimeout(60, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		wait.withTimeout(80, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
 		for (WebElement message : messages) {
 			if (message.getText().contains("Id  Title")) {
 				notFound = false;
@@ -228,7 +232,7 @@ public class SeleniumTest {
 		}
 		if (notFound)
 			assertTrue(false);
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 	}
 
 	/**
@@ -238,9 +242,9 @@ public class SeleniumTest {
 	 */
 	@Test
 	public void testMergePR() throws Exception {
-		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+		driver.get("https://se-project2017.slack.com/messages/selenium-test");
 		WebDriverWait wait = new WebDriverWait(driver, 60);
-		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+		wait.until(ExpectedConditions.titleContains("selenium-test"));
 		WebElement messageBot = driver.findElement(By.id("msg_input"));
 		assertNotNull(messageBot);
 
@@ -255,7 +259,7 @@ public class SeleniumTest {
 		WebElement msg = driver.findElement(
 				By.xpath("//span[@class='message_body' and text() = \"Pull Request successfully merged\"]"));
 		assertNotNull(msg);
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 	}
 
 	// /**
@@ -263,9 +267,9 @@ public class SeleniumTest {
 	// */
 	// @Test
 	// public void Usecase1() {
-	// driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+	// driver.get("https://se-project2017.slack.com/messages/selenium-test");
 	// WebDriverWait wait = new WebDriverWait(driver, 30);
-	// wait.until(ExpectedConditions.titleContains("selenium-bot"));
+	// wait.until(ExpectedConditions.titleContains("selenium-test"));
 	//
 	// // Type something
 	// WebElement messageBot = driver.findElement(By.id("msg_input"));
