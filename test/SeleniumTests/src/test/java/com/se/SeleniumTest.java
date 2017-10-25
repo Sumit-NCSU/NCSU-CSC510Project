@@ -29,7 +29,7 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
  */
 public class SeleniumTest {
 	private static final String USERNAME = System.getenv("SLACKXUSER");
-	private static final String PASSWORD = System.getenv("SLACKXPWD");
+  	private static final String PASSWORD = System.getenv("SLACKXPWD");
 	private static WebDriver driver;
 
 	/**
@@ -152,6 +152,28 @@ public class SeleniumTest {
 
 		wait.withTimeout(3, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
 		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'Greetings']"));
+		assertNotNull(msg);
+	}
+	
+	@Test
+	public void Usecase3() {
+		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+
+		// Type something
+		WebElement messageBot = driver.findElement(By.id("msg_input"));
+		assertNotNull(messageBot);
+
+		Actions actions = new Actions(driver);
+		actions.moveToElement(messageBot);
+		actions.click();
+		actions.sendKeys("@botCiCd merge #1 pull request for aakarshg/serverprovision");
+		actions.sendKeys(Keys.RETURN);
+		actions.build().perform();
+
+		wait.withTimeout(3, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'Yes, Admin, merged!']"));
 		assertNotNull(msg);
 	}
 }
