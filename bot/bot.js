@@ -118,8 +118,8 @@ function getPullRequest(repo, number) {
 
 // Lists all pull requests of a repo
 function listPullRequests() {
-  var pull_requests = nock("https://api.github.com").get("/repos/octocat/Hello-World/pulls").reply(200, JSON.stringify(data.pull_requests[0]));
-	return data.pull_requests;
+  var pull_requests = nock("https://api.github.com").get("/repos/octocat/Hello-World/pulls").reply(200, JSON.stringify(data.pull_requests));
+	return pull_requests;
 }
 
 // List files of a specific pullrequest
