@@ -1,9 +1,9 @@
 // webhook url = https://hooks.slack.com/services/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
-var Botkit = require('botkit');
-var nock = require("nock");
+var Botkit = require('botkit')
+var nock = require("nock")
+var Table = require('easy-table')
 // Load mock data
 var data = require("./mock.json")
-var Table = require('easy-table')
 
 if (!process.env.SLACKTOKEN) {
 	console.log('Error: Specify token in environment');
@@ -23,30 +23,20 @@ var bot = controller.spawn({
 controller.hears([ 'hi' ], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	controller.storage.users.get(message.user, function(err, user) {
     console.log('inside hi');
-		// if (user && user.name) {
-		// 	bot.reply(message, 'Hello ' + user.name + '!!');
-		// } else {
 			bot.reply(message, 'Hello');
-		// }
 	});
 });
-
-// controller.hears(/\bhow.*ur.*day.*\b/, [ 'mention', 'direct_mention',
-// 		'direct_message' ], function(bot, message) {
-// 	bot.reply(message, "Great.! I hope yours is going fine as well.! ");
-// });
 
 // Details of a particular pull request
 controller.hears('Get pull request 1 for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
 { 	var repo = "Hello-World"
 	console.log(getPullRequest())
 	var pull_req = JSON.parse(getPullRequest().interceptors[0].body);
-	
 	var t = new Table
 	t.cell('Id', pull_req.id)
 	t.cell('State	', pull_req.state)
-	t.cell('		Title	', pull_req.title)
-	t.cell('	Description	', pull_req.body)
+	t.cell('Title	', pull_req.title)
+	t.cell('Description	', pull_req.body)
 	t.newRow()
     bot.reply(message, t.toString());
 });
@@ -80,31 +70,31 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 
 	result.forEach(function(req) {
 	t.cell('Id', req.Id)
-	t.cell('		Title	', req.title)
+	t.cell('Title	', req.title)
 	t.newRow()
 	})
   bot.reply(message, t.toString());
 });
 
-// Returns list of pull requests to user for a repo.
-controller.hears('List pull requests for octat for repo Hello-World', 
-['mention', 'direct_mention', 'direct_message' ], function(bot, message) {
-    var repo = "Hello-World"
-    console.log('inside octocat');
-    var pull_req = listPullRequests();//PRNumber: 1347, title: new-feature
-    var msg = "PRNumber: " + pull_req.number+ ", title: " + pull_req.title
-    bot.reply(message, msg);
-});
+// // Returns list of pull requests to user for a repo.
+// controller.hears('List pull requests for octat for repo Hello-World', 
+// ['mention', 'direct_mention', 'direct_message' ], function(bot, message) {
+//     var repo = "Hello-World"
+//     console.log('inside octocat');
+//     var pull_req = listPullRequests();//PRNumber: 1347, title: new-feature
+//     var msg = "PRNumber: " + pull_req.number+ ", title: " + pull_req.title
+//     bot.reply(message, msg);
+// });
 
-// Show all pull requests
-controller.hears(/\bpull.*request.*\b/, [ 'mention', 'direct_mention',
-		'direct_message' ], function(bot, message) {
-    var repo = "Hello-World"
-    console.log('inside octocat');
-    var pull_req = listPullRequests();
-    var msg = "PRNumber: " + pull_req.number+ ", title: " + pull_req.title
-    bot.reply(message, msg);
-});
+// // Show all pull requests
+// controller.hears(/\bpull.*request.*\b/, [ 'mention', 'direct_mention',
+// 		'direct_message' ], function(bot, message) {
+//     var repo = "Hello-World"
+//     console.log('inside octocat');
+//     var pull_req = listPullRequests();
+//     var msg = "PRNumber: " + pull_req.number+ ", title: " + pull_req.title
+//     bot.reply(message, msg);
+// });
 
 // pull_request payload
 function getPayLoad() {
