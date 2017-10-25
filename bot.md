@@ -55,7 +55,7 @@ Common Pre conditions for all the use cases are:
 
 * ## Bot Implementation
 
-
+We have added our Bot to the Slack Platform for our Team Project. We are able to send and receive messages on the Bot Channel. Right now, we are able to support simple conversations which will further be enhanced in the remaining milestones.
 
 * ## Selenium Testing
 
