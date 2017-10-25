@@ -45,7 +45,17 @@ Common Pre conditions for all the use cases are:
 
 * ## Mocking
 
+### The following components were involved in the mocking process:
+
+1. We created our own Mock.json for our Mock Data
+
+2. We used web hooks to mock instances where without a user input, the Bot still replies. This happens in Use-Case 1 where Jenkins alerts the Bot of the pull request.
+
+3. We used Nock module of Nodejs to implement the mocking of HTTP requests.
+
 * ## Bot Implementation
+
+
 
 * ## Selenium Testing
 
