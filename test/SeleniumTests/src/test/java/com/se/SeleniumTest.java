@@ -105,7 +105,7 @@ public class SeleniumTest {
 	}
 
 	/**
-	 * test case to test that bot is active.
+	 * test case to test that slackBot is active.
 	 */
 	@Test
 	public void testBotActive() {
@@ -121,9 +121,7 @@ public class SeleniumTest {
 		for (int i = 0; i < spans.size(); i++) {
 			String elementText = spans.get(i).getAttribute("innerText");
 			if ("cicdbot".equals(elementText)) {
-				System.out.println(elementText);
 				String status = spans.get(i).getAttribute("innerHTML");
-				System.out.println(status);
 				// assertTrue(status.contains("presence--away"));
 				assertTrue(status.contains("presence--active"));
 			}
@@ -131,11 +129,13 @@ public class SeleniumTest {
 	}
 
 	/**
-	 * @throws InterruptedException
+	 * test that slackBot is replying to incoming messages.
+	 * 
+	 * @throws Exception
 	 * 
 	 */
 	@Test
-	public void testBotReplies() throws InterruptedException {
+	public void testBotReplies() throws Exception {
 		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
 		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.titleContains("selenium-bot"));
@@ -158,12 +158,12 @@ public class SeleniumTest {
 	}
 
 	/**
-	 * test for use case 2: view details of open PRs
+	 * test for useCase 1: return PR details of a specific pull request.
 	 * 
-	 * @throws InterruptedException
+	 * @throws Exception
 	 */
 	@Test
-	public void Usecase2() throws InterruptedException {
+	public void testGetPRDetais() throws Exception {
 		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
 		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.titleContains("selenium-bot"));
@@ -175,27 +175,69 @@ public class SeleniumTest {
 		Actions actions = new Actions(driver);
 		actions.moveToElement(messageBot);
 		actions.click();
-		actions.sendKeys("@cicdbot List pull requests for octat/Hello-World");
+		actions.sendKeys("@cicdbot Get pull request 1 for octat for repo Hello-World");
 		actions.sendKeys(Keys.RETURN);
 		actions.build().perform();
 
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='message_body']")));
+		List<WebElement> messages = driver.findElements(By.xpath("//span[@class='message_body']"));
+		boolean notFound = true;
 		wait.withTimeout(60, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
-		WebElement msg = null;
-
-		msg = driver.findElement(
-				By.xpath("//span[@class='message_body' and text() = \"PRNumber: 1347, title: new-feature\"]"));
-
-		assertNotNull(msg);
+		for (WebElement message : messages) {
+			if (message.getText().contains("Id  State      Title            Description")) {
+				notFound = false;
+				assertTrue(true);
+			}
+		}
+		if (notFound)
+			assertTrue(false);
 		Thread.sleep(3000);
 	}
 
 	/**
-	 * test for use case 3: merging a pull request.
+	 * test for useCase 2: return a list of open pull requests for a Repo.
 	 * 
-	 * @throws InterruptedException
+	 * @throws Exception
 	 */
 	@Test
-	public void Usecase3() throws InterruptedException {
+	public void testviewPRs() throws Exception {
+		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+		WebDriverWait wait = new WebDriverWait(driver, 60);
+		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+
+		// Type something
+		WebElement messageBot = driver.findElement(By.id("msg_input"));
+		assertNotNull(messageBot);
+
+		Actions actions = new Actions(driver);
+		actions.moveToElement(messageBot);
+		actions.click();
+		actions.sendKeys("@cicdbot Get pull requests for octat for repo Hello-World");
+		actions.sendKeys(Keys.RETURN);
+		actions.build().perform();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='message_body']")));
+		List<WebElement> messages = driver.findElements(By.xpath("//span[@class='message_body']"));
+		boolean notFound = true;
+		wait.withTimeout(60, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		for (WebElement message : messages) {
+			if (message.getText().contains("Id  Title")) {
+				notFound = false;
+				assertTrue(true);
+			}
+		}
+		if (notFound)
+			assertTrue(false);
+		Thread.sleep(3000);
+	}
+
+	/**
+	 * test for useCase 3: merging a pull request.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testMergePR() throws Exception {
 		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
 		WebDriverWait wait = new WebDriverWait(driver, 60);
 		wait.until(ExpectedConditions.titleContains("selenium-bot"));
@@ -216,6 +258,9 @@ public class SeleniumTest {
 		Thread.sleep(3000);
 	}
 
+	// /**
+	// * usecase 1 actual test depends on Jenkins interaction
+	// */
 	// @Test
 	// public void Usecase1() {
 	// driver.get("https://se-project2017.slack.com/messages/selenium-bot");
