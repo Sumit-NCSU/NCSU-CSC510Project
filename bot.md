@@ -49,6 +49,19 @@ Common Pre conditions for all the use cases are:
 
 * ## Selenium Testing
 
+### Using Selenium we have tested for the following:
+
+1. Test that the Channel exists.
+
+2. Test that the Bot is replying.
+
+3. Test that the Bot is actually online.
+
+4. Test for Use-Case2 i.e. the Bot returns back the list of all the pull requests along with their status for a particular user/repository.
+
+5. Test for Use-Case3 i.e. the Bot posts that the merge #number pull request for the verfied user and repository has been completed.
+
+
 * ## Link to Task Tracking
 [Worksheet.md](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/WORKSHEET.md)
 
