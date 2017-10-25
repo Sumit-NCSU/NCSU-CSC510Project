@@ -15,7 +15,7 @@ bot.startRTM(function(err,bot,payload) {
 // send webhooks
 bot.configureIncomingWebhook({url: webhook_url});
 bot.sendWebhook({
-  text: 'Hey!',
+  text: '[sample/samplerepo] Pull request submitted by dummy', 
   channel: '#selenium-bot',
 },function(err,res) {
   // handle error
