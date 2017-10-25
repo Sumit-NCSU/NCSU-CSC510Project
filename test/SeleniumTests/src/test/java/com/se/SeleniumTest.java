@@ -156,6 +156,28 @@ public class SeleniumTest {
 	}
 	
 	@Test
+	public void Usecase1() {
+		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.titleContains("selenium-bot"));
+
+		// Type something
+		WebElement messageBot = driver.findElement(By.id("msg_input"));
+		assertNotNull(messageBot);
+
+		Actions actions = new Actions(driver);
+		actions.moveToElement(messageBot);
+		actions.click();
+		actions.sendKeys("@botCiCd merge #1 pull request for aakarshg/serverprovision"); // pull request syntax
+		actions.sendKeys(Keys.RETURN);
+		actions.build().perform();
+
+		wait.withTimeout(3, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class);
+		WebElement msg = driver.findElement(By.xpath("//span[@class='message_body' and text() = 'Yes, Admin, merged!']")); //initial details like of pull request
+		assertNotNull(msg);
+	}
+	
+	@Test
 	public void Usecase3() {
 		driver.get("https://se-project2017.slack.com/messages/selenium-bot");
 		WebDriverWait wait = new WebDriverWait(driver, 30);
