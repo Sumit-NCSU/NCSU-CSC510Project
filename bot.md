@@ -43,8 +43,6 @@ Common Pre conditions for all the use cases are:
    * [S1] User will type sentence like `@botCiCd merge #1 pull request for aakarshg/serverprovision`.
    * [S2] Bot will verify admin status of user and status of jenkins build.
 
-### Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)
-
 * ## Mocking
 
 ### The following components were involved in the mocking process:
@@ -77,4 +75,7 @@ We have used **_botkit_** for integrating our bot with slack.
 
 * ## Link to Task Tracking
 [Worksheet.md](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/WORKSHEET.md)
+
+#### Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)
+#### Youtube link for [SeleniumTest Screencast](https://youtu.be/xW2NwHLRoYU)
 
