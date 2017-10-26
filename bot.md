@@ -43,6 +43,8 @@ Common Pre conditions for all the use cases are:
    * [S1] User will type sentence like `@botCiCd merge #1 pull request for aakarshg/serverprovision`.
    * [S2] Bot will verify admin status of user and status of jenkins build.
 
+### Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)
+
 * ## Mocking
 
 ### The following components were involved in the mocking process:
@@ -55,7 +57,8 @@ Common Pre conditions for all the use cases are:
 
 * ## Bot Implementation
 
-We have added our Bot to the Slack Platform for our Team Project. We are able to send and receive messages on the Bot Channel. Right now, we are able to support simple conversations which will further be enhanced in the remaining milestones.
+We have added our Bot to the Slack Platform for our Team Project. We are able to send and receive messages on the Bot Channel. Right now, we are able to support simple conversations which will further be enhanced in the remaining milestones.</br>
+We have used **_botkit_** for integrating our bot with slack.
 
 * ## Selenium Testing
 

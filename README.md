@@ -12,6 +12,7 @@ Repository for CSC 510 Software Engineering Project
 
 [Design](DESIGN.md)
 
+## Milestone 1
 ### Task Tracking: 
 
 [Tracker](WORKSHEET.md)
@@ -20,7 +21,11 @@ Repository for CSC 510 Software Engineering Project
 
 [Milestone 1](https://trello.com/b/h193q9wx/milestone-1)
 
-### Instructions for Initial Setup: 
+### Screencasts:
 
-[Setup](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/SlackBot/SlackBotWorkshop.md)
+Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)
+Youtube link for [SeleniumTest Screencast](https://youtu.be/xW2NwHLRoYU)
+
+
+
 
