@@ -47,10 +47,13 @@ controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'd
   console.log('inside pr merge');
   var prnumber = 11;
   var msg = mergePullRequest(prnumber);
+  var adminlist = ["aakarshg", "assinsin", "sebotcicd"];
   console.log(msg)
   var reply = '';
-  if (msg.merged) {
+  if (msg.merged  ) {
+    if(adminlist.contains(message.user)){
     reply = msg.message;
+	  };
   } else {
     reply = 'Not able to Merge!';
   }
@@ -74,6 +77,15 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 	t.newRow()
 	})
   bot.reply(message, t.toString());
+});
+
+// Getting the details from jenkins and this is where bot is supposed to hit git's rest api to get all details.
+controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
+{    console.log("Got the message");
+ bot.say({
+   text: "[sample/samplerepo] Pull request submitted by dummy #9 DummyPRTitle",
+   channel: 'selenium-test'
+    });
 });
 
 // // Returns list of pull requests to user for a repo.
