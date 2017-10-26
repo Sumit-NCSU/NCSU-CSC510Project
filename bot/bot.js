@@ -63,9 +63,7 @@ controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'd
 controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
 { 	var repo = "Hello-World"
 	var result = [];
-	//console.log(listPullRequests().interceptors[0].body)
 	var pull_reqs = JSON.parse(listPullRequests().interceptors[0].body);
-	//console.log(pull_reqs)
 	for(i=0;i<pull_reqs.length;i++){
 	  result.push({Id:pull_reqs[i].id,title:pull_reqs[i].title});
 	}
