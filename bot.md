@@ -43,8 +43,6 @@ Common Pre conditions for all the use cases are:
    * [S1] User will type sentence like `@botCiCd merge #1 pull request for aakarshg/serverprovision`.
    * [S2] Bot will verify admin status of user and status of jenkins build.
 
-### Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)
-
 * ## Mocking
 
 ### The following components were involved in the mocking process:
@@ -54,6 +52,11 @@ Common Pre conditions for all the use cases are:
 2. We used web hooks to mock instances where without a user input, the Bot still replies. This happens in Use-Case 1 where Jenkins alerts the Bot of the pull request.
 
 3. We used Nock module of Nodejs to implement the mocking of HTTP requests.
+
+#### Link for [Mock Data](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/mock.json)
+#### Link for NodeJS file [bot.js](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/bot.js) which is using nock api for mocking
+#### Link for NodeJS file [incoming.js](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/incoming.js) which is using Webhook for mocking
+
 
 * ## Bot Implementation
 
@@ -66,15 +69,20 @@ We have used **_botkit_** for integrating our bot with slack.
 
 1. Test that the Channel exists.
 
-2. Test that the Bot is replying.
+2. Test that the Bot is actually online.
 
-3. Test that the Bot is actually online.
+3. Test that the Bot is replying.
 
 4. Test for Use-Case2 i.e. the Bot returns back the list of all the pull requests along with their status for a particular user/repository.
 
 5. Test for Use-Case3 i.e. the Bot posts that the merge #number pull request for the verfied user and repository has been completed.
 
+#### Link for [SeleniumTest Java file](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/test/SeleniumTests/src/test/java/com/se/SeleniumTest.java)
 
 * ## Link to Task Tracking
-[Worksheet.md](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/WORKSHEET.md)
+#### Link for [Worksheet.md](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/WORKSHEET.md)
+
+* ## Link to Screencast
+#### Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)
+#### Youtube link for [SeleniumTest Screencast](https://youtu.be/xW2NwHLRoYU)
 
