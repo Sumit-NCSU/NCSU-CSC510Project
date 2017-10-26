@@ -53,14 +53,15 @@ Common Pre conditions for all the use cases are:
 
 3. We used Nock module of Nodejs to implement the mocking of HTTP requests.
 
+#### Link for [Mock Data](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/mock.json)
+#### Link for NodeJS file [bot.js](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/bot.js) which is using nock api for mocking
+#### Link for NodeJS file [incoming.js](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/incoming.js) which is using Webhook for mocking
+
+
 * ## Bot Implementation
 
 We have added our Bot to the Slack Platform for our Team Project. We are able to send and receive messages on the Bot Channel. Right now, we are able to support simple conversations which will further be enhanced in the remaining milestones.</br>
 We have used **_botkit_** for integrating our bot with slack.
-
-#### Link for [Mock Data](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/mock.json)
-#### Link for NodeJS file [bot.js](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/bot.js) which is using nock api for mocking
-#### Link for NodeJS file [incoming.js](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot/incoming.js) which is using Webhook for mocking
 
 * ## Selenium Testing
 
