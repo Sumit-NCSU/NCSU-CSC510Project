@@ -1,4 +1,4 @@
-// webhook url = https://hooks.slack.com/services/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
+
 var Botkit = require('botkit')
 var nock = require("nock")
 var Table = require('easy-table')
@@ -98,15 +98,6 @@ controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_ment
 //     bot.reply(message, msg);
 // });
 
-// // Show all pull requests
-// controller.hears(/\bpull.*request.*\b/, [ 'mention', 'direct_mention',
-// 		'direct_message' ], function(bot, message) {
-//     var repo = "Hello-World"
-//     console.log('inside octocat');
-//     var pull_req = listPullRequests();
-//     var msg = "PRNumber: " + pull_req.number+ ", title: " + pull_req.title
-//     bot.reply(message, msg);
-// });
 
 // pull_request payload
 function getPayLoad() {
