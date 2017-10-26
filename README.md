@@ -8,11 +8,12 @@ Repository for CSC 510 Software Engineering Project
 * Aakarsh Gopi (agopi)
 * Ruchika Verma (rverma5)
 
+## Milestone: Design
 ### Project Design: 
 
 [Design](DESIGN.md)
 
-## Milestone 1
+## Milestone: Bot
 ### Task Tracking: 
 
 [Tracker](WORKSHEET.md)
