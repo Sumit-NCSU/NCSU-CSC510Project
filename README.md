@@ -11,7 +11,7 @@ Repository for CSC 510 Software Engineering Project
 ## Milestone: Design
 #### Project Design: 
 
-[Design](DESIGN.md)
+[Design](DESIGN.md) [ Updated Design Document with refined use cases and scope narrowed down to Pull Request Management]
 
 ## Milestone: Bot
 #### Task Tracking: 
@@ -24,7 +24,8 @@ Repository for CSC 510 Software Engineering Project
 
 #### Bot.md
 
-[Link to Bot.md](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot.md)
+[Bot.md](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot.md)
+
 #### Screencasts:
 
 Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)</br>
