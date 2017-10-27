@@ -11,7 +11,7 @@ Repository for CSC 510 Software Engineering Project
 ## Milestone: Design
 #### Project Design: 
 
-[Design](DESIGN.md) [ Updated Design Document with refined use cases and scope narrowed down to Pull Request Management]
+[Design](DESIGN.md)
 
 ## Milestone: Bot
 #### Task Tracking: 
@@ -24,13 +24,29 @@ Repository for CSC 510 Software Engineering Project
 
 #### Bot.md
 
-[Bot.md](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot.md)
+[Bot.md](bot.md)
 
 #### Screencasts:
 
 Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)</br>
 Youtube link for [SeleniumTest Screencast](https://youtu.be/xW2NwHLRoYU)
 
+## Milestone: Service
+#### Task Tracking: 
+
+[Tracker](WORKSHEET.md)
+
+#### Trello Board:
+
+[Milestone 2](https://trello.com/b/UfgRVHrf/milestone-2)
+
+#### Service.md
+
+[Service.md](SERVICE.md)
+
+#### Screencast:
+
+[Screencast]()
 
 
 
