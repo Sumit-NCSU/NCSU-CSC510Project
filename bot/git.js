@@ -22,7 +22,7 @@ function getRepos(userName)
 		// Send a http request to url and specify a callback that will be called upon its return.
 		request(options, function (error, response, body) 
 		{
-			var repos = JSON.parse(body);cx
+			var repos = JSON.parse(body);
 			resolve(repos);
 		});
 	});
