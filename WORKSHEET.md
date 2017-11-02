@@ -1,8 +1,8 @@
 # Task Tracking Worksheet - [Trello](https://trello.com/b/h193q9wx)
 
-We are tracking our daily tasks and progress using trello which can be found [here](https://trello.com/b/h193q9wx):
-
 ## Milestone 1 - [Milestone 1](https://trello.com/b/h193q9wx/milestone-1)
+
+We are tracking our daily tasks and progress for milestone 1 using trello which can be found [here](https://trello.com/b/h193q9wx):
 
 | Deliverable        | Item/Status   |  Issues/Tasks
 | ------------------ | ------------  |  ------------
@@ -11,3 +11,17 @@ We are tracking our daily tasks and progress using trello which can be found [he
 | Bot Implementation | Completed   | [#27](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/27)
 | Selenium Tests     | Completed   | [#30](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/30)
 | Screencast         | Completed    | [#31](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/31)
+
+
+## Milestone 2 - [Milestone 2](https://trello.com/b/UfgRVHrf/milestone-2)
+
+We are tracking our daily tasks and progress for milestone 2 using trello which can be found [here](https://trello.com/b/UfgRVHrf)
+
+| Deliverable                    | Item/Status |  Issues/Tasks
+| ------------------------------ | ----------- |  --------------------
+| Implement Use Case 1           | Incomplete  | [#40](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/40), [#57](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/57)
+| Implement Use Case 2           | Incomplete  | [#58](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/58)
+| Implement Use Case 3           | Incomplete  | [#59](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/59)
+| Identify and handle edge cases | Incomplete  | [#60](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/60)
+| Streamline bot interaction     | Incomplete  | [#61](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/61)
+| Screencast                     | Incomplete  | [#62](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/62)

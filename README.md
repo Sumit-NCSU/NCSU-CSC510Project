@@ -9,28 +9,26 @@ Repository for CSC 510 Software Engineering Project
 * Ruchika Verma (rverma5)
 
 ## Milestone: Design
-#### Project Design: 
 
-[Design](DESIGN.md) [ Updated Design Document with refined use cases and scope narrowed down to Pull Request Management]
+| Task           | Links                |
+|----------------|----------------------|
+| Project Design | [Design](DESIGN.md)  |
 
 ## Milestone: Bot
-#### Task Tracking: 
 
-[Tracker](WORKSHEET.md)
+| Task          | Links                   |
+|---------------|-------------------------|
+| Task Tracking | [Tracker](WORKSHEET.md) |
+| Trello Board  | [Milestone 1](https://trello.com/b/h193q9wx/milestone-1) |
+| Bot.md        | [Bot.md](bot.md) |
+| Screencasts   | [UseCase Screencast](https://youtu.be/Aar2CXXPN_8), [SeleniumTest Screencast](https://youtu.be/xW2NwHLRoYU) |
 
-#### Trello Board:
+## Milestone: Service
 
-[Milestone 1](https://trello.com/b/h193q9wx/milestone-1)
-
-#### Bot.md
-
-[Bot.md](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/master/bot.md)
-
-#### Screencasts:
-
-Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)</br>
-Youtube link for [SeleniumTest Screencast](https://youtu.be/xW2NwHLRoYU)
-
-
-
+| Task          | Links               |
+|---------------|---------------------|
+| Task Tracking | [Tracker](WORKSHEET.md) |
+| Trello Board  | [Milestone 2](https://trello.com/b/UfgRVHrf/milestone-2) |
+| Service.md    | [Service.md](SERVICE.md) |
+| Screencast    | [Screencast]() |
 

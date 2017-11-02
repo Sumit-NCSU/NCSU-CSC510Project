@@ -8,7 +8,7 @@ var Promise = require("bluebird");
 var github = require("./git.js");
 
 if (!process.env.SLACKTOKEN) {
-	console.log('Error: Specify token in environment');
+	console.log('Error: Specify Git token in environment variable: SLACKTOKEN');
 	process.exit(1);
 }
 
