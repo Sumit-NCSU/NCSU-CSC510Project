@@ -6,7 +6,7 @@ var Table = require('easy-table')
 var data = require("./mock.json")
 
 if (!process.env.SLACKTOKEN) {
-	console.log('Error: Specify token in environment');
+	console.log('Error: Specify Git token in environment variable: SLACKTOKEN');
 	process.exit(1);
 }
 
