@@ -2,7 +2,7 @@ var request = require('request');
 
 var urlRoot = "https://api.github.com";
 
-var token = "token " + "18550fc0536fba882309f170d537b48c116f03a6";
+var token = "token " + "";
 var user = "srivassumit";
 var repoName = "SEGitAPI";
 
