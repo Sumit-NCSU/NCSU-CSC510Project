@@ -49,18 +49,55 @@ function getPullRequests(owner, repo, isOpen, branchName) {
 		//console.log(obj);
 		
 		if (obj != null) {
-			for( var i = 0; i < obj.length; i++ ) {
+			for(var i = 0; i < obj.length; i++) {
 				var title = obj[i].title;
-				console.log( title );
+				console.log("Pull Request Name: " + title);
 				pullRequests.push(obj[i]);
 			}
 		} else {
-			console.log('No open Pull requests found');
+			console.log('No Pull requests found');
 			return false;
 		}
 	});
 	return pullRequests;
 }
 
+function mergePullRequest(owner, repo, number) {
+	// Check if the Git token is set.
+	if (!process.env.GITTOKEN) {
+		console.log('Error: Specify Git token in environment variable: GITTOKEN');
+		return false;
+	}
 
-//getPullRequests(user,repoName);
+	// Set the options for the request.
+	var options = {
+		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls/" + number + "/merge",
+		method: 'PUT',
+		headers: {
+			"User-Agent": "CiCdBot",
+			"content-type": "application/json",
+			"Authorization": "token " + process.env.GITTOKEN,
+			"commit_title": "Merged by CiCdBot",
+			"commit_message": "Merged by CiCdBot"
+		}
+	};
+
+	// Send a http request to url and specify a callback that will be called upon its return.
+	request(options, function (error, response, body) {
+		var obj = JSON.parse(body);
+		//console.log(obj);
+		
+		if (obj != null) {
+			console.log(obj.message);
+			return obj.message;
+		}
+	});	
+}
+
+
+getPullRequests(user,repoName);
+
+mergePullRequest(user,repoName,3);
+
+exports.getPullRequests = getPullRequests;
+exports.mergePullRequest = mergePullRequest;
