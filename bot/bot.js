@@ -107,31 +107,3 @@ controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_ment
     });
 });
 
-// pull_request payload
-function getPayLoad() {
-	var payload = data.pull_request_payload;
-}
-
-// Get a pull request info. and send to slack through webhook.
-function getPullRequest(repo, number) {
-	var pull_request = nock("https://api.github.com").get("/repos/octocat/Hello-World/pulls/" + number).reply(200, JSON.stringify(data.pull_req));
-	return pull_request;
-}
-
-// Lists all pull requests of a repo
-function listPullRequests() {
-  var pull_requests = nock("https://api.github.com").get("/repos/octocat/Hello-World/pulls").reply(200, JSON.stringify(data.pull_requests));
-	return pull_requests;
-}
-
-// List files of a specific pullrequest
-function listPullRequestFiles(number) {
-	var files = nock("https://api.github.com").get("/repos/octocat/Hello-World/pulls/" + number).reply(200, JSON.stringify(data.pull_req_files));
-	return files;
-}
-
-function mergePullRequest(prnumber) {
-  var merge_resp = nock("https://api.github.com").put("/repos/octocat/Hello-World/pulls/1/merge").reply(200, JSON.stringify(data.merge_pull_req));  
-  console.log('merging')
-	return data.merge_pull_req;
-}
