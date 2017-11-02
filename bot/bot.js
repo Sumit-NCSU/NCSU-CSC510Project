@@ -4,6 +4,8 @@ var nock = require("nock")
 var Table = require('easy-table')
 // Load mock data
 var data = require("./mock.json")
+var Promise = require("bluebird");
+var github = require("./git.js");
 
 if (!process.env.SLACKTOKEN) {
 	console.log('Error: Specify Git token in environment variable: SLACKTOKEN');
@@ -19,6 +21,13 @@ var bot = controller.spawn({
 	token : process.env.SLACKTOKEN
 }).startRTM()
 
+controller.configureSlackApp({
+  clientId: process.env.clientId,
+  clientSecret: process.env.clientSecret,
+  redirectUri: 'http://localhost:3002',
+  scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
+});
+
 // Greetings
 controller.hears([ 'hi' ], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	controller.storage.users.get(message.user, function(err, user) {
@@ -30,8 +39,10 @@ controller.hears([ 'hi' ], [ 'mention', 'direct_mention', 'direct_message' ], fu
 // Details of a particular pull request
 controller.hears('Get pull request 1 for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
 { 	var repo = "Hello-World"
-	console.log(getPullRequest())
-	var pull_req = JSON.parse(getPullRequest().interceptors[0].body);
+	var owner = "octat"
+	var number = 1
+	var branchName = ""
+	var pull_req = github.getPullRequest(owner, repo, number, branchName)
 	var t = new Table
 	t.cell('Id', pull_req.id)
 	t.cell('State	', pull_req.state)
@@ -41,8 +52,34 @@ controller.hears('Get pull request 1 for octat for repo Hello-World',['mention',
     bot.reply(message, t.toString());
 });
 
+controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
+{ 	var repo = "Hello-World"
+	var owner = "octat"
+	var branchName = ""
+	var isOpen = true
+	var pull_reqs = github.getPullRequests(owner, repo, isOpen, branchName)
+	pull_reqs.then(function(value){
+		var result = [];
+		for(i=0;i<value.length;i++){
+			result.push({Id:value[i].id,title:value[i].title});
+		}
+	var result = [];
+	for(i=0;i<pull_reqs.length;i++){
+	  result.push({Id:pull_reqs[i].id,title:pull_reqs[i].title});
+	}
+	var t = new Table
+
+	result.forEach(function(req) {
+	t.cell('Id', req.Id)
+	t.cell('Title	', req.title)
+	t.newRow()
+	})
+    bot.reply(message, t.toString());
+});
+
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
 controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
+  // TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
   console.log(message);
   console.log('inside pr merge');
   var prnumber = 11;
@@ -60,22 +97,6 @@ controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'd
   bot.reply(message, reply);
 });
 
-controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
-{ 	var repo = "Hello-World"
-	var result = [];
-	var pull_reqs = JSON.parse(listPullRequests().interceptors[0].body);
-	for(i=0;i<pull_reqs.length;i++){
-	  result.push({Id:pull_reqs[i].id,title:pull_reqs[i].title});
-	}
-	var t = new Table
-
-	result.forEach(function(req) {
-	t.cell('Id', req.Id)
-	t.cell('Title	', req.title)
-	t.newRow()
-	})
-  bot.reply(message, t.toString());
-});
 
 // Getting the details from jenkins and this is where bot is supposed to hit git's rest api to get all details.
 controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
@@ -85,17 +106,6 @@ controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_ment
    channel: 'selenium-test'
     });
 });
-
-// // Returns list of pull requests to user for a repo.
-// controller.hears('List pull requests for octat for repo Hello-World', 
-// ['mention', 'direct_mention', 'direct_message' ], function(bot, message) {
-//     var repo = "Hello-World"
-//     console.log('inside octocat');
-//     var pull_req = listPullRequests();//PRNumber: 1347, title: new-feature
-//     var msg = "PRNumber: " + pull_req.number+ ", title: " + pull_req.title
-//     bot.reply(message, msg);
-// });
-
 
 // pull_request payload
 function getPayLoad() {
