@@ -41,56 +41,40 @@ controller.hears('Get pull request 1 for octat for repo Hello-World',['mention',
 { 	var repo = "Hello-World"
 	var owner = "octat"
 	var number = 1
-	var pull_req = github.getPullRequest(owner, repo, number)
-	pull_req.then(function(value){
-		var t = new Table
-		t.cell('Id', value.id)
-		t.cell('State	', value.state)
-		t.cell('Title	', value.title)
-		t.cell('Description	', value.body)
-		t.newRow()
-		bot.reply(message, t.toString());
-	});
-	// var pull_req = JSON.parse(getPullRequest().interceptors[0].body);
-	// var t = new Table
-	// t.cell('Id', pull_req.id)
-	// t.cell('State	', pull_req.state)
-	// t.cell('Title	', pull_req.title)
-	// t.cell('Description	', pull_req.body)
-	// t.newRow()
-    // bot.reply(message, t.toString());
+	var branchName = ""
+	var pull_req = github.getPullRequest(owner, repo, number, branchName)
+	var t = new Table
+	t.cell('Id', pull_req.id)
+	t.cell('State	', pull_req.state)
+	t.cell('Title	', pull_req.title)
+	t.cell('Description	', pull_req.body)
+	t.newRow()
+    bot.reply(message, t.toString());
 });
 
 controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
 { 	var repo = "Hello-World"
 	var owner = "octat"
-	var pull_reqs = github.listPullRequests(owner, repo)
+	var branchName = ""
+	var isOpen = true
+	var pull_reqs = github.getPullRequests(owner, repo, isOpen, branchName)
 	pull_reqs.then(function(value){
 		var result = [];
 		for(i=0;i<value.length;i++){
 			result.push({Id:value[i].id,title:value[i].title});
 		}
-		var t = new Table
-		result.forEach(function(req) {
-		t.cell('Id', req.Id)
-		t.cell('Title	', req.title)
-		t.newRow()
-		})
-		bot.reply(message, t.toString());
-	});
-	// var result = [];
-	// var pull_reqs = JSON.parse(listPullRequests().interceptors[0].body);
-	// for(i=0;i<pull_reqs.length;i++){
-	  // result.push({Id:pull_reqs[i].id,title:pull_reqs[i].title});
-	// }
-	// var t = new Table
+	var result = [];
+	for(i=0;i<pull_reqs.length;i++){
+	  result.push({Id:pull_reqs[i].id,title:pull_reqs[i].title});
+	}
+	var t = new Table
 
-	// result.forEach(function(req) {
-	// t.cell('Id', req.Id)
-	// t.cell('Title	', req.title)
-	// t.newRow()
-	// })
-  // bot.reply(message, t.toString());
+	result.forEach(function(req) {
+	t.cell('Id', req.Id)
+	t.cell('Title	', req.title)
+	t.newRow()
+	})
+    bot.reply(message, t.toString());
 });
 
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
