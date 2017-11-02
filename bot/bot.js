@@ -4,6 +4,8 @@ var nock = require("nock")
 var Table = require('easy-table')
 // Load mock data
 var data = require("./mock.json")
+var Promise = require("bluebird");
+var github = require("./github.js");
 
 if (!process.env.SLACKTOKEN) {
 	console.log('Error: Specify token in environment');
@@ -43,6 +45,7 @@ controller.hears('Get pull request 1 for octat for repo Hello-World',['mention',
 
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
 controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
+  // TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
   console.log(message);
   console.log('inside pr merge');
   var prnumber = 11;
@@ -59,6 +62,7 @@ controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'd
   }
   bot.reply(message, reply);
 });
+
 
 controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
 { 	var repo = "Hello-World"
