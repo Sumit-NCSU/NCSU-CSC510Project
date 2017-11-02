@@ -72,6 +72,28 @@ function getPullRequest(owner, repo, number )
 	});
 }
 
+function getPullRequestFiles(owner, repo, number )
+{
+	var options = {
+		url: urlRoot + "/repos/" + owner +"/" + repo + "/pulls/"+number+"/files",
+		method: 'GET',
+		headers: {
+			"content-type": "application/json",
+			"Authorization": token
+		}
+	};
+
+	return new Promise(function (resolve, reject) 
+	{
+		// Send a http request to url and specify a callback that will be called upon its return.
+		request(options, function (error, response, body) 
+		{
+			var obj = JSON.parse(body);
+			resolve(obj);
+		});
+	});
+}
+
 exports.getRepos = getRepos;
 exports.getPullRequest = getPullRequest;
 exports.listPullRequests = listPullRequests;
