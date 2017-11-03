@@ -205,6 +205,75 @@ function mergePullRequest(owner, repo, number) {
 	});	
 }
 
+function getContributors(owner, repo)
+{
+	if (!process.env.GITTOKEN) {
+		console.log('Error: Specify Git token in environment variable: GITTOKEN');
+		return false;
+	}
+	
+	var options = {
+		url: urlRoot + '/repos/' + owner + "/" + repo + "/contributors",
+		method: 'GET',
+		headers: {
+			"User-Agent": "CiCdBot",
+			"content-type": "application/json",
+			"Authorization": "token " + process.env.GITTOKEN,
+		}
+	};
+
+	var contributors=[];
+	// Send a http request to url and specify a callback that will be called upon its return.
+	request(options, function (error, response, body) {
+		var obj = JSON.parse(body);
+		
+		if (obj != null) {
+			for(var i = 0; i < obj.length; i++) {
+				console.log(obj[i].login);
+				contributors.push(obj[i]);
+			}
+		} else {
+			console.log('No Contributors found');
+			return false;
+		}
+	});
+	return contributors;	
+}
+
+function getBranches(owner, repo)
+{
+	if (!process.env.GITTOKEN) {
+		console.log('Error: Specify Git token in environment variable: GITTOKEN');
+		return false;
+	}
+	
+	var options = {
+		url: urlRoot + '/repos/' + owner + "/" + repo + "/branches",
+		method: 'GET',
+		headers: {
+			"User-Agent": "CiCdBot",
+			"content-type": "application/json",
+			"Authorization": "token " + process.env.GITTOKEN,
+		}
+	};
+
+	var branches=[];
+	// Send a http request to url and specify a callback that will be called upon its return.
+	request(options, function (error, response, body) {
+		var obj = JSON.parse(body);
+		if (obj != null) {
+			for(var i = 0; i < obj.length; i++) {
+				console.log(obj[i].name);
+				branches.push(obj[i]);
+			}
+		} else {
+			console.log('No branches found');
+			return false;
+		}
+	});
+	return branches;	
+}
+
 
 //getPullRequests(user,repoName);
 
