@@ -4,7 +4,7 @@ var Table = require('easy-table')
 // Load mock data
 // var data = require("./mock.json")
 var Promise = require("bluebird");
-var github = require("./git.js");
+var github = require("./gitinterface.js");
 
 if (!process.env.SLACKTOKEN) {
 	console.log('Error: Specify Git token in environment variable: SLACKTOKEN');
@@ -19,12 +19,12 @@ var controller = Botkit.slackbot({
 var bot = controller.spawn({
 	token : process.env.SLACKTOKEN,
 }).startRTM()
-// 234420262803.266186861744 : Id
-// 94b5d076ac6c2394850029b1b1cbec66 : secret
+
+// TODO: remove hardcoded tokens later.
 controller.configureSlackApp({
-  clientId: process.env.clientId,
-  clientSecret: process.env.clientSecret,
-  redirectUri: 'http://localhost:3002',
+  clientId: "234420262803.266365986402",//clientid
+  clientSecret: "0aa2f397cb34ce5ce8867bcb3c9379fa",//clientsecret
+  redirectUri: 'https://srivassumit.lib.id/cibot@dev/auth/',//oauth
   scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
 });
 
@@ -82,7 +82,7 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 	})
     bot.reply(message, t.toString());
 });
-
+});
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
 controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
   // TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
@@ -112,4 +112,3 @@ controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_ment
    channel: 'selenium-test'
     });
 });
-
