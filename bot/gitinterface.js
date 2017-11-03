@@ -173,7 +173,8 @@ function getRepos(owner)
 }
 
 
-function mergePullRequest(owner, repo, number) {
+function mergePullRequest(owner, repo, number, callback) {
+	console.log('im in gitintergace');
 	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
@@ -196,11 +197,12 @@ function mergePullRequest(owner, repo, number) {
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		//console.log(obj);
 		
 		if (obj != null) {
-			console.log(obj.message);
-			return obj.message;
+			console.log('msg sent by git: '+JSON.stringify(obj.message))
+			return callback(obj.message);
+		} else {
+			return callback(null);
 		}
 	});	
 }
