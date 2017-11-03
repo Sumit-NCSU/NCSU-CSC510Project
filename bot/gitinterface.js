@@ -279,7 +279,9 @@ function getBranches(owner, repo)
 
 //mergePullRequest(user,repoName,3);
 
-// 
+//getBranches(user, repoName);
+
+//getContributors(user, repoName);
 
 exports.getPullRequests = getPullRequests;
 exports.mergePullRequest = mergePullRequest;
