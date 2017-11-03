@@ -83,19 +83,22 @@ controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'd
   // TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
   console.log(message);
   console.log('inside pr merge');
-  var prnumber = 11;
-  var msg = mergePullRequest(prnumber);
-  var adminlist = ["aakarshg", "assinsin", "sebotcicd"];
-  console.log(msg)
+  var prnumber =6;
+  var adminlist = ["aakarshg", "assinsin", "sebotcicd","U6WGAURSQ","rverma5"];
   var reply = '';
-  if (msg.merged  ) {
-    if(adminlist.contains(message.user)){
-    reply = msg.message;
-	  };
-  } else {
-    reply = 'Not able to Merge!';
-  }
-  bot.reply(message, reply);
+  github.mergePullRequest("srivassumit", "SEGitAPI", prnumber, (msg) => {
+	if (msg) {
+		console.log('msg received in bot: ' + msg)
+		if(adminlist.indexOf(message.user)>-1) {
+			reply = msg;
+		} else {
+			reply = "You don't have permission to merge through the bot interface!";
+		}
+	}
+	bot.reply(message, reply);
+  });
+  
+  
 });
 
 
