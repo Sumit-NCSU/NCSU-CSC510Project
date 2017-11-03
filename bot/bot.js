@@ -1,9 +1,8 @@
-
 var Botkit = require('botkit')
 var nock = require("nock")
 var Table = require('easy-table')
 // Load mock data
-var data = require("./mock.json")
+// var data = require("./mock.json")
 var Promise = require("bluebird");
 var github = require("./gitinterface.js");
 
@@ -18,7 +17,7 @@ var controller = Botkit.slackbot({
 
 // connect the bot to a stream of messages
 var bot = controller.spawn({
-	token : process.env.SLACKTOKEN
+	token : process.env.SLACKTOKEN,
 }).startRTM()
 
 // TODO: remove hardcoded tokens later.
@@ -30,16 +29,21 @@ controller.configureSlackApp({
 });
 
 // Greetings
-controller.hears([ 'hi' ], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
+controller.hears([ 'hi','Hello'], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	controller.storage.users.get(message.user, function(err, user) {
     console.log('inside hi');
-			bot.reply(message, 'Hello');
+	bot.reply(message, 'Hello');
 	});
 });
 
 // Details of a particular pull request
 controller.hears('Get pull request 1 for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
-{ 	var repo = "Hello-World"
+{ 	
+	bot.startConversation(message, function(err, convo) {
+		convo.say('Better take this private...')
+		convo.say({ ephemeral: true, text: 'These violent delights have violent ends' })
+	})
+	var repo = "Hello-World"
 	var owner = "octat"
 	var number = 1
 	var branchName = ""
@@ -54,7 +58,8 @@ controller.hears('Get pull request 1 for octat for repo Hello-World',['mention',
 });
 
 controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
-{ 	var repo = "Hello-World"
+{ 	
+	var repo = "Hello-World"
 	var owner = "octat"
 	var branchName = ""
 	var isOpen = true
@@ -85,7 +90,7 @@ controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'd
   console.log('inside pr merge');
   var prnumber = 11;
   var msg = mergePullRequest(prnumber);
-  var adminlist = ["aakarshg", "assinsin", "sebotcicd"];
+  var adminlist = ["aakarshg", "assinsin", "sebotcicd"]; 
   console.log(msg)
   var reply = '';
   if (msg.merged  ) {
