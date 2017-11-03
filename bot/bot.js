@@ -5,7 +5,7 @@ var Table = require('easy-table')
 // Load mock data
 var data = require("./mock.json")
 var Promise = require("bluebird");
-var github = require("./git.js");
+var github = require("./gitinterface.js");
 
 if (!process.env.SLACKTOKEN) {
 	console.log('Error: Specify Git token in environment variable: SLACKTOKEN');
@@ -76,7 +76,7 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 	})
     bot.reply(message, t.toString());
 });
-
+});
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
 controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
   // TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
@@ -106,4 +106,3 @@ controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_ment
    channel: 'selenium-test'
     });
 });
-
