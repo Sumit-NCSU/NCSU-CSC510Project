@@ -21,10 +21,11 @@ var bot = controller.spawn({
 	token : process.env.SLACKTOKEN
 }).startRTM()
 
+// TODO: remove hardcoded tokens later.
 controller.configureSlackApp({
-  clientId: process.env.clientId,
-  clientSecret: process.env.clientSecret,
-  redirectUri: 'http://localhost:3002',
+  clientId: "234420262803.266365986402",//clientid
+  clientSecret: "0aa2f397cb34ce5ce8867bcb3c9379fa",//clientsecret
+  redirectUri: 'https://srivassumit.lib.id/cibot@dev/auth/',//oauth
   scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
 });
 
