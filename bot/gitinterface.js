@@ -274,6 +274,38 @@ function getBranches(owner, repo)
 	return branches;	
 }
 
+function getPermission(owner, repo, username)
+{
+	if (!process.env.GITTOKEN) {
+		console.log('Error: Specify Git token in environment variable: GITTOKEN');
+		return false;
+	}
+	
+	var options = {
+		url: urlRoot + '/repos/' + owner + "/" + repo + "/collaborators/" + username,
+		method: 'GET',
+		headers: {
+			"User-Agent": "CiCdBot",
+			"content-type": "application/json",
+			"Authorization": "token " + process.env.GITTOKEN,
+		}
+	};
+
+	var permission;
+	// Send a http request to url and specify a callback that will be called upon its return.
+	request(options, function (error, response, body) {
+		var obj = JSON.parse(body);
+		if (obj != null) {
+				console.log(obj.user.login);
+				permission = obj.permission;
+		} else {
+			console.log('No username found');
+			return false;
+		}
+	});
+	return permission;	
+}
+
 
 //getPullRequests(user,repoName);
 
