@@ -19,13 +19,8 @@ var controller = Botkit.slackbot({
 var bot = controller.spawn({
 	token : process.env.SLACKTOKEN,
 }).startRTM()
-<<<<<<< HEAD
-// 234420262803.266186861744 : Id
-// 94b5d076ac6c2394850029b1b1cbec66 : secret
-=======
 
 // TODO: remove hardcoded tokens later.
->>>>>>> 62b721655ea5d67db5c02b20fc9062b07347a4af
 controller.configureSlackApp({
   clientId: "234420262803.266365986402",//clientid
   clientSecret: "0aa2f397cb34ce5ce8867bcb3c9379fa",//clientsecret
