@@ -77,7 +77,7 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 	})
     bot.reply(message, t.toString());
 });
-});
+
 
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
 controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
