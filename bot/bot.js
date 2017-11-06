@@ -94,10 +94,10 @@ controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'd
   console.log(message);
   console.log('inside pr merge');
   var prnumber =6;
-  var adminlist = ["aakarshg", "assinsin", "sebotcicd","U6WGAURSQ","rverma5"];
   var msg = mergePullRequest(prnumber);
  console.log(msg)
-  var reply = '';
+  var adminlist = ["aakarshg", "assinsin", "sebotcicd","U6WGAURSQ","U6VUKPYCR"];
+ var reply = '';
   github.mergePullRequest("srivassumit", "SEGitAPI", prnumber, (msg) => {
 	if (msg) {
 		console.log('msg received in bot: ' + msg)
