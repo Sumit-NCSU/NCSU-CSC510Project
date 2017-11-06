@@ -64,11 +64,6 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 	var branchName = ""
 	var isOpen = true
 	var pull_reqs = github.getPullRequests(owner, repo, isOpen, branchName)
-	pull_reqs.then(function(value){
-		var result = [];
-		for(i=0;i<value.length;i++){
-			result.push({Id:value[i].id,title:value[i].title});
-		}
 	var result = [];
 	for(i=0;i<pull_reqs.length;i++){
 	  result.push({Id:pull_reqs[i].id,title:pull_reqs[i].title});
@@ -83,6 +78,7 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
     bot.reply(message, t.toString());
 });
 });
+
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
 controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
   // TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
