@@ -45,7 +45,7 @@ function getPullRequests(owner, repo, isOpen, branchName, callback) {
 	var pullRequests=[];
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
-		var obj = JSON.parse(body);		
+		var obj = JSON.parse(body);
 		
 		if (obj != null) {
 			console.log('GitInterface: Pull Requests found: ');
