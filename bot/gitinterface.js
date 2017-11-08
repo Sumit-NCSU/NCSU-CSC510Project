@@ -12,7 +12,7 @@ var repoName = "SEGitAPI";
  * @param {*} isOpen [optional] defaults to true
  * @param {*} branchName [optional] defaults to master
  */
-function getPullRequests(owner, repo, isOpen, branchName) {
+function getPullRequests(owner, repo, isOpen, branchName, callback) {
 	// Default values for optional variables
 	isOpen = (typeof isOpen !== 'undefined') ?  isOpen : true;
 	branchName = (typeof branchName !== 'undefined') ?  branchName : 'master';
@@ -20,7 +20,7 @@ function getPullRequests(owner, repo, isOpen, branchName) {
 	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
+		return callback(false);
 	}
 
 	var state;
@@ -56,14 +56,14 @@ function getPullRequests(owner, repo, isOpen, branchName) {
 			}
 		} else {
 			console.log('No Pull requests found');
-			return false;
+			return callback(false);
 		}
 	});
-	return pullRequests;
+	return callback(pullRequests);
 }
 
-function getPullRequest(owner, repo, number, branchName )
-{	// Check if the Git token is set.
+function getPullRequest(owner, repo, number, branchName) {
+	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
@@ -99,8 +99,7 @@ function getPullRequest(owner, repo, number, branchName )
 	return pullRequest;
 }
 
-function getPullRequestFiles(owner, repo, number, branchName )
-{
+function getPullRequestFiles(owner, repo, number, branchName) {
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
@@ -137,8 +136,7 @@ function getPullRequestFiles(owner, repo, number, branchName )
 	
 }
 
-function getRepos(owner)
-{
+function getRepos(owner) {
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
@@ -171,7 +169,6 @@ function getRepos(owner)
 	return repos;
 	
 }
-
 
 function mergePullRequest(owner, repo, number, callback) {
 	console.log('im in gitintergace');
