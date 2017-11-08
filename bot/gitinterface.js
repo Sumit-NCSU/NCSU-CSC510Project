@@ -12,7 +12,7 @@ var repoName = "SEGitAPI";
  * @param {*} isOpen [optional] defaults to true
  * @param {*} branchName [optional] defaults to master
  */
-function getPullRequests(owner, repo, isOpen, branchName) {
+function getPullRequests(owner, repo, isOpen, branchName, callback) {
 	// Default values for optional variables
 	isOpen = (typeof isOpen !== 'undefined') ?  isOpen : true;
 	branchName = (typeof branchName !== 'undefined') ?  branchName : 'master';
@@ -20,7 +20,7 @@ function getPullRequests(owner, repo, isOpen, branchName) {
 	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
+		return callback(false);
 	}
 
 	var state;
@@ -46,24 +46,25 @@ function getPullRequests(owner, repo, isOpen, branchName) {
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		//console.log(obj);
 		
 		if (obj != null) {
+			console.log('GitInterface: Pull Requests found: ');
 			for(var i = 0; i < obj.length; i++) {
 				var title = obj[i].title;
-				console.log("Pull Request Name: " + title);
+				console.log("\tPull Request Name: " + title);
 				pullRequests.push(obj[i]);
 			}
+			console.log('GitInterface: Sending back ' + pullRequests.length + ' pull requests');
+			return callback(pullRequests);
 		} else {
-			console.log('No Pull requests found');
-			return false;
+			console.log('GitInterface: No Pull requests found');
+			return callback(false);
 		}
 	});
-	return pullRequests;
 }
 
-function getPullRequest(owner, repo, number, branchName )
-{	// Check if the Git token is set.
+function getPullRequest(owner, repo, number, branchName) {
+	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
@@ -99,8 +100,7 @@ function getPullRequest(owner, repo, number, branchName )
 	return pullRequest;
 }
 
-function getPullRequestFiles(owner, repo, number, branchName )
-{
+function getPullRequestFiles(owner, repo, number, branchName) {
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
@@ -137,8 +137,7 @@ function getPullRequestFiles(owner, repo, number, branchName )
 	
 }
 
-function getRepos(owner)
-{
+function getRepos(owner) {
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
@@ -171,7 +170,6 @@ function getRepos(owner)
 	return repos;
 	
 }
-
 
 function mergePullRequest(owner, repo, number, callback) {
 	console.log('im in gitintergace');

@@ -1,8 +1,6 @@
 var Botkit = require('botkit')
 var nock = require("nock")
 var Table = require('easy-table')
-// Load mock data
-// var data = require("./mock.json")
 var Promise = require("bluebird");
 var github = require("./gitinterface.js");
 
@@ -17,7 +15,7 @@ var controller = Botkit.slackbot({
 
 // connect the bot to a stream of messages
 var bot = controller.spawn({
-	token : process.env.SLACKTOKEN,
+	token : process.env.SLACKTOKEN
 }).startRTM()
 
 // TODO: remove hardcoded tokens later.
@@ -29,16 +27,38 @@ controller.configureSlackApp({
 });
 
 // Greetings
-controller.hears([ 'hi','Hello'], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
+controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	controller.storage.users.get(message.user, function(err, user) {
-    console.log('inside hi');
-	bot.reply(message, 'Hello');
+    	console.log('inside hi');
+		bot.reply(message, 'Hello');
 	});
 });
 
-// Details of a particular pull request
-controller.hears('Get pull request 1 for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
-{ 	
+//TODO: generalize this, implement drop down list in this.
+controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) {
+	var repo = "SEGitAPI"
+	var owner = "srivassumit"
+	var branchName = "master"
+	var isOpen = true
+	github.getPullRequests(owner, repo, isOpen, branchName, (value) => {
+		console.log('Bot: Received ' + value.length + ' Pull requests');
+		var result = [];
+		for(i=0;i<value.length;i++){
+			result.push({Id:value[i].id,title:value[i].title});
+		}
+		var t = new Table
+		result.forEach(function(req) {
+			t.cell('Id                 \t\t', req.Id)
+			t.cell('Title	', req.title)
+			t.newRow()
+		})
+    	bot.reply(message, t.toString());
+	});
+});
+
+//TODO: generalize this, something like this should also be called when user selects a PR from the drop down for all PRs.
+controller.hears('Get pull request 1 for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) { 	
+	//TODO: remove this?
 	bot.startConversation(message, function(err, convo) {
 		convo.say('Better take this private...')
 		convo.say({ ephemeral: true, text: 'These violent delights have violent ends' })
@@ -56,58 +76,32 @@ controller.hears('Get pull request 1 for octat for repo Hello-World',['mention',
 	t.newRow()
     bot.reply(message, t.toString());
 });
-
-controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
-{ 	
-	var repo = "Hello-World"
-	var owner = "octat"
-	var branchName = ""
-	var isOpen = true
-	var pull_reqs = github.getPullRequests(owner, repo, isOpen, branchName)
-	var result = [];
-	for(i=0;i<pull_reqs.length;i++){
-	  result.push({Id:pull_reqs[i].id,title:pull_reqs[i].title});
-	}
-	var t = new Table
-
-	result.forEach(function(req) {
-	t.cell('Id', req.Id)
-	t.cell('Title	', req.title)
-	t.newRow()
-	})
-    bot.reply(message, t.toString());
-});
-
-
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
+//TODO: generalize this, pull pr number etc. from message.
 controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
-  // TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
-  console.log(message);
-  console.log('inside pr merge');
-  var prnumber =6;
-  var adminlist = ["aakarshg", "assinsin", "sebotcicd","U6WGAURSQ","U6VUKPYCR"];
-  var reply = '';
-  github.mergePullRequest("srivassumit", "SEGitAPI", prnumber, (msg) => {
+	// TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
+	console.log(message);
+	console.log('inside pr merge');
+	var prnumber =4;
+	var adminlist = ["aakarshg", "assinsin", "sebotcicd","U6WGAURSQ","U6VUKPYCR"];
+	var reply = '';
+	github.mergePullRequest("srivassumit", "SEGitAPI", prnumber, (msg) => {
 	if (msg) {
 		console.log('msg received in bot: ' + msg)
-		if(adminlist.indexOf(message.user)>-1) {
+		//check if user is allowed to merge via the bot.
+		if(adminlist.indexOf(message.user) > -1) {
 			reply = msg;
 		} else {
 			reply = "You don't have permission to merge through the bot interface!";
 		}
 	}
 	bot.reply(message, reply);
-  });
-  
-  
+	});
 });
 
-
+//TODO: remove this? This was used for the mock phase?
 // Getting the details from jenkins and this is where bot is supposed to hit git's rest api to get all details.
-controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_mention','direct_message'], function(bot,message) 
-{    console.log("Got the message");
- bot.say({
-   text: "[sample/samplerepo] Pull request submitted by dummy #9 DummyPRTitle",
-   channel: 'selenium-test'
-    });
+controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
+	console.log("Got the message");
+	bot.say({text: "[sample/samplerepo] Pull request submitted by dummy #9 DummyPRTitle", channel: 'selenium-test'});
 });
