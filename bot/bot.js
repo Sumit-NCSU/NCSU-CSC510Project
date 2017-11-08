@@ -63,10 +63,10 @@ controller.hears('Get pull request 1 for octat for repo Hello-World',['mention',
 		convo.say('Better take this private...')
 		convo.say({ ephemeral: true, text: 'These violent delights have violent ends' })
 	})
-	var repo = "Hello-World"
-	var owner = "octat"
-	var number = 1
-	var branchName = ""
+	var repo = "Hello-World" // extract this from user message/intent/context?
+	var owner = "octat" // extract this from user message/intent/context?
+	var number = 1 // extract this from user message/intent/context?
+	var branchName = "" // extract this from user message/intent/context?
 	var pull_req = github.getPullRequest(owner, repo, number, branchName)
 	var t = new Table
 	t.cell('Id', pull_req.id)
@@ -82,21 +82,24 @@ controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'd
 	// TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
 	console.log(message);
 	console.log('inside pr merge');
-	var prnumber =4;
+	var repo = "SEGitAPI" // extract this from user message/intent/context?
+	var owner = "srivassumit"// extract this from user message/intent/context?
+	var prnumber = 10;// extract this from user message
 	var adminlist = ["aakarshg", "assinsin", "sebotcicd","U6WGAURSQ","U6VUKPYCR"];
 	var reply = '';
-	github.mergePullRequest("srivassumit", "SEGitAPI", prnumber, (msg) => {
-	if (msg) {
-		console.log('msg received in bot: ' + msg)
-		//check if user is allowed to merge via the bot.
-		if(adminlist.indexOf(message.user) > -1) {
-			reply = msg;
-		} else {
-			reply = "You don't have permission to merge through the bot interface!";
-		}
+	//check admin list before actually merging
+	if(adminlist.indexOf(message.user) > -1) {
+		github.mergePullRequest(owner, repo, prnumber, (msg) => {
+			if (msg) {
+				console.log('msg received in bot: ' + msg)
+				reply = msg;
+				bot.reply(message, reply);
+			}
+		});
+	} else {
+		reply = "You don't have permission to merge through the bot interface!";
+		bot.reply(message, reply);
 	}
-	bot.reply(message, reply);
-	});
 });
 
 //TODO: remove this? This was used for the mock phase?
