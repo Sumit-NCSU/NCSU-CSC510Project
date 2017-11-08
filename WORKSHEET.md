@@ -19,9 +19,9 @@ We are tracking our daily tasks and progress for milestone 2 using trello which 
 
 | Deliverable                    | Item/Status |  Issues/Tasks
 | ------------------------------ | ----------- |  --------------------
-| Implement Use Case 1           | In Progress | [#40](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/40), [#57](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/57)
+| Implement Use Case 1           | In Progress | [#40](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/40), [#57](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/57), [#85](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/85)
 | Implement Use Case 2           | In Progress | [#58](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/58)
-| Implement Use Case 3           | In Progress | [#59](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/59)
+| Implement Use Case 3           | In Progress | [#59](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/59), [#84](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/84)
 | Identify and handle edge cases | Incomplete  | [#60](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/60)
 | Streamline bot interaction     | In Progress | [#61](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/61), [#69](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/69)
 | Screencast                     | Incomplete  | [#62](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/62)
