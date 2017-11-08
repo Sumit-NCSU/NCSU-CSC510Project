@@ -45,21 +45,22 @@ function getPullRequests(owner, repo, isOpen, branchName, callback) {
 	var pullRequests=[];
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
-		var obj = JSON.parse(body);
-		//console.log(obj);
+		var obj = JSON.parse(body);		
 		
 		if (obj != null) {
+			console.log('GitInterface: Pull Requests found: ');
 			for(var i = 0; i < obj.length; i++) {
 				var title = obj[i].title;
-				console.log("Pull Request Name: " + title);
+				console.log("\tPull Request Name: " + title);
 				pullRequests.push(obj[i]);
 			}
+			console.log('GitInterface: Sending back ' + pullRequests.length + ' pull requests');
+			return callback(pullRequests);
 		} else {
-			console.log('No Pull requests found');
+			console.log('GitInterface: No Pull requests found');
 			return callback(false);
 		}
 	});
-	return callback(pullRequests);
 }
 
 function getPullRequest(owner, repo, number, branchName) {

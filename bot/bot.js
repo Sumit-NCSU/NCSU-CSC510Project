@@ -63,13 +63,14 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 	var branchName = "master"
 	var isOpen = true
 	github.getPullRequests(owner, repo, isOpen, branchName, (value) => {
+		console.log('Bot: Received ' + value.length + ' Pull requests');
 		var result = [];
 		for(i=0;i<value.length;i++){
 			result.push({Id:value[i].id,title:value[i].title});
 		}
 		var t = new Table
 		result.forEach(function(req) {
-			t.cell('Id', req.Id)
+			t.cell('Id                 \t\t', req.Id)
 			t.cell('Title	', req.title)
 			t.newRow()
 		})
