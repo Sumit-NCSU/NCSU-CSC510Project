@@ -34,29 +34,7 @@ controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], func
 	});
 });
 
-//TODO: generalize this
-controller.hears('Get pull request 1 for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) 
-{ 	
-	//TODO: remove this?
-	bot.startConversation(message, function(err, convo) {
-		convo.say('Better take this private...')
-		convo.say({ ephemeral: true, text: 'These violent delights have violent ends' })
-	})
-	var repo = "Hello-World"
-	var owner = "octat"
-	var number = 1
-	var branchName = ""
-	var pull_req = github.getPullRequest(owner, repo, number, branchName)
-	var t = new Table
-	t.cell('Id', pull_req.id)
-	t.cell('State	', pull_req.state)
-	t.cell('Title	', pull_req.title)
-	t.cell('Description	', pull_req.body)
-	t.newRow()
-    bot.reply(message, t.toString());
-});
-
-//TODO: generalize this
+//TODO: generalize this, implement drop down list in this.
 controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) {
 	var repo = "SEGitAPI"
 	var owner = "srivassumit"
@@ -78,14 +56,34 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 	});
 });
 
+//TODO: generalize this, something like this should also be called when user selects a PR from the drop down for all PRs.
+controller.hears('Get pull request 1 for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) { 	
+	//TODO: remove this?
+	bot.startConversation(message, function(err, convo) {
+		convo.say('Better take this private...')
+		convo.say({ ephemeral: true, text: 'These violent delights have violent ends' })
+	})
+	var repo = "Hello-World"
+	var owner = "octat"
+	var number = 1
+	var branchName = ""
+	var pull_req = github.getPullRequest(owner, repo, number, branchName)
+	var t = new Table
+	t.cell('Id', pull_req.id)
+	t.cell('State	', pull_req.state)
+	t.cell('Title	', pull_req.title)
+	t.cell('Description	', pull_req.body)
+	t.newRow()
+    bot.reply(message, t.toString());
+});
+
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
+//TODO: generalize this, pull pr number etc. from message.
 controller.hears(/\bmerge.*pull.*request.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	// TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
 	console.log(message);
 	console.log('inside pr merge');
-	var prnumber =6;
-	var msg = mergePullRequest(prnumber);
-	console.log(msg)
+	var prnumber =4;
 	var adminlist = ["aakarshg", "assinsin", "sebotcicd","U6WGAURSQ","U6VUKPYCR"];
 	var reply = '';
 	github.mergePullRequest("srivassumit", "SEGitAPI", prnumber, (msg) => {
