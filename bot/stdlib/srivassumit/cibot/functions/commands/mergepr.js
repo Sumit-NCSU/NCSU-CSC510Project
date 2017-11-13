@@ -5,7 +5,7 @@ const mergeButton = require('../actions/mergeButton.js');
 /**
 * /mergepr
 *
-*   Command for whowing the Merge PR buttons.
+*   Command for showing the Merge PR buttons.
 *
 *   See https://api.slack.com/slash-commands for more details.
 *
