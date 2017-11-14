@@ -1,3 +1,8 @@
+var express = require('express')
+var request = require('request')
+var bodyParser = require('body-parser')
+var app = express()
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const lib = require('lib')({token: process.env.STDLIB_TOKEN});
 
 /**
@@ -33,19 +38,14 @@ module.exports = (user, channel, text = '', command = {}, botToken = null, callb
 				"style":"primary",
 				"type": "button",
 				"value": "list",
-				"confirm": {
-				  "title": "Confirm list",
-				  "text": "Are you sure?",
-				  "ok_text": "Yes",
-				  "dismiss_text": "No"
-				}
+				
 			  },
 			  {
-				"name": "DontList",
-				"text": "Don't List",
+				"name": "Dontlist",
+				"text": "Do not List",
 				"style":"danger",
 				"type": "button",
-				"value": "DontList"
+				"value": "Dontlist"
 			  }
 			]
 		  }
