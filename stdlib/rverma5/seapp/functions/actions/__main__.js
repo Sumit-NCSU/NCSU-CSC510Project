@@ -21,7 +21,7 @@ module.exports = (context, callback) => {
 
   let params = context.params;
   let action;
-
+  console.log("In action handler function")
   if (params.payload) {
     try {
       action = JSON.parse(params.payload);
@@ -55,19 +55,21 @@ module.exports = (context, callback) => {
   }
 
   let name = action.actions[0].name;
-
+  console.log("Checking the name")
+  console.log(name)
   getBotToken(action.team.id, (err, botToken) => {
 
     if (err) {
       callback(err);
     }
-
+    
     lib[`${context.service.identifier}.actions.${name}`](
       {
         user: action.user.id,
         channel: action.channel.id,
         action: action,
         botToken: botToken
+        
       },
       (err, result) => {
         if (err) {
