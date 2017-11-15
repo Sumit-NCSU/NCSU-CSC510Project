@@ -18,6 +18,7 @@ class EventCache {
     this.ttl = ttl || 60000;
   }
 
+  // Refresh cache when duration is more than time to live
   refresh() {
     let t = new Date().valueOf();
     let cache = this.cache;
@@ -38,6 +39,7 @@ class EventCache {
     return cache;
   }
 
+  // Adding the event with current timestamp
   add(event, id) {
     let cache = this.refresh();
     if (cache[id]) {
