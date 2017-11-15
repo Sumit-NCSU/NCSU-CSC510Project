@@ -20,10 +20,9 @@ var bot = controller.spawn({
 	token : process.env.SLACKTOKEN
 }).startRTM()
 
-// TODO: remove hardcoded tokens later.
 controller.configureSlackApp({
-  clientId: "234420262803.266365986402",//clientid
-  clientSecret: "0aa2f397cb34ce5ce8867bcb3c9379fa",//clientsecret
+  clientId: "<<CLIENT_ID>>",//clientid
+  clientSecret: "<<CLIENT_SECRET",//clientsecret
   redirectUri: 'https://srivassumit.lib.id/cibot@dev/auth/',//oauth
   scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
 });
@@ -57,7 +56,6 @@ controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_mes
 	}
 });
 
-//TODO: generalize this, implement drop down list in this.
 controller.hears(/\bget.*requests.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	// bot says: Get pull requests for octat for repo Hello-World
 	/*
@@ -86,7 +84,6 @@ controller.hears(/\bget.*requests.*\b/,['mention', 'direct_mention','direct_mess
 
 });
 
-//TODO: generalize this, something like this should also be called when user selects a PR from the drop down for all PRs.
 controller.hears(/\bget.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	// let the bot say: Get pull request 1 for octat for repo Hello-World
 	//TODO: remove this?
@@ -112,11 +109,9 @@ controller.hears(/\bget.*request.*\b/,['mention', 'direct_mention','direct_messa
 
 });
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
-//TODO: generalize this, pull pr number etc. from message.
 
 controller.hears(/\bmerge.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	// old regex: \bmerge.*pull.*request.*\b
-	// TODO: Aakarsh to do the Jenkins integration for merging request. U can put your code here fro merging pull request.
 	console.log(message);
 	console.log('inside pr merge');
 	var repo = "serverprovision" // extract this from user message/intent/context?
@@ -151,7 +146,6 @@ else{
 	}
 });
 
-//TODO: remove this? This was used for the mock phase?
 // Getting the details from jenkins and this is where bot is supposed to hit git's rest api to get all details.
 controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	console.log("Got the message");
