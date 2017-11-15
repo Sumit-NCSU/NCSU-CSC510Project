@@ -24,4 +24,4 @@ We are tracking our daily tasks and progress for milestone 2 using trello which 
 | Implement Use Case 3           | Completed | [#59](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/59), [#84](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/84)
 | Identify and handle edge cases | Completed  | [#60](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/60)
 | Streamline bot interaction     | Completed | [#61](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/61), [#69](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/69)
-| Screencast                     | In Progress  | [#62](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/62)
+| Screencast                     | Completed  | [#62](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/62)
