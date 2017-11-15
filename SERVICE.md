@@ -35,9 +35,14 @@ The limitation here is that the bot can only merge oull pull requests which are 
 
 
 ## Identifying and handling Edge cases
-Edge Case1: The code is not merged until it passes all the checks.  
-Edge Case2: If the user is not in the admin list, he/she cannot merge any pull requests.  
-Edge Case3: Bot replies with error messages whenever the information given to it is not complete.  
+
+* Edge Case1: The code is not merged until it passes all the checks. </br>
+  To handle this we have created a function, which will check and iterate through all the edge cases. If all the edge cases are passed, then only it will merge the pull request.</br>
+* Edge Case2: If the user is not in the admin list, he/she cannot merge any pull requests.</br>
+  To handle this we have created a function, which has a list of all the admin members and only they are allowed to merge on a repository.</br>
+* Edge Case3: Bot replies with error messages whenever the information given to it is not complete. </br>
+  
+
 ## Streamlining the bot interaction
 
 ## Task Tracking
