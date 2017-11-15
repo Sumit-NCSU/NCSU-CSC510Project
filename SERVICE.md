@@ -36,14 +36,22 @@ The limitation here is that the bot can only merge oull pull requests which are 
 
 ## Identifying and handling Edge cases
 
-* Edge Case1: The code is not merged until it passes all the checks. </br>
+* Edge Case1: Bot replies with error messages whenever the information given to it is not complete. </br>
+  To handle this, we have set our bot to reply with error message. For example, if a wrong PULL REQUEST Number is entered, it would throw an error that this PR Number doesn't exist.
+
+* Edge Case2: The code is not merged until it passes all the checks. </br>
   To handle this we have created a function, which will check and iterate through all the edge cases. If all the edge cases are passed, then only it will merge the pull request.</br>
-* Edge Case2: If the user is not in the admin list, he/she cannot merge any pull requests.</br>
+
+* Edge Case3: If the user is not in the admin list, he/she cannot merge any pull requests.</br>
   To handle this we have created a function, which has a list of all the admin members and only they are allowed to merge on a repository.</br>
-* Edge Case3: Bot replies with error messages whenever the information given to it is not complete. </br>
-  
+
 
 ## Streamlining the bot interaction
+
+When user requests a pull request, bot displays the details of the selected pull request and ask if the user wants to merge the pull request.</br>
+![Screenshot](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone2/media/SEAPPInteractiveButtons.png)
+
+Currently we are implementing to integrate drop down list with slack app.
 
 ## Task Tracking
 
