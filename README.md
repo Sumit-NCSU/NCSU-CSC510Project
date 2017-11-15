@@ -32,5 +32,9 @@ Youtube link for [UseCase Screencast](https://youtu.be/Aar2CXXPN_8)</br>
 Youtube link for [SeleniumTest Screencast](https://youtu.be/xW2NwHLRoYU)
 
 
+## Milestone: Service
+
+Please check the branch [milestone2](https://github.ncsu.edu/ssrivas8/CSC510Project/tree/milestone2) 
+
 
 
