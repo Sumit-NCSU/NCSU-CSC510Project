@@ -56,7 +56,7 @@ The limitation here is that the bot can only merge oull pull requests which are 
 When user requests a pull request, bot displays the details of the selected pull request and ask if the user wants to merge the pull request.</br>
 ![Screenshot](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone2/media/SEAPPInteractiveButtons.png)
 
-Currently we are implementing to integrate drop down list with slack app.
+Currently we are streamlining the integration of drop down list into the slack app.
 
 ## Task Tracking
 
