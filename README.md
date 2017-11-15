@@ -34,6 +34,7 @@ Youtube link for [SeleniumTest Screencast](https://youtu.be/xW2NwHLRoYU)
 
 ## Milestone: Service
 
+[Service](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone2/SERVICE.md) 
 Please check the branch [milestone2](https://github.ncsu.edu/ssrivas8/CSC510Project/tree/milestone2) 
 
 
