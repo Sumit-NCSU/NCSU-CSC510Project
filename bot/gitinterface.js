@@ -63,6 +63,9 @@ function getPullRequests(owner, repo, isOpen, branchName, callback) {
 	});
 }
 
+/*
+* Function to get a specific pull request
+*/
 function getPullRequest(owner, repo, number, branchName) {
 	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
@@ -100,6 +103,9 @@ function getPullRequest(owner, repo, number, branchName) {
 	return pullRequest;
 }
 
+/*
+* Function to get all pull request files
+*/
 function getPullRequestFiles(owner, repo, number, branchName) {
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
@@ -137,6 +143,9 @@ function getPullRequestFiles(owner, repo, number, branchName) {
 	
 }
 
+/*
+* Function to get all the repos for a user
+*/
 function getRepos(owner) {
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
@@ -171,6 +180,9 @@ function getRepos(owner) {
 	
 }
 
+/*
+* Function to perform the merge requests
+*/
 function mergePullRequest(owner, repo, number, callback) {
 	console.log('im in gitintergace');
 	// Check if the Git token is set.
@@ -205,6 +217,9 @@ function mergePullRequest(owner, repo, number, callback) {
 	});	
 }
 
+/*
+* Function to get contributors for a repo
+*/
 function getContributors(owner, repo)
 {
 	if (!process.env.GITTOKEN) {
@@ -240,6 +255,9 @@ function getContributors(owner, repo)
 	return contributors;	
 }
 
+/*
+* Function to get branches on a repo
+*/
 function getBranches(owner, repo)
 {
 	if (!process.env.GITTOKEN) {
@@ -274,6 +292,9 @@ function getBranches(owner, repo)
 	return branches;	
 }
 
+/*
+* Function to check for the valid permissions on a repo for a user
+*/
 function getPermission(owner, repo, username)
 {
 	if (!process.env.GITTOKEN) {
