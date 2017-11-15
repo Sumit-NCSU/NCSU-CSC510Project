@@ -1,6 +1,6 @@
-# Task Tracking Worksheet - [Trello](https://trello.com/b/h193q9wx)
+# Task Tracking Worksheet - Trello
 
-## Milestone 1 - [Milestone 1](https://trello.com/b/h193q9wx/milestone-1)
+## Milestone 1 - [Trello Milestone 1](https://trello.com/b/h193q9wx/milestone-1)
 
 We are tracking our daily tasks and progress for milestone 1 using trello which can be found [here](https://trello.com/b/h193q9wx):
 
@@ -13,7 +13,7 @@ We are tracking our daily tasks and progress for milestone 1 using trello which 
 | Screencast         | Completed    | [#31](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/31)
 
 
-## Milestone 2 - [Milestone 2](https://trello.com/b/UfgRVHrf/milestone-2)
+## Milestone 2 - [Trello Milestone 2](https://trello.com/b/UfgRVHrf/milestone-2)
 
 We are tracking our daily tasks and progress for milestone 2 using trello which can be found [here](https://trello.com/b/UfgRVHrf)
 
