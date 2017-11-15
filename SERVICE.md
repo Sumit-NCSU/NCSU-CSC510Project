@@ -2,6 +2,11 @@
 
 ## Use Case #1 Implementation
 
+We have updated use case 1, to now provide users the functionality of issuing a pull request by interacting with slack bot. 
+The user needs to use the keywords `issue pull request` followed by repo as `owner/reponame` and the branchname `branch` and the base branch `base`. We then use Git's Rest api to issue a pull request. The jenkins server is configured and has a 
+cron job that monitors that the repository for any pull requests and runs every 5 minutes. Whenever a pull request is being submitted, it'd trigger the build of the job. If it runs successfully then it would post that all checks have been passed on github. 
+
+
 ## Use Case #2 Implementation
 
 For Use case 2, we implemented the Get functionality using [Git API- get](https://developer.github.com/v3/repos/#get). Using the bot, we fetch parts of thr essage from the user like the owner, repo name, number etc and using these details, called the getPullRequest functionality by sending the following as a JSON message as a GET request to the Git API:
