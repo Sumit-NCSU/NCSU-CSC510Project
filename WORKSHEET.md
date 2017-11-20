@@ -33,8 +33,8 @@ We are tracking our daily tasks and progress for milestone 3 using trello which 
 
 | Deliverable                    | Item/Status |  Issues/Tasks
 | ------------------------------ | ----------- |  --------------------
-| Deployment                     | Incomplete | [#100](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/100), [#102](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/102)
-| Acceptance Testing             | Incomplete | [#101](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/101)
-| Code Inspection                | Incomplete | [#103](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/103), [#84](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/84)
+| Deployment                     | Incomplete  | [#100](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/100), [#102](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/102)
+| Acceptance Testing             | Incomplete  | [#101](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/101)
+| Code Inspection                | Incomplete  | [#103](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/103)
 | Avoid uptime penalties         | Incomplete  | [#105](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/105)
 | Screencast                     | Incomplete  | [#104](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/104)
