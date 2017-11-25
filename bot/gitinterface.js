@@ -361,6 +361,33 @@ function getStatus(owner,repo,ref,callback)
 
 }
 
+function createPullRequest(owner,repo,head,base)
+{
+	var options = {
+		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
+		method: 'POST',
+		headers: {
+			"User-Agent": "EnableIssues",
+			"content-type": "application/json",
+			"Authorization": "token " + process.env.GITTOKEN
+		},
+		json:
+		{
+			"title": "Created by bot from slack",
+			"body": "Please check commit history",
+			"head": head,
+			"base": base
+		}
+
+	};
+	// Send a http request to url and specify a callback that will be called upon its return.
+	request(options, function (error, response, body)
+	{
+		console.log( body );
+
+	});
+	return 1
+}
 //getPullRequests(user,repoName);
 
 //mergePullRequest(user,repoName,3);
@@ -377,3 +404,4 @@ exports.getPullRequest = getPullRequest;
 exports.getPullRequestFiles = getPullRequestFiles;
 exports.getBranches = getBranches;
 exports.getContributors = getContributors;
+exports.createPullRequest = createPullRequest;
