@@ -57,6 +57,7 @@ module.exports = (context, callback) => {
   let name = action.actions[0].name;
   console.log("Checking the name")
   console.log(name)
+  console.log(action)
   getBotToken(action.team.id, (err, botToken) => {
 
     if (err) {

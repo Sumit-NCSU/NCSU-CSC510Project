@@ -25,16 +25,13 @@ module.exports = (user, channel, action = {}, botToken = null, callback) => {
     attachments: [{
       text: 'Try hitting this endpoint again by clicking the button!',
       fallback: 'Can\'t display attachment',
-      callback_id: 'callback_id',
+      callback_id: 'listpr_action',
       actions: [
-        {
-          name: 'example',
-          text: 'Refresh',
-          type: 'button',
-          value: 'value'
-        }
-      ]
+         {
+       name: 'example',
+       type: 'button', 
+       value: 'example'
+       } ]
     }]
-  });
 
-};
+})};

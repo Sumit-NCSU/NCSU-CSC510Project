@@ -15,14 +15,20 @@ module.exports = (token, channel, ts, message, callback) => {
     console.log('Warning: No token provided for message');
     return callback(null, message);
   }
-
-  if (typeof message === 'string') {
+ // console.log("The message in update_message is : ")
+ // console.log(JSON.stringify(message))
+  // if (typeof message == 'string') {
     message = {
-      text: message
+        "ok": true,
+        "channel": channel,
+        "ts": ts,
+        "text": "Updated text you carefully authored"
     };
-  }
-
-  message.ts = ts;
+  // }
+  console.log(JSON.stringify(message))
+  //message.ts = ts;
+  console.log(ts)
+  console.log("Message in update_message" + JSON.stringify(message))
   let data = formatMessage(token, channel, message);
 
   if (data.attachments) {
@@ -37,7 +43,7 @@ module.exports = (token, channel, ts, message, callback) => {
     if (err) {
       return callback(err);
     }
-
+    console.log("REsult" + JSON.parse(result));
     let body;
     try {
       body = JSON.parse(result.body);

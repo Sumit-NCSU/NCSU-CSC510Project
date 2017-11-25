@@ -6,7 +6,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const lib = require('lib')({token: process.env.STDLIB_TOKEN});
 
 /**
-* /listpr
+* /example
 *
 *   Command for whowing the List PR buttons.
 *
@@ -33,11 +33,11 @@ module.exports = (user, channel, text = '', command = {}, botToken = null, callb
 			"attachment_type": "default",
 			"actions": [
 			  {
-				"name": "list",
-				"text": "list",
+				"name": "example",
+				"text": "example",
 				"style":"primary",
 				"type": "button",
-				"value": "list",
+				"value": "example",
 				
 			  },
 			  {

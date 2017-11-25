@@ -34,11 +34,32 @@ controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], func
 	});
 });
 
+controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
+	// bot says: issue pull request on aakarshg/Serverprovision aakarshg-patch-3
+
+	var X = "issue"
+	var text_message = message.text
+	var Z = "successfully issued " + text_message.toString().split(X).pop();
+
+
+
+	var repo = "Serverprovision"
+	var owner = "aakarshg"
+	var branchName = "aakarshg-patch-3"
+	var base = "master"
+	var x = github.createPullRequest(owner, repo, branchName,base)
+	if (x==true){
+		console.log("Received response in bot.js")
+	bot.reply(message,Z)
+	}
+});
+
+
 //TODO: generalize this, implement drop down list in this.
 controller.hears('Get pull requests for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) {
-	var repo = "SEGitAPI"
-	var owner = "srivassumit"
-	var branchName = "master"
+	var repo = "Serverprovision"
+	var owner = "aakarshg"
+	var branchName = ""
 	var isOpen = true
 	github.getPullRequests(owner, repo, isOpen, branchName, (value) => {
 		console.log('Bot: Received ' + value.length + ' Pull requests');
@@ -59,12 +80,12 @@ controller.hears('Get pull requests for octat for repo Hello-World',['mention', 
 //TODO: generalize this, something like this should also be called when user selects a PR from the drop down for all PRs.
 controller.hears('Get pull request 1 for octat for repo Hello-World',['mention', 'direct_mention','direct_message'], function(bot,message) { 	
 	//TODO: remove this?
-	bot.startConversation(message, function(err, convo) {
-		convo.say('Better take this private...')
-		convo.say({ ephemeral: true, text: 'These violent delights have violent ends' })
-	})
-	var repo = "Hello-World" // extract this from user message/intent/context?
-	var owner = "octat" // extract this from user message/intent/context?
+	// bot.startConversation(message, function(err, convo) {
+	// 	convo.say('Better take this private...')
+	// 	convo.say({ ephemeral: true, text: 'These violent delights have violent ends' })
+	// })
+	var repo = "SEGitAPI"
+	var owner = "srivassumit" // extract this from user message/intent/context?
 	var number = 1 // extract this from user message/intent/context?
 	var branchName = "" // extract this from user message/intent/context?
 	var pull_req = github.getPullRequest(owner, repo, number, branchName)
