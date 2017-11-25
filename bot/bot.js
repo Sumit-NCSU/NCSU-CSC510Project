@@ -161,19 +161,30 @@ app.post('/listprs', function(req, res) {
 // The callback contains the action Name which can be used to determine which action was performed.
 app.post('/actions', function(req, res) {
 	console.log('Inside action response: ');	
-	var reqActions = req.body.payload;
-	console.log(reqActions);
+	var reqPayload = req.body.payload;
+	console.log(reqPayload);
 	//parse the name of the action
-	var actionName = JSON.parse(reqActions).actions[0].name;
+	var actionName = JSON.parse(reqPayload).actions[0].name;
 	console.log(actionName);
 	//res.type('json');
 	if (actionName == 'merge') {
-		//TODO: extract the below details from the req somehow.
-		//doMergeAction(repo, owner, prnumber, branch);
+		// The merge button is clicked.
+		console.log('The Merge button was clicked');
+		// TODO: extract the below details from the req somehow.
+		// doMergeAction(repo, owner, prnumber, branch);
 		res.send("you clicked merge button!");
 	} else if (actionName == 'nomerge') {
-		//TODO: nothing?
+		// The Dont't merge button is clicked
+		console.log('The Don\'t Merge button was clicked');
+		// TODO: nothing?
 		res.send("you clicked Don\'t merge button!");
+	} else if (actionName == 'prnames') {
+		// an option is selected from the dynamic dropdown list.
+		console.log('An option was selected fromt the Dynamic drop down list of List pull requests.');
+		console.log('The request Payload is: ' + reqPayload);
+		var selectedOptionValue = JSON.parse(reqPayload).actions[0].selected_options[0].value;
+		console.log(selectedOptionValue); // This is the PR number
+		res.send('You selected option: ' + selectedOptionValue);
 	} else {
 		res.send("New uknown action received: " + actionName);
 	}
