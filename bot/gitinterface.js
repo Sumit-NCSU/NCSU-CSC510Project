@@ -13,9 +13,6 @@ var repoName = "SEGitAPI";
  * @param {*} branchName [optional] defaults to master
  */
 function getPullRequests(owner, repo, callback) {
-	// Default values for optional variables
-
-
 	// Set the options for the request.
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
@@ -24,7 +21,6 @@ function getPullRequests(owner, repo, callback) {
 			"User-Agent": "CiCdBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN,
-
 		}
 	};
 	var pullRequests=[];
