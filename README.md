@@ -30,5 +30,14 @@ Repository for CSC 510 Software Engineering Project
 | Task Tracking | [Tracker](WORKSHEET.md) |
 | Trello Board  | [Milestone 2](https://trello.com/b/UfgRVHrf/milestone-2) |
 | Service.md    | [Service.md](SERVICE.md) |
+| Screencast    | [Screencast](https://youtu.be/MNnJc90oxr8) |
+
+## Milestone: Deploy
+
+| Task          | Links               |
+|---------------|---------------------|
+| Task Tracking | [Tracker](WORKSHEET.md) |
+| Trello Board  | [Milestone 3](https://trello.com/b/96amhY0q/milestone-3) |
+| Deploy.md    | [Deploy.md](DEPLOY.md) |
 | Screencast    | [Screencast]() |
 

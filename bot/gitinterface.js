@@ -12,24 +12,7 @@ var repoName = "SEGitAPI";
  * @param {*} isOpen [optional] defaults to true
  * @param {*} branchName [optional] defaults to master
  */
-function getPullRequests(owner, repo, isOpen, branchName, callback) {
-	// Default values for optional variables
-	isOpen = (typeof isOpen !== 'undefined') ?  isOpen : true;
-	branchName = (typeof branchName !== 'undefined') ?  branchName : 'master';
-
-	// Check if the Git token is set.
-	if (!process.env.GITTOKEN) {
-		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return callback(false);
-	}
-
-	var state;
-	if (isOpen) {
-		state='open';
-	} else {
-		state='closed';
-	}
-	
+function getPullRequests(owner, repo, callback) {
 	// Set the options for the request.
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
@@ -38,15 +21,13 @@ function getPullRequests(owner, repo, isOpen, branchName, callback) {
 			"User-Agent": "CiCdBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN,
-			"state": state,
-			"base": branchName
 		}
 	};
 	var pullRequests=[];
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		
+
 		if (obj != null) {
 			console.log('GitInterface: Pull Requests found: ');
 			for(var i = 0; i < obj.length; i++) {
@@ -63,12 +44,12 @@ function getPullRequests(owner, repo, isOpen, branchName, callback) {
 	});
 }
 
-function getPullRequest(owner, repo, number, branchName) {
+function getPullRequest(owner, repo, number,callback) {
 	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
-	}	
+	}
 
 	var options = {
 		url: urlRoot + "/repos/" + owner +"/" + repo + "/pulls/"+number,
@@ -76,8 +57,7 @@ function getPullRequest(owner, repo, number, branchName) {
 		headers: {
 			"User-Agent": "CiCdBot",
 			"content-type": "application/json",
-			"Authorization": "token " + process.env.GITTOKEN,
-			"base": branchName
+			"Authorization": "token " + process.env.GITTOKEN
 		}
 	};
 
@@ -86,26 +66,30 @@ function getPullRequest(owner, repo, number, branchName) {
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
 		//console.log(obj);
-		
+
 		if (obj != null) {
+				var arr2 = [];
+				arr2.push(obj.body);
+				arr2.push(obj.state)
+				arr2.push(obj.title);
+				arr2.push(obj.id);
 				var title = obj.title;
 				console.log("Pull Request Name: " + title);
-				pullRequest = obj;
-			
+				return callback(obj)
+
 		} else {
 			console.log('No Pull request found');
 			return false;
 		}
 	});
-	return pullRequest;
 }
 
 function getPullRequestFiles(owner, repo, number, branchName) {
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
-	}	
-	
+	}
+
 	var options = {
 		url: urlRoot + "/repos/" + owner +"/" + repo + "/pulls/"+number+"/files",
 		method: 'GET',
@@ -121,7 +105,7 @@ function getPullRequestFiles(owner, repo, number, branchName) {
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		
+
 		if (obj != null) {
 			for(var i = 0; i < obj.length; i++) {
 				var title = obj[i].title;
@@ -134,7 +118,7 @@ function getPullRequestFiles(owner, repo, number, branchName) {
 		}
 	});
 	return pullRequestFiles;
-	
+
 }
 
 function getRepos(owner) {
@@ -142,7 +126,7 @@ function getRepos(owner) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
 	}
-	
+
 	var options = {
 		url: urlRoot + '/users/' + owner + "/repos",
 		method: 'GET',
@@ -157,7 +141,7 @@ function getRepos(owner) {
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		
+
 		if (obj != null) {
 			for(var i = 0; i < obj.length; i++) {
 				repos.push(obj[i]);
@@ -168,7 +152,7 @@ function getRepos(owner) {
 		}
 	});
 	return repos;
-	
+
 }
 
 function mergePullRequest(owner, repo, number, callback) {
@@ -195,14 +179,14 @@ function mergePullRequest(owner, repo, number, callback) {
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		
+
 		if (obj != null) {
 			console.log('msg sent by git: '+JSON.stringify(obj.message))
 			return callback(obj.message);
 		} else {
 			return callback(null);
 		}
-	});	
+	});
 }
 
 function getContributors(owner, repo)
@@ -211,7 +195,7 @@ function getContributors(owner, repo)
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
 	}
-	
+
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/contributors",
 		method: 'GET',
@@ -226,7 +210,7 @@ function getContributors(owner, repo)
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		
+
 		if (obj != null) {
 			for(var i = 0; i < obj.length; i++) {
 				console.log(obj[i].login);
@@ -237,7 +221,7 @@ function getContributors(owner, repo)
 			return false;
 		}
 	});
-	return contributors;	
+	return contributors;
 }
 
 function getBranches(owner, repo)
@@ -246,7 +230,7 @@ function getBranches(owner, repo)
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
 	}
-	
+
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/branches",
 		method: 'GET',
@@ -271,7 +255,7 @@ function getBranches(owner, repo)
 			return false;
 		}
 	});
-	return branches;	
+	return branches;
 }
 
 function getPermission(owner, repo, username)
@@ -280,7 +264,7 @@ function getPermission(owner, repo, username)
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
 		return false;
 	}
-	
+
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/collaborators/" + username,
 		method: 'GET',
@@ -303,9 +287,79 @@ function getPermission(owner, repo, username)
 			return false;
 		}
 	});
-	return permission;	
+	return permission;
 }
 
+function createPullRequest(owner,repo,head,base)
+{
+	var options = {
+		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
+		method: 'POST',
+		headers: {
+			"User-Agent": "EnableIssues",
+			"content-type": "application/json",
+			"Authorization": "token " + process.env.GITTOKEN
+		},
+		json:
+		{
+			"title": "Created by bot from slack",
+			"body": "Please check commit history",
+			"head": head,
+			"base": base
+		}
+
+	};
+	// Send a http request to url and specify a callback that will be called upon its return.
+	request(options, function (error, response, body)
+	{
+		console.log( body );
+
+	});
+	return 1
+}
+
+function getStatus(owner,repo,ref,callback)
+{
+	var options = {
+		url: urlRoot + '/repos/' + owner + "/" + repo + "/statuses/" + ref,
+		method: 'GET',
+		headers: {
+			"User-Agent": "EnableIssues",
+			"content-type": "application/json",
+			"Authorization": "token " + process.env.GITTOKEN
+		}
+	};
+	var output = 0
+	// Send a http request to url and specify a callback that will be called upon its return.
+	request(options, function (error, response, body)
+	{
+		var obj = JSON.parse(body);
+
+		//console.log( obj );
+		console.log("The latest jenkins status is	")
+		/*
+		for( var i = 0; i < obj.length; i++ )
+		{
+			var name = obj[i].name;
+			console.log( name );
+		}
+		*/
+		console.log(obj[0].state)
+		if (obj[0].state == 'success'){
+			console.log("successfully")
+			return callback(true)
+			output = 1
+		}
+		else{
+			return false
+		}
+	});
+	if(output==1){
+		console.log("returning true")
+		return true
+	}
+
+}
 
 function createPullRequest(owner,repo,head,base)
 {
@@ -341,7 +395,8 @@ function createPullRequest(owner,repo,head,base)
 //getBranches(user, repoName);
 
 //getContributors(user, repoName);
-
+exports.getStatus = getStatus;
+exports.createPullRequest = createPullRequest;
 exports.getPullRequests = getPullRequests;
 exports.mergePullRequest = mergePullRequest;
 exports.getRepos = getRepos;
