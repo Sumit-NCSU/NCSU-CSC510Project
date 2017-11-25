@@ -5,10 +5,10 @@ var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 
-var clientId = '251283423607.276615584448';
-var clientSecret = '5d6923fd3e3939a67f833f266f6217ed';
+var clientId = '251283423607.266908998500';
+var clientSecret = '23e2a008bc2aa4954771a7f65d8f55a9';
 
-var adminlist = ["U6WCFDZL3", "assinsin", "sebotcicd","U6WGAURSQ","U6VUKPYCR"];
+var adminlist = ["U6WCFDZL3", "assinsin", "sebotcicd","U6WGAURSQ","U6VUKPYCR","U7USQD4SY"];
 
 var app = express();
 app.use(bodyParser.urlencoded());
@@ -42,7 +42,7 @@ var bot = controller.spawn({
 controller.configureSlackApp({
   clientId: clientId,//clientid
   clientSecret: clientSecret,//clientsecret
-  redirectUri: 'https://6a10fde0.ngrok.io/oauth/',//oauth
+  redirectUri: 'http://3c59565c.ngrok.io/oauth/',//oauth
   scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
 });
 
@@ -171,8 +171,16 @@ app.post('/actions', function(req, res) {
 		// The merge button is clicked.
 		console.log('The Merge button was clicked');
 		// TODO: extract the below details from the req somehow.
-		// doMergeAction(repo, owner, prnumber, branch);
-		res.send("you clicked merge button!");
+		// Hard coding just to make sure that the fucntion calls
+		var repo = "serverprovision" // extract this from user message/intent/context?
+		var owner = "aakarshg"// extract this from user message/intent/context?
+		var prnumber = 15;// extract this from user message
+		var branch = "aakarshg-patch-4"
+		var user = "U7USQD4SY"
+		doMergeAction(repo, owner, prnumber, branch,user,function(response){
+			res.send(response);	
+		});
+		//res.send("you clicked merge button!");
 	} else if (actionName == 'nomerge') {
 		// The Dont't merge button is clicked
 		console.log('The Don\'t Merge button was clicked');
@@ -194,7 +202,7 @@ app.post('/actions', function(req, res) {
 controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	controller.storage.users.get(message.user, function(err, user) {
 		console.log('inside hi');	
-		bot.reply(message, 'Hello, ' + message.user + '!');
+		bot.reply(message, 'Hello, this: ' + message.user + ' ,will be your unique ID for this App. Please store it somewhere! ');
 	});
 });
 
@@ -297,33 +305,39 @@ controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_ment
 });
 
 
-doMergeAction = function(repo, owner, prnumber, branch) {
+function doMergeAction(repo, owner, prnumber, branch, user, callback) {
 	// old regex: \bmerge.*pull.*request.*\b
-	console.log(message);
+	//console.log(message);
 	console.log('inside do merge action');
-	var repo = "serverprovision" // extract this from user message/intent/context?
-	var owner = "aakarshg"// extract this from user message/intent/context?
-	var prnumber = 15;// extract this from user message
-	var branch = "aakarshg-patch-4"
+	// var repo = "serverprovision" // extract this from user message/intent/context?
+	// var owner = "aakarshg"// extract this from user message/intent/context?
+	// var prnumber = 15;// extract this from user message
+	// var branch = "aakarshg-patch-4"
+	// Need the jenkins status to work to check this. At the moment just replying with hard coded values.
+	var reply = 'Yup, Merged';
+	return callback(reply);
 	var reply = '';
 	//check admin list before actually merging
-	if(adminlist.indexOf(message.user) > -1) {
+	if(adminlist.indexOf(user) > -1) {
 		github.getStatus(owner, repo, branch, (out) =>{
 			if(out)	{
 				github.mergePullRequest(owner, repo, prnumber, (msg) => {
 					if (msg) {
 						console.log('msg received in bot: ' + msg)
 						reply = msg;
-						bot.reply(message, reply);
+						//bot.reply(message, reply);
 					}
 				});
 			} else {
 				reply = "Build has been unsuccessful";
-				bot.reply(message, reply);
+				//bot.reply(message, reply);
 			}
 		});
 	} else {
 		reply = "You don't have permission to merge via the bot interface!";
-		bot.reply(message, reply);
+		//bot.reply(message, reply);
+
 	}
+	console.log(reply)
+	return callback(reply)
 }
