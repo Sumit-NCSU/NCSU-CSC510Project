@@ -42,7 +42,7 @@ var bot = controller.spawn({
 controller.configureSlackApp({
   clientId: clientId,//clientid
   clientSecret: clientSecret,//clientsecret
-  redirectUri: 'https://b42f0003.ngrok.io/oauth/',//oauth
+  redirectUri: 'http://52.91.118.251:4390/oauth',//oauth
   scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
 });
 
