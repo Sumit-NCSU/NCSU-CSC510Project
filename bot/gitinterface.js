@@ -66,17 +66,10 @@ function getPullRequest(owner, repo, number,callback) {
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
 		//console.log(obj);
-
 		if (obj != null) {
-				var arr2 = [];
-				arr2.push(obj.body);
-				arr2.push(obj.state)
-				arr2.push(obj.title);
-				arr2.push(obj.id);
 				var title = obj.title;
 				console.log("Pull Request Name: " + title);
 				return callback(obj)
-
 		} else {
 			console.log('No Pull request found');
 			return false;
