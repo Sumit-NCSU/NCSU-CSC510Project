@@ -196,7 +196,44 @@ app.post('/actions', function(req, res) {
 		console.log('The request Payload is: ' + reqPayload);
 		var selectedOptionValue = JSON.parse(reqPayload).actions[0].selected_options[0].value;
 		console.log(selectedOptionValue); // This is the PR number
-		res.send('You selected option: ' + selectedOptionValue);
+
+		//extract things from selectedOptionValue
+		var arr = selectedOptionValue.split(" ")
+		console.log('Got this: ' +arr);//<owner> <repo> <number>
+		github.getPullRequest(arr[0], arr[1], arr[2], (value) => {
+			console.log(value)
+			var msg = "Pull Request Details: \nId: " + value.id + "\nTitle: " +value.title + "\nDescription: " + value.body;
+			var reply_with_attachments = {
+				"text": msg,
+				"attachments": [
+					{
+						"text": "Would you like to merge this PR",
+						"fallback": "You are unable to choose an option",
+						"callback_id": "merge_action",
+						"color": "#09aa08",
+						"attachment_type": "default",
+						"actions": [
+							{
+								"name": "merge",
+								"text": "Merge",
+								"style":"primary",
+								"type": "button",
+								"value": "merge"
+							},
+							{
+								"name": "nomerge",
+								"text": "Don't Merge",
+								"style":"danger",
+								"type": "button",
+								"value": "nomerge"
+							}
+						]
+					}
+				]
+			}
+			res.type('json');
+			res.send(reply_with_attachments);
+		});
 	} else {
 		res.send("New uknown action received: " + actionName);
 	}
