@@ -2,32 +2,33 @@ var request = require('request');
 
 var urlRoot = "https://api.github.com";
 
-var user = "srivassumit";
-var repoName = "SEGitAPI";
-
 /**
  * Method to return a list of pull requests for the specified repo.
- * @param {*} owner required username of the repo owner
- * @param {*} repo required repo name
- * @param {*} isOpen [optional] defaults to true
- * @param {*} branchName [optional] defaults to master
+ * @param {*} owner username of the repo owner.
+ * @param {*} repo repo name.
+ * @param {*} callback callback function.
  */
 function getPullRequests(owner, repo, callback) {
+	console.log('GitInterface: Get Pull Requests.');
+	//check if the git token is set.
+	if (!process.env.GITTOKEN) {
+		console.log('GitInterface: Error: Specify Git token in environment variable: GITTOKEN');
+		return callback(false);
+	}
 	// Set the options for the request.
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
 		method: 'GET',
 		headers: {
-			"User-Agent": "CiCdBot",
+			"User-Agent": "CiBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN,
 		}
 	};
-	var pullRequests=[];
+	var pullRequests = [];
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-
 		if (obj != null) {
 			console.log('GitInterface: Pull Requests found: ');
 			for(var i = 0; i < obj.length; i++) {
@@ -44,328 +45,176 @@ function getPullRequests(owner, repo, callback) {
 	});
 }
 
-function getPullRequest(owner, repo, number,callback) {
+/**
+ * Method to return a details of a specific pull request.
+ * @param {*} owner username of the repo.
+ * @param {*} repo name of the repo.
+ * @param {*} number pull request number.
+ * @param {*} callback callback function.
+ */
+function getPullRequest(owner, repo, number, callback) {
+	console.log('GitInterface: Get Pull Request.');
 	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
-		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
+		console.log('GitInterface: Error: Specify Git token in environment variable: GITTOKEN');
+		return callback(false);
 	}
-
+	// Set the options for the request.
 	var options = {
-		url: urlRoot + "/repos/" + owner +"/" + repo + "/pulls/"+number,
+		url: urlRoot + "/repos/" + owner +"/" + repo + "/pulls/" + number,
 		method: 'GET',
 		headers: {
-			"User-Agent": "CiCdBot",
+			"User-Agent": "CiBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN
 		}
 	};
-
 	var pullRequest;
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		//console.log(obj);
 		if (obj != null) {
-				var title = obj.title;
-				console.log("Pull Request Name: " + title);
-				return callback(obj)
+			var title = obj.title;
+			console.log('GitInterface: Pull Request Name: ' + title);
+			return callback(obj);
 		} else {
-			console.log('No Pull request found');
-			return false;
+			console.log('GitInterface: No Pull request found');
+			return callback(false);
 		}
 	});
 }
 
-function getPullRequestFiles(owner, repo, number, branchName) {
+/**
+ * Method to get the repos of a user.
+ * @param {*} owner the owner of the repos.
+ * @param {*} callback callback function.
+ */
+function getRepos(owner, callback) {
+	console.log('GitInterface: Get Repos.');
+	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
 		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
+		return callback(false);
 	}
-
-	var options = {
-		url: urlRoot + "/repos/" + owner +"/" + repo + "/pulls/"+number+"/files",
-		method: 'GET',
-		headers: {
-			"User-Agent": "CiCdBot",
-			"content-type": "application/json",
-			"Authorization": "token " + process.env.GITTOKEN,
-			"base": branchName
-		}
-	};
-
-	var pullRequestFiles=[];
-	// Send a http request to url and specify a callback that will be called upon its return.
-	request(options, function (error, response, body) {
-		var obj = JSON.parse(body);
-
-		if (obj != null) {
-			for(var i = 0; i < obj.length; i++) {
-				var title = obj[i].title;
-				console.log("Pull Request File Name: " + title);
-				pullRequestFiles.push(obj[i]);
-			}
-		} else {
-			console.log('No Pull request Files found');
-			return false;
-		}
-	});
-	return pullRequestFiles;
-
-}
-
-function getRepos(owner) {
-	if (!process.env.GITTOKEN) {
-		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
-	}
-
+	// Set the options for the request.
 	var options = {
 		url: urlRoot + '/users/' + owner + "/repos",
 		method: 'GET',
 		headers: {
-			"User-Agent": "CiCdBot",
+			"User-Agent": "CiBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN,
 		}
 	};
-
 	var repos=[];
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-
 		if (obj != null) {
+			console.log('GitInterface: Repositories found.');
 			for(var i = 0; i < obj.length; i++) {
 				repos.push(obj[i]);
 			}
 		} else {
-			console.log('No Repositories found');
-			return false;
+			console.log('GitInterface: No Repositories found.');
+			return callback(false);
 		}
 	});
-	return repos;
-
+	return callback(repos);
 }
 
+/**
+ * Method to merge a given pull request
+ * @param {*} owner the owner of the repo.
+ * @param {*} repo the name of the repo.
+ * @param {*} number the pull request number.
+ * @param {*} callback callback function.
+ */
 function mergePullRequest(owner, repo, number, callback) {
-	console.log('im in gitintergace');
+	console.log('GitIntergace: Merge Pull Request.');
 	// Check if the Git token is set.
 	if (!process.env.GITTOKEN) {
-		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
+		console.log('GitIntergace: Merge Pull Request.: Error: Specify Git token in environment variable: GITTOKEN');
+		return callback(false);
 	}
-
 	// Set the options for the request.
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls/" + number + "/merge",
 		method: 'PUT',
 		headers: {
-			"User-Agent": "CiCdBot",
+			"User-Agent": "CiBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN,
-			"commit_title": "Merged by CiCdBot",
-			"commit_message": "Merged by CiCdBot"
+			"commit_title": "Merged by CiBot",
+			"commit_message": "Merged by CiBot"
 		}
 	};
-
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-
 		if (obj != null) {
-			console.log('msg sent by git: '+JSON.stringify(obj.message))
+			console.log('GitIntergace: Message from Git: ' + JSON.stringify(obj.message))
 			return callback(obj.message);
 		} else {
-			return callback(null);
+			console.log('GitIntergace: Nothing returned from Git.')
+			return callback(false);
 		}
 	});
 }
 
-function getContributors(owner, repo)
-{
-	if (!process.env.GITTOKEN) {
-		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
-	}
-
-	var options = {
-		url: urlRoot + '/repos/' + owner + "/" + repo + "/contributors",
-		method: 'GET',
-		headers: {
-			"User-Agent": "CiCdBot",
-			"content-type": "application/json",
-			"Authorization": "token " + process.env.GITTOKEN,
-		}
-	};
-
-	var contributors=[];
-	// Send a http request to url and specify a callback that will be called upon its return.
-	request(options, function (error, response, body) {
-		var obj = JSON.parse(body);
-
-		if (obj != null) {
-			for(var i = 0; i < obj.length; i++) {
-				console.log(obj[i].login);
-				contributors.push(obj[i]);
-			}
-		} else {
-			console.log('No Contributors found');
-			return false;
-		}
-	});
-	return contributors;
-}
-
-function getBranches(owner, repo)
-{
-	if (!process.env.GITTOKEN) {
-		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
-	}
-
-	var options = {
-		url: urlRoot + '/repos/' + owner + "/" + repo + "/branches",
-		method: 'GET',
-		headers: {
-			"User-Agent": "CiCdBot",
-			"content-type": "application/json",
-			"Authorization": "token " + process.env.GITTOKEN,
-		}
-	};
-
-	var branches=[];
-	// Send a http request to url and specify a callback that will be called upon its return.
-	request(options, function (error, response, body) {
-		var obj = JSON.parse(body);
-		if (obj != null) {
-			for(var i = 0; i < obj.length; i++) {
-				console.log(obj[i].name);
-				branches.push(obj[i]);
-			}
-		} else {
-			console.log('No branches found');
-			return false;
-		}
-	});
-	return branches;
-}
-
-function getPermission(owner, repo, username)
-{
-	if (!process.env.GITTOKEN) {
-		console.log('Error: Specify Git token in environment variable: GITTOKEN');
-		return false;
-	}
-
-	var options = {
-		url: urlRoot + '/repos/' + owner + "/" + repo + "/collaborators/" + username,
-		method: 'GET',
-		headers: {
-			"User-Agent": "CiCdBot",
-			"content-type": "application/json",
-			"Authorization": "token " + process.env.GITTOKEN,
-		}
-	};
-
-	var permission;
-	// Send a http request to url and specify a callback that will be called upon its return.
-	request(options, function (error, response, body) {
-		var obj = JSON.parse(body);
-		if (obj != null) {
-				console.log(obj.user.login);
-				permission = obj.permission;
-		} else {
-			console.log('No username found');
-			return false;
-		}
-	});
-	return permission;
-}
-
-function createPullRequest(owner,repo,head,base)
-{
-	var options = {
-		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
-		method: 'POST',
-		headers: {
-			"User-Agent": "EnableIssues",
-			"content-type": "application/json",
-			"Authorization": "token " + process.env.GITTOKEN
-		},
-		json:
-		{
-			"title": "Created by bot from slack",
-			"body": "Please check commit history",
-			"head": head,
-			"base": base
-		}
-
-	};
-	// Send a http request to url and specify a callback that will be called upon its return.
-	request(options, function (error, response, body)
-	{
-		console.log( body );
-
-	});
-	return 1
-}
-
-function getStatus(owner,repo,ref,callback)
-{
+/**
+ * Method to check the Jenkins build status of a Pull Request.
+ * @param {*} owner username of the repo.
+ * @param {*} repo name of the repo.
+ * @param {*} ref the HEAD ref of the Pull Request.
+ * @param {*} callback callback function.
+ */
+function getStatus(owner, repo, ref, callback) {
+	console.log('GitInterface: GetStatus.');
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/statuses/" + ref,
 		method: 'GET',
 		headers: {
-			"User-Agent": "EnableIssues",
+			"User-Agent": "CiBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN
 		}
 	};
-	var output = 0
+	var output = 0;
 	// Send a http request to url and specify a callback that will be called upon its return.
-	request(options, function (error, response, body)
-	{
+	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-
-		//console.log( obj );
-		console.log("The latest jenkins status is	")
-		/*
-		for( var i = 0; i < obj.length; i++ )
-		{
-			var name = obj[i].name;
-			console.log( name );
-		}
-		*/
-		console.log(obj[0].state)
-		if (obj[0].state == 'success'){
-			console.log("successfully")
-			return callback(true)
-			output = 1
-		}
-		else{
-			return false
+		console.log('The latest jenkins status is:');
+		console.log(obj[0].state);
+		if (obj[0].state == 'success') {
+			console.log("Success.")
+			return callback(true);
+		} else {
+			console.log("Not Success.")
+			return callback(false);
 		}
 	});
-	if(output==1){
-		console.log("returning true")
-		return true
-	}
-
 }
 
-function createPullRequest(owner,repo,head,base)
-{
+/**
+ * Method to create a pull request.
+ * @param {*} owner the owner of the repo.
+ * @param {*} repo the name of the repo.
+ * @param {*} head the head branch.
+ * @param {*} base the base branch.
+ * @param {*} callback callback function.
+ */
+function createPullRequest(owner, repo, head, base, callback) {
+	console.log('GitIntergace: Create Pull Request.');
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
 		method: 'POST',
 		headers: {
-			"User-Agent": "EnableIssues",
+			"User-Agent": "CiBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN
 		},
-		json:
-		{
+		json: {
 			"title": "Created by bot from slack",
 			"body": "Please check commit history",
 			"head": head,
@@ -374,27 +223,19 @@ function createPullRequest(owner,repo,head,base)
 
 	};
 	// Send a http request to url and specify a callback that will be called upon its return.
-	request(options, function (error, response, body)
-	{
-		console.log( body );
-
+	request(options, function (error, response, body) {
+		console.log(body);
+		if (body) {
+			return callback(true);
+		} else {
+			return callback(false);
+		}
 	});
-	return 1
 }
-//getPullRequests(user,repoName);
 
-//mergePullRequest(user,repoName,3);
-
-//getBranches(user, repoName);
-
-//getContributors(user, repoName);
-exports.getStatus = getStatus;
-exports.createPullRequest = createPullRequest;
 exports.getPullRequests = getPullRequests;
-exports.mergePullRequest = mergePullRequest;
-exports.getRepos = getRepos;
 exports.getPullRequest = getPullRequest;
-exports.getPullRequestFiles = getPullRequestFiles;
-exports.getBranches = getBranches;
-exports.getContributors = getContributors;
+exports.getRepos = getRepos;
+exports.mergePullRequest = mergePullRequest;
+exports.getStatus = getStatus;
 exports.createPullRequest = createPullRequest;
