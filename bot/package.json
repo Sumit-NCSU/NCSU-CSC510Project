@@ -9,10 +9,11 @@
   "author": "sumit",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "botkit": "^0.6.4",
+    "botkit-middleware-witai": "0.0.2",
     "easy-table": "^1.1.0",
     "nock": "^9.0.25",
-    "request": "^2.83.0",
-    "bluebird": "^3.5.1"
+    "request": "^2.83.0"
   }
 }

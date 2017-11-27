@@ -5,11 +5,19 @@ var Promise = require("bluebird");
 var github = require("./gitinterface.js");
 
 
+if (!process.env.wit) {
+    console.log('Error: Specify wit in environment');
+    process.exit(1);
+}
 
 if (!process.env.SLACKTOKEN) {
 	console.log('Error: Specify Git token in environment variable: SLACKTOKEN');
 	process.exit(1);
 }
+
+var wit = require('./src/botkit-middleware-witai')({
+    token: process.env.wit,
+});
 
 var controller = Botkit.slackbot({
 	debug : false
@@ -25,6 +33,13 @@ controller.configureSlackApp({
   clientSecret: "<<CLIENT_SECRET",//clientsecret
   redirectUri: 'https://srivassumit.lib.id/cibot@dev/auth/',//oauth
   scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
+});
+
+controller.middleware.receive.use(wit.receive);
+
+controller.hears(['hello'], 'direct_message,direct_mention,mention', wit.hears, function(bot, message) {
+   console.log('wit hi');   
+   bot.reply(message, 'Hello!');
 });
 
 // Greetings
