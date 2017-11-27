@@ -218,19 +218,22 @@ controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], func
 
 controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	// user says: issue pull request on aakarshg/Serverprovision aakarshg-patch-3
-	var X = "issue"
 	var text_message = message.text
-	var Z = "successfully issued " + text_message.toString().split(X).pop();
+	var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
 
 	var repo = "Serverprovision"
 	var owner = "aakarshg"
 	var branchName = "aakarshg-patch-4"
 	var base = "master"
-	var x = github.createPullRequest(owner, repo, branchName,base)
-	if (x==true){
-		console.log("Received response in bot.js")
-	bot.reply(message,Z)
-	}
+	github.createPullRequest(owner, repo, branchName, base, (value) => {
+		if (value){
+			console.log("Pull Request created")
+			bot.reply(message, responseMsg);
+		} else {
+			console.log("unable to create pull request.")
+			bot.reply(message, "Unable to create pull request.");
+		}
+	});
 });
 
 // Get the list of pull requests for a given repository. Alternately the slash command /listprs can also be used.
@@ -269,7 +272,7 @@ controller.hears(/\bget.*request.*\b/,['mention', 'direct_mention','direct_messa
 		var headBranch = value.head.label.split(":")[1];
 		var baseBranch = value.base.label.split(":")[1];
 		console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
-		var t ="Id: " + value.id + "\nTitle: " + value.title + "\nDescription: " + value.body + "\nHEAD Branch: " + headBranch;
+		var t ="Id: " + value.number + "\nTitle: " + value.title + "\nDescription: " + value.body + "\nHEAD Branch: " + headBranch;
     	bot.reply(message, t.toString());
 	});
 
@@ -332,12 +335,6 @@ controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_ment
 
 function doMergeAction(repo, owner, prnumber, branch, user, callback) {
 	console.log('inside do merge action');
-	
-	// Need the jenkins status to work to check this. At the moment just replying with hard coded values.
-	var reply = 'Yup, Merged';
-	//return callback(reply);
-	
-	
 	var reply = '';
 	//check admin list before actually merging
 	if(adminlist.indexOf(user) > -1) {
@@ -357,6 +354,7 @@ function doMergeAction(repo, owner, prnumber, branch, user, callback) {
 		// });
 	} else {
 		reply = "You don't have permission to merge via the bot interface!";
+		console.log(reply);
 		return callback(reply);
 	}
 }
