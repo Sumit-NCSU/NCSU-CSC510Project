@@ -5,10 +5,10 @@ var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 
-var clientId = '251283423607.266908998500';
-var clientSecret = '23e2a008bc2aa4954771a7f65d8f55a9';
+var clientId = process.env.CIBOTCID;
+var clientSecret = process.env.CIBOTCSEC;
 
-var adminlist = ["U6WCFDZL3", "assinsin", "sebotcicd","U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q"];
+var adminlist = ["U6WCFDZL3", "U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q"];
 
 var app = express();
 app.use(bodyParser.urlencoded());
