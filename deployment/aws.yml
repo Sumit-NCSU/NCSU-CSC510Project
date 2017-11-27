@@ -60,7 +60,7 @@
       with_items: "{{ ec2.instances }}"
 
     - name: Add vm to group
-      local_action: lineinfile dest=/home/vagrant_data/deployment/inventory regexp="{{ item.public_ip }}" insertafter="[{{ group_name }}]" line="{{ item.public_ip }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/{{ansible_ssh_user}}/keys/{{keypair}}.pem ansible_python_interpreter=/usr/bin/python3" state=present
+      local_action: lineinfile dest=/home/vagrant_data/deployment/inventory regexp="{{ item.public_ip }}" insertafter="[{{ group_name }}]" line="{{ item.public_ip }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/{{ansible_ssh_user}}/keys/{{keypair}}.pem ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no'" state=present
       with_items: "{{ ec2.instances }}"
 
 - name: Start the role
