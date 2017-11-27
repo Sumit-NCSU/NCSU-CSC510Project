@@ -189,7 +189,7 @@ app.post('/actions', function(req, res) {
 		// The Dont't merge button is clicked
 		console.log('The Don\'t Merge button was clicked');
 		// TODO: nothing?
-		res.send("you clicked Don\'t merge button!");
+		res.send("Thanks for reducing my work. Appreciate it!");
 	} else if (actionName == 'prnames') {
 		// an option is selected from the dynamic dropdown list.
 		console.log('An option was selected fromt the Dynamic drop down list of List pull requests.');
@@ -313,13 +313,12 @@ function doMergeAction(repo, owner, prnumber, branch, user, callback) {
 	// old regex: \bmerge.*pull.*request.*\b
 	//console.log(message);
 	console.log('inside do merge action');
-	// var repo = "serverprovision" // extract this from user message/intent/context?
-	// var owner = "aakarshg"// extract this from user message/intent/context?
-	// var prnumber = 15;// extract this from user message
-	// var branch = "aakarshg-patch-4"
+	
 	// Need the jenkins status to work to check this. At the moment just replying with hard coded values.
 	var reply = 'Yup, Merged';
 	return callback(reply);
+	
+	
 	var reply = '';
 	//check admin list before actually merging
 	if(adminlist.indexOf(user) > -1) {
