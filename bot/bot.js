@@ -42,7 +42,7 @@ var bot = controller.spawn({
 controller.configureSlackApp({
   clientId: clientId,//clientid
   clientSecret: clientSecret,//clientsecret
-  redirectUri: 'http://3c59565c.ngrok.io/oauth/',//oauth
+  redirectUri: 'https://b42f0003.ngrok.io/oauth/',//oauth
   scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
 });
 
@@ -119,10 +119,14 @@ app.post('/proptions', function(req, res) {
 		var options = {};
 		var key = 'options';
 		options[key] = [];
+		var details;
+		details= owner;
+		details=details+" "+repo;
 		for(i=0;i<value.length;i++){
+			//details2 = value[i].number;
 			var data = {
 				text: '#' + value[i].number + ': ' + value[i].title,
-				value: value[i].number
+				value: details + " " + value[i].number
 			};
 			// console.log('-->>>>> The Value of PR: ' + JSON.stringify(value[i]));
 			options[key].push(data);
