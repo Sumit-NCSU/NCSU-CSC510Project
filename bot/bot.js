@@ -42,7 +42,7 @@ var bot = controller.spawn({
 controller.configureSlackApp({
   clientId: clientId,//clientid
   clientSecret: clientSecret,//clientsecret
-  redirectUri: 'http://54.209.205.158:4390/oauth',//oauth
+  //redirectUri: 'http://54.209.205.158:4390/oauth',//oauth
   scopes: ['incoming-webhook','team:read','users:read','channels:read','im:read','im:write','groups:read','emoji:read','chat:write:bot']
 });
 
@@ -54,8 +54,8 @@ app.get('/oauth', function(req, res) {
     // When a user authorizes an app, a code query parameter is passed on the oAuth endpoint. If that code is not there, we respond with an error message
     if (!req.query.code) {
         res.status(500);
-        res.send({"Error": "Looks like we're not getting code."});
-        console.log("Looks like we're not getting code.");
+        res.send({"Error": "Incorrect request. The oauth code is missing."});
+        console.log("Incorrect request. The oauth code is missing.");
     } else {
         // We'll do a GET call to Slack's `oauth.access` endpoint, passing our app's client ID, client secret, and the code we just got as query parameters.
         request({
@@ -76,53 +76,29 @@ app.get('/oauth', function(req, res) {
 // This method is used to create the dynamic options to load in the list PR request.
 app.post('/proptions', function(req, res) {
 	console.log('Loading options for the dynamic menu');
-	var repo = "SEGitAPI";
-	var owner = "srivassumit";
+	var reqPayload = req.body.payload;
+	console.log('Payload:' + reqPayload);
+	var repo = "SampleRepo";
+	var owner = "botcicd";
 	github.getPullRequests(owner, repo, (value) => {
 		console.log('Bot: Received ' + value.length + ' Pull requests');
 		var options = {};
 		var key = 'options';
 		options[key] = [];
 		var details;
-		details= owner;
-		details=details+" "+repo;
-		for(i=0;i<value.length;i++){
-			//details2 = value[i].number;
+		details = owner;
+		details = details + " " + repo;
+		for(i = 0; i < value.length; i++) {
 			var data = {
 				text: '#' + value[i].number + ': ' + value[i].title,
 				value: details + " " + value[i].number
-			};
-			// console.log('-->>>>> The Value of PR: ' + JSON.stringify(value[i]));
+			};			
 			options[key].push(data);
 		}
 		console.log('Pull Requests options are: ' + JSON.stringify(options));
 		res.type('json');
 		res.send(options);
 	});	
-});
-
-// Functionality of List PRs... apart fromt he normal conversations, the user also has an option to use this slash command.
-app.post('/listprs', function(req, res) {
-	console.log('generating dynamic pr list');
-	var repo = "SEGitAPI"
-	var owner = "srivassumit"
-	var reply_with_attachments = {
-		"text": "Select a Pull Request from the List:",
-		"attachments": [{
-			"text": "Pull Requests of repository: " + repo,
-			"fallback": "Upgrade your Slack client to use message menus.",
-			"color": "#3AA3E3",
-			"attachment_type": "default",
-			"callback_id":"pr_selection",
-			"actions": [{
-			  "name": "prnames",
-			  "text": "Select a pull request",
-			  "type": "select",
-			  "data_source": "external",
-			}]
-		}]
-	};
-	res.send(reply_with_attachments);
 });
 
 // This method is used to respond to the actions whenever a user selects any option from a menu or clicks on a button.
@@ -136,8 +112,7 @@ app.post('/actions', function(req, res) {
 	var actionName = JSON.parse(reqPayload).actions[0].name;
 	var actionValue = JSON.parse(reqPayload).actions[0].value;
 	console.log('actionName:' + actionName);
-	console.log('actionValue:' + actionValue);
-	//res.type('json');
+	console.log('actionValue:' + actionValue);	
 	if (actionName == 'merge') {
 		// The merge button is clicked.
 		console.log('The Merge button was clicked');
@@ -149,8 +124,7 @@ app.post('/actions', function(req, res) {
 		var user = userName
 		doMergeAction(repo, owner, prnumber, branch,user,function(response){
 			res.send(response);	
-		});
-		//res.send("you clicked merge button!");
+		});		
 	} else if (actionName == 'nomerge') {
 		// The Dont't merge button is clicked
 		console.log('The Don\'t Merge button was clicked');		
@@ -161,44 +135,38 @@ app.post('/actions', function(req, res) {
 		console.log('The request Payload is: ' + reqPayload);
 		var selectedOptionValue = JSON.parse(reqPayload).actions[0].selected_options[0].value;
 		console.log(selectedOptionValue); // This is the PR number
-
 		//extract things from selectedOptionValue
 		var arr = selectedOptionValue.split(" ")
 		console.log('Got this: ' +arr);//<owner> <repo> <number>
 		github.getPullRequest(arr[0], arr[1], arr[2], (value) => {
 			console.log(value)
 			var headBranch = value.head.label.split(":")[1];
-			var baseBranch = value.base.label.split(":")[1];
-			//console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
+			var baseBranch = value.base.label.split(":")[1];			
 			var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
 			var msg = "Pull Request Details: \nId: " + value.id + "\nTitle: " +value.title + "\nDescription: " + value.body;
 			var reply_with_attachments = {
 				"text": msg,
-				"attachments": [
+				"attachments": [{
+					"text": "Would you like to merge this PR",
+					"fallback": "You are unable to choose an option",
+					"callback_id": "merge_action",
+					"color": "#09aa08",
+					"attachment_type": "default",
+					"actions": [{
+						"name": "merge",
+						"text": "Merge",
+						"style":"primary",
+						"type": "button",
+						"value": val
+					},
 					{
-						"text": "Would you like to merge this PR",
-						"fallback": "You are unable to choose an option",
-						"callback_id": "merge_action",
-						"color": "#09aa08",
-						"attachment_type": "default",
-						"actions": [
-							{
-								"name": "merge",
-								"text": "Merge",
-								"style":"primary",
-								"type": "button",
-								"value": val
-							},
-							{
-								"name": "nomerge",
-								"text": "Don't Merge",
-								"style":"danger",
-								"type": "button",
-								"value": "nomerge"
-							}
-						]
-					}
-				]
+						"name": "nomerge",
+						"text": "Don't Merge",
+						"style":"danger",
+						"type": "button",
+						"value": "nomerge"
+					}]
+				}]
 			}
 			res.type('json');
 			res.send(reply_with_attachments);
@@ -216,14 +184,13 @@ controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], func
 	});
 });
 
-controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	// user says: issue pull request on aakarshg/Serverprovision aakarshg-patch-3
+controller.hears(/\bissue.*pull.*request.*on.*botcicd\\SampleRepo.*from.*new-feature.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
+	// user says: issue pull request on botcicd/SampleRepo from new-feature
 	var text_message = message.text
-	var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
-
-	var repo = "Serverprovision"
-	var owner = "aakarshg"
-	var branchName = "aakarshg-patch-4"
+	var responseMsg = "Successfully issued " + text_message.toString().split("issue").pop();
+	var repo = "SampleRepo"
+	var owner = "botcicd"
+	var branchName = "new-feature"
 	var base = "master"
 	github.createPullRequest(owner, repo, branchName, base, (value) => {
 		if (value){
@@ -237,10 +204,10 @@ controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_mes
 });
 
 // Get the list of pull requests for a given repository. Alternately the slash command /listprs can also be used.
-controller.hears(/\bget.*requests.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
+controller.hears(/\bget.*pull.*requests.*for.*botcicd\\SampleRepo.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	// user says: Get pull requests for octocat for repo Hello-World
-	var repo = "SEGitAPI"
-	var owner = "srivassumit"
+	var repo = "SampleRepof"
+	var owner = "botcicd"
 	console.log('generating dynamic pr list');
 	var reply_with_attachments = {
 		"text": "Select a Pull Request from the List:",
@@ -262,10 +229,10 @@ controller.hears(/\bget.*requests.*\b/,['mention', 'direct_mention','direct_mess
 });
 
 // Get the details of a given pull request.
-controller.hears(/\bget.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
+controller.hears(/\bget.*pull.*request.*on.*botcicd\\SampleRepo.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	// let the bot say: Get pull request 1 for octat for repo Hello-World
-	var repo = "SEGitAPI" // extract this from user message/intent/context?
-	var owner = "srivassumit" // extract this from user message/intent/context?
+	var repo = "SampleRepo" // extract this from user message/intent/context?
+	var owner = "botcicd" // extract this from user message/intent/context?
 	var number = 13 // extract this from user message/intent/context?
 	github.getPullRequest(owner, repo, number, (value) => {
 		console.log(value);
@@ -275,63 +242,47 @@ controller.hears(/\bget.*request.*\b/,['mention', 'direct_mention','direct_messa
 		var t ="Id: " + value.number + "\nTitle: " + value.title + "\nDescription: " + value.body + "\nHEAD Branch: " + headBranch;
     	bot.reply(message, t.toString());
 	});
-
 });
 
 // merge a given pull request. Alternately the slash command /mergepr can also be used.
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
-controller.hears(/\bmerge.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
+controller.hears(/\bmerge.*pull.*request.*on.*botcicd\\SampleRepo.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	console.log('inside merge method hear');
-	var repo = "SEGitAPI"; // extract this from user message/intent/context?
-	var owner = "srivassumit" // extract this from user message/intent/context?
-	var number = 15; // extract this from user message/intent/context?
-
+	var repo = "SampleRepo"; // extract this from user message/intent/context?
+	var owner = "botcicd" // extract this from user message/intent/context?
+	var number = 5; // extract this from user message/intent/context?
 	github.getPullRequest(owner, repo, number, (value) => {
 		console.log(value);
 		var headBranch = value.head.label.split(":")[1];
-		var baseBranch = value.base.label.split(":")[1];
-		//console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
+		var baseBranch = value.base.label.split(":")[1];		
 		var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
 		var reply_with_attachments = {
 			"text": "Would you like to merge this PR?",
-			"attachments": [
+			"attachments": [{
+				"text": "Choose an option",
+				"fallback": "You are unable to choose an option",
+				"callback_id": "merge_action",
+				"color": "#09aa08",
+				"attachment_type": "default",
+				"actions": [{
+					"name": "merge",
+					"text": "Merge",
+					"style":"primary",
+					"type": "button",
+					"value": val
+				},
 				{
-					"text": "Choose an option",
-					"fallback": "You are unable to choose an option",
-					"callback_id": "merge_action",
-					"color": "#09aa08",
-					"attachment_type": "default",
-					"actions": [
-						{
-							"name": "merge",
-							"text": "Merge",
-							"style":"primary",
-							"type": "button",
-							"value": val
-						},
-						{
-							"name": "nomerge",
-							"text": "Don't Merge",
-							"style":"danger",
-							"type": "button",
-							"value": "nomerge"
-						}
-					]
-				}
-			]
+					"name": "nomerge",
+					"text": "Don't Merge",
+					"style":"danger",
+					"type": "button",
+					"value": "nomerge"
+				}]
+			}]
 		}
 		bot.reply(message, reply_with_attachments);    	
 	});
-
-	
 });
-
-// Getting the details from jenkins and this is where bot is supposed to hit git's rest api to get all details.
-controller.hears(/\bsample.*Pull.*request.*submitted\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	console.log("Got the message");
-	bot.say({text: "[sample/samplerepo] Pull request submitted by dummy #9 DummyPRTitle", channel: 'selenium-test'});
-});
-
 
 function doMergeAction(repo, owner, prnumber, branch, user, callback) {
 	console.log('inside do merge action');
