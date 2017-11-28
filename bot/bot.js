@@ -175,13 +175,31 @@ controller.hears(['hi', 'hello', 'greetings'], [ 'mention', 'direct_mention', 'd
 });
 
 controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	// user says: issue pull request on botcicd/SampleRepo new-feature
+	//issue pull request on repo aakarshg/Serverprovision from aakarshg-patch-3 onto master
 	var text_message = message.text;
 	var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
-	var repo = "SampleRepo";
-	var owner = "botcicd";
-	var branchName = "new-feature";
-	var base = "master";
+	var extract_base = "onto "
+	var base = text_message.toString().split(extract_base).pop();
+	var extract_head = "from "
+	var branch_head = text_message.toString().split(extract_head).pop();
+	var branchName = branch_head.split(" ")[0];
+	var extract_repo = "repo"
+	var repo_name = text_message.split("repo ")[1].split(" ")[0];
+	var owner = repo_name.split("/")[0]
+	var repo = repo_name.split("/")[1]
+	var statuscheck = 0;
+	console.log(base);
+	console.log(branchName);
+	console.log(owner);
+	console.log(repo);
+	if(repolist.indexOf(repo_name)  >    -1 ){
+  	console.log(repo_name)
+  	statuscheck = 1;
+	}
+	else{
+  	console.log("The repository isn't in the list of repositories managed by bot")
+  	bot.reply(message, "Unable to create pull request.");
+	}
 	github.createPullRequest(owner, repo, branchName, base, (value) => {
 		if (value) {
 			console.log("Pull Request created")
@@ -193,11 +211,15 @@ controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_mes
 	});
 });
 
-// Get the list of pull requests for a given repository. Alternately the slash command /listprs can also be used.
+// Get the list of pull requests for a given repository. 
 controller.hears(/\bget.*requests.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	// user says: Get pull requests for octocat for repo Hello-World
-	var repo = "SampleRepo"
-	var owner = "botcicd"
+	// Get pull requests for repo ssrivas8/segitapi
+	var text_message = message.text;
+	var repo_name = text_message.split("repo ")[1]
+	var owner = repo_name.split("/")[0]
+	var repo = repo_name.split("/")[1]
+	console.log(owner)
+	console.log(repo)
 	console.log('Bot: Generating dynamic pull request list');
 	var reply_with_attachments = {
 		"text": "Select a Pull Request from the List:",
@@ -221,10 +243,15 @@ controller.hears(/\bget.*requests.*\b/,['mention', 'direct_mention','direct_mess
 // Get the details of a given pull request.
 controller.hears(/\bget.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	console.log('Bot: Inside Get request details for a specific request.');
-	// let the bot say: Get pull request 1 for octat for repo Hello-World
-	var repo = "SampleRepo" // extract this from user message/intent/context?
-	var owner = "botcicd" // extract this from user message/intent/context?
-	var number = 8 // extract this from user message/intent/context?
+	// let the bot say: Get pull request 1 for repo ssrivas8/segitapi
+	var text_message = message.text;
+	var number = text_message.toString().split(extract_pr).pop().split(" ")[0];
+	var repo_name = text_message.split("repo ")[1]
+	var owner = repo_name.split("/")[0]
+	var repo = repo_name.split("/")[1]
+	console.log(owner)
+	console.log(repo)
+	console.log(number)
 	github.getPullRequest(owner, repo, number, (value) => {
 		console.log(value);
 		var headBranch = value.head.label.split(":")[1];
@@ -237,10 +264,18 @@ controller.hears(/\bget.*request.*\b/,['mention', 'direct_mention','direct_messa
 
 // merge a given pull request. Alternately the slash command /mergepr can also be used.
 controller.hears(/\bmerge.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
+	//merge pull request 1 for repo aakarshg/serverprovision
 	console.log('Bot: Inside merge pull request method.');
-	var repo = "SampleRepo"; // extract this from user message/intent/context?
-	var owner = "botcicd" // extract this from user message/intent/context?
-	var number = 15; // extract this from user message/intent/context?
+	var text_message = message.text;
+	var extract_pr = "request "
+	var number = text_message.toString().split(extract_pr).pop().split(" ")[0];
+	var repo_name = text_message.split("repo ")[1]	
+	var owner = repo_name.split("/")[0]
+	var repo = repo_name.split("/")[1]
+	console.log(owner)
+	console.log(repo)
+	console.log(repo_name)
+	console.log(number)
 	github.getPullRequest(owner, repo, number, (value) => {
 		console.log(value);
 		var headBranch = value.head.label.split(":")[1];
