@@ -10,10 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
     "botkit": "^0.6.4",
-    "botkit-middleware-witai": "0.0.2",
+    "botkit-middleware-witai": "^0.0.2",
     "easy-table": "^1.1.0",
     "nock": "^9.0.25",
+    "node-wit": "^4.3.0",
     "request": "^2.83.0"
   }
 }

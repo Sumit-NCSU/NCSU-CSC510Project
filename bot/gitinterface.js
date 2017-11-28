@@ -13,9 +13,6 @@ var repoName = "SEGitAPI";
  * @param {*} branchName [optional] defaults to master
  */
 function getPullRequests(owner, repo, callback) {
-	// Default values for optional variables
-
-
 	// Set the options for the request.
 	var options = {
 		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
@@ -24,7 +21,6 @@ function getPullRequests(owner, repo, callback) {
 			"User-Agent": "CiCdBot",
 			"content-type": "application/json",
 			"Authorization": "token " + process.env.GITTOKEN,
-
 		}
 	};
 	var pullRequests=[];
@@ -70,17 +66,10 @@ function getPullRequest(owner, repo, number,callback) {
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
 		//console.log(obj);
-
 		if (obj != null) {
-				var arr2 = [];
-				arr2.push(obj.body);
-				arr2.push(obj.state)
-				arr2.push(obj.title);
-				arr2.push(obj.id);
 				var title = obj.title;
 				console.log("Pull Request Name: " + title);
 				return callback(obj)
-
 		} else {
 			console.log('No Pull request found');
 			return false;
@@ -365,6 +354,33 @@ function getStatus(owner,repo,ref,callback)
 
 }
 
+function createPullRequest(owner,repo,head,base)
+{
+	var options = {
+		url: urlRoot + '/repos/' + owner + "/" + repo + "/pulls",
+		method: 'POST',
+		headers: {
+			"User-Agent": "EnableIssues",
+			"content-type": "application/json",
+			"Authorization": "token " + process.env.GITTOKEN
+		},
+		json:
+		{
+			"title": "Created by bot from slack",
+			"body": "Please check commit history",
+			"head": head,
+			"base": base
+		}
+
+	};
+	// Send a http request to url and specify a callback that will be called upon its return.
+	request(options, function (error, response, body)
+	{
+		console.log( body );
+
+	});
+	return 1
+}
 //getPullRequests(user,repoName);
 
 //mergePullRequest(user,repoName,3);
@@ -381,3 +397,4 @@ exports.getPullRequest = getPullRequest;
 exports.getPullRequestFiles = getPullRequestFiles;
 exports.getBranches = getBranches;
 exports.getContributors = getContributors;
+exports.createPullRequest = createPullRequest;
