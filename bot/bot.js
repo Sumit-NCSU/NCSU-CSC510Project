@@ -318,33 +318,6 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
    });
  }
 })})
-// // Greetings to the user
-// controller.hears(['hi', 'hello', 'greetings'], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
-	// controller.storage.users.get(message.user, function(err, user) {
-		// console.log('inside hi');	
-		// bot.reply(message, 'Hello, this: ' + message.user + ' ,will be your unique ID for this App. Please store it somewhere! ');
-	// });
-// });
-
-// controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	// // user says: issue pull request on aakarshg/Serverprovision aakarshg-patch-3
-	// var text_message = message.text
-	// var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
-
-	// var repo = "Serverprovision"
-	// var owner = "aakarshg"
-	// var branchName = "aakarshg-patch-4"
-	// var base = "master"
-	// github.createPullRequest(owner, repo, branchName, base, (value) => {
-		// if (value){
-			// console.log("Pull Request created")
-			// bot.reply(message, responseMsg);
-		// } else {
-			// console.log("unable to create pull request.")
-			// bot.reply(message, "Unable to create pull request.");
-		// }
-	// });
-// });
 
 // // Get the list of pull requests for a given repository. Alternately the slash command /listprs can also be used.
 // controller.hears(/\bget.*requests.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
