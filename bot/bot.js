@@ -21,10 +21,6 @@ app.listen(PORT, function () {
     console.log("CiBot app listening on port " + PORT);
 });
 
-if (process.env.SLACKTOKEN) {
-	console.log("This is the slacktoken set-" + process.env.SLACKTOKEN);
-}
-
 if (!process.env.SLACKTOKEN) {
 	console.log('Error: Specify the Slack bot token in environment variable: SLACKTOKEN');
 	process.exit(1);
