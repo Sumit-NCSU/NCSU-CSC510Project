@@ -10,7 +10,8 @@
     * SLACKTOKEN
     * GITTOKEN
     * CIBOTCID (this is your slack bot client id)
-    * CIBOTCSEC (this is your slack bot cleint secret key) </br>
+    * CIBOTCSEC (this is your slack bot cleint secret key) 
+    * WIT (this is your wit ai token) </br>
 5. You also need your _AWS ACCESS ID_ and _AWS SECRET KEY_, with the private key to ssh into AWS EC2 instance. Name the private key file as **se\_slack\_key.pem**, change the permission of the key file to 600 and place it in /home/vagrant/keys/ directory. </br>
 
 <hr>
@@ -45,3 +46,5 @@ $ touch inventory
 ```bash
 $ ansible-playbook -i inventory aws.yml -s 
 ```
+
+<hr>
