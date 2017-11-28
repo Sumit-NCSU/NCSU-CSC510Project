@@ -251,7 +251,7 @@ controller.hears(/\bmerge.*\b/, [ 'mention', 'direct_mention', 'direct_message' 
 	console.log('inside merge method hear');
 	var repo = "SampleRepo"; // extract this from user message/intent/context?
 	var owner = "botcicd" // extract this from user message/intent/context?
-	var number = 8; // extract this from user message/intent/context?
+	var number = 9; // extract this from user message/intent/context?
 	github.getPullRequest(owner, repo, number, (value) => {
 		console.log('Bot: value from Get Pull Request: ' + value);
 		if (value) {
