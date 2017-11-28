@@ -1,7 +1,8 @@
 #!/bin/bash
 
-echo "export SLACKTOKEN="xoxb-277295356770-FK2arrfUcxjnwOhIz3OYb7eD"" >> /etc/environment
-echo "export CLIENTID="234420262803.278786608823"" >> /etc/environment
-echo "export CLIENTSECRET="8e238a7b0cca46530ad840104a3fbb47"" >> /etc/environment
+echo "export SLACKTOKEN="YOUR_SLACKTOKEN_GOES_HERE"" >> /etc/environment
+echo "export CIBOTCID="YOUR_BOT_CLIENT_ID_GOES_HERE"" >> /etc/environment
+echo "export CIBOTCSEC="YOUR_BOT_CLIENT_SECRET_GOES_HERE"" >> /etc/environment
+echo "export GITTOKEN="YOUR_GITTOKEN_GOES_HERE"" >> /etc/environment
 
 source ~/.bashrc
