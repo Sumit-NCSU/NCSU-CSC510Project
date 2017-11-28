@@ -258,10 +258,10 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 	 var base = data.entities.to[0].value
 	 github.createPullRequest(owner, repo, branchName, base, (value) => {
 		 if (value){
-			 console.log("Pull Request created")
-			 bot.reply(message, responseMsg);
+			 console.log("Pull Request created");
+			 bot.reply(message,"Pull Request created");
 		 } else {
-			 console.log("unable to create pull request.")
+			 console.log("unable to create pull request.");
 			 bot.reply(message, "Unable to create pull request.");
 		 }
    });
