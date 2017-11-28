@@ -175,99 +175,102 @@ app.post('/actions', function(req, res) {
 
 // Get the list of pull requests for a given repository. Alternately the slash command /listprs can also be used.
 controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	console.log(message.match[0])
-    client.message(message.match)
- .then((data) => {
-   console.log(JSON.stringify(data));
-   var intent = (data.entities.intent[0].value)
-   var repo1 = (data.entities.repo_name[0].value)
-   
-   if(intent.toString() == "merge_pull_req"){
-	 //  console.log("Insiade")
-		var number = (data.entities.number[0].value)
-		console.log(repo1)
-		var owner = repo1.split('/')[1]
-		var repo =  repo1.split('/')[0]
-		console.log(repo,owner,number)
-		 github.getPullRequest(owner, repo, number, (value) => {
-		 console.log(value);
-		var headBranch = value.head.label.split(":")[1];
-		var baseBranch = value.base.label.split(":")[1];
-		 //console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
-		 var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
-		 var reply_with_attachments = {
-			 "text": "Would you like to merge this PR?",
-			 "attachments": [
-				 {
-					 "text": "Choose an option",
-					 "fallback": "You are unable to choose an option",
-					 "callback_id": "merge_action",
-					 "color": "#09aa08",
-					 "attachment_type": "default",
-					 "actions": [
-						 {
-							 "name": "merge",
-							 "text": "Merge",
-							 "style":"primary",
-							 "type": "button",
-							 "value": val
-						 },
-						 {
-							 "name": "nomerge",
-							 "text": "Don't Merge",
-							 "style":"danger",
-							 "type": "button",
-							 "value": "nomerge"
-								 }
-				 ]
-				 }
-			 ]
-		 }
-		 bot.reply(message, reply_with_attachments);    	
-	 });
+	try{
+		console.log(message.match[0])
+    	client.message(message.match)
+ 		.then((data) => {
+   			console.log(JSON.stringify(data));
+				var intent = (data.entities.intent[0].value)
+				var repo1 = (data.entities.repo_name[0].value)
+				
+				if(intent.toString() == "merge_pull_req"){
+					//  console.log("Insiade")
+					var number = (data.entities.number[0].value)
+					console.log(repo1)
+					var owner = repo1.split('/')[1]
+					var repo =  repo1.split('/')[0]
+					console.log(repo,owner,number)
+					github.getPullRequest(owner, repo, number, (value) => {
+						console.log(value);
+						var headBranch = value.head.label.split(":")[1];
+						var baseBranch = value.base.label.split(":")[1];
+						//console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
+						var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
+						var reply_with_attachments = {
+							"text": "Would you like to merge this PR?",
+							"attachments": [
+								{
+									"text": "Choose an option",
+									"fallback": "You are unable to choose an option",
+									"callback_id": "merge_action",
+									"color": "#09aa08",
+									"attachment_type": "default",
+									"actions": [
+									{
+										"name": "merge",
+										"text": "Merge",
+										"style":"primary",
+										"type": "button",
+										"value": val
+									},
+									{	
+										"name": "nomerge",
+										"text": "Don't Merge",
+										"style":"danger",
+										"type": "button",
+										"value": "nomerge"
+									}]
+								}]
+						}
+						bot.reply(message, reply_with_attachments);    	
+					});
 
-   }
-   else if(intent=="list_pull_reqs"){
-	   console.log(repo1)
-	   var repo = repo1.split('/')[0]
-	    var reply_with_attachments = {
-		 "text": "Select a Pull Request from the List:",
-		 "attachments": [{
-			 "text": "Pull Requests of repository: " + repo,
-			 "fallback": "Upgrade your Slack client to use message menus.",
-			 "color": "#3AA3E3",
-			 "attachment_type": "default",
-			 "callback_id":"pr_selection",
-			 "actions": [{
-			   "name": "prnames",
-			   "text": "Select a pull request",
-			   "type": "select",
-			   "data_source": "external",
-			 }]
-		 }]
-	 };
-	 bot.reply(message, reply_with_attachments);
-   }
-   else if(intent=="issue_pull_req"){
-	   // var text_message = message.text
-	// var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
+   				}
+				else if(intent=="list_pull_reqs"){
+					console.log(repo1)
+					var repo = repo1.split('/')[0]
+						var reply_with_attachments = {
+						"text": "Select a Pull Request from the List:",
+						"attachments": [{
+							"text": "Pull Requests of repository: " + repo,
+							"fallback": "Upgrade your Slack client to use message menus.",
+							"color": "#3AA3E3",
+							"attachment_type": "default",
+							"callback_id":"pr_selection",
+							"actions": [{
+							"name": "prnames",
+							"text": "Select a pull request",
+							"type": "select",
+							"data_source": "external",
+							}]
+						}]
+					};
+					bot.reply(message, reply_with_attachments);
+				}
+				else if(intent=="issue_pull_req"){
+					// var text_message = message.text
+					// var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
 
-	 var repo = repo1.split('/')[0]
-	 var owner = repo1.split('/')[1]
-	 var branchName = data.entities.from[0].value
-	 var base = data.entities.to[0].value
-	 github.createPullRequest(owner, repo, branchName, base, (value) => {
-		 if (value){
-			 console.log("Pull Request created");
-			 bot.reply(message,"Pull Request created");
-		 } else {
-			 console.log("unable to create pull request.");
-			 bot.reply(message, "Unable to create pull request.");
-		 }
-   });
- }
-})})
-
+					var repo = repo1.split('/')[0]
+					var owner = repo1.split('/')[1]
+					var branchName = data.entities.from[0].value
+					var base = data.entities.to[0].value
+					github.createPullRequest(owner, repo, branchName, base, (value) => {
+						if (value){
+							console.log("Pull Request created");
+							bot.reply(message,"Pull Request created");
+						} else {
+							console.log("unable to create pull request.");
+							bot.reply(message, "Unable to create pull request.");
+						}
+					});
+				}
+			})
+		} catch(err){
+			console.error(err);
+			bot.reply(message, "Couldn't recognize the intent. I can only perform 'list', 'issue' and 'merge' on pull request.");
+		}
+	})
 
 
 
