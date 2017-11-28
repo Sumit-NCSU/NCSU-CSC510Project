@@ -186,7 +186,7 @@ controller.hears(/\bissue.*\b/,['mention', 'direct_mention','direct_message'], f
 	var responseMsg = "Successfully issued " + text_message.toString().split("issue").pop();
 	var repo = "SampleRepo"
 	var owner = "botcicd"
-	var branchName = "new-featurex"
+	var branchName = "new-feature"
 	var base = "master"
 	github.createPullRequest(owner, repo, branchName, base, (value) => {
 		if (value){
