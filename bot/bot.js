@@ -180,7 +180,7 @@ app.post('/actions', function(req, res) {
 controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	controller.storage.users.get(message.user, function(err, user) {
 		console.log('inside hi');	
-		bot.reply(message, 'Hello, this: ' + message.user + ' ,will be your unique ID for this App. Please store it somewhere! ');
+		bot.reply(message, 'Hello!');
 	});
 });
 
