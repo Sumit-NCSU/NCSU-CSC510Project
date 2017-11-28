@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var clientId = process.env.CIBOTCID;
 var clientSecret = process.env.CIBOTCSEC;
 
-var adminlist = ["U6WCFDZL3", "U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q"];
+var adminlist = ["U6WCFDZL3", "U6WGAURSQ", "U7NH5E072", "U6VUKPYCR", "U7USQD4SY", "U7C5SDE5Q"];
 
 var app = express();
 app.use(bodyParser.urlencoded());
@@ -251,7 +251,7 @@ controller.hears(/\bmerge.*\b/, [ 'mention', 'direct_mention', 'direct_message' 
 	console.log('inside merge method hear');
 	var repo = "SampleRepo"; // extract this from user message/intent/context?
 	var owner = "botcicd" // extract this from user message/intent/context?
-	var number = 15; // extract this from user message/intent/context?
+	var number = 16; // extract this from user message/intent/context?
 	github.getPullRequest(owner, repo, number, (value) => {
 		console.log('Bot: value from Get Pull Request: ' + value);
 		if (value) {
