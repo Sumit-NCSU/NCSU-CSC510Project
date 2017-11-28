@@ -5,7 +5,7 @@ var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 
-const {Wit, log} = require('node-wit');
+const Wit = require('node-wit');
 
 const client = new Wit({accessToken: process.env.WIT});
 
