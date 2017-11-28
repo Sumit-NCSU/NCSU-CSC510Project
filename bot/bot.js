@@ -186,15 +186,15 @@ controller.hears(/\bissue.*pull.*request.*on.*botcicd\\SampleRepo.*from.*new-fea
 	var responseMsg = "Successfully issued " + text_message.toString().split("issue").pop();
 	var repo = "SampleRepo"
 	var owner = "botcicd"
-	var branchName = "new-feature"
+	var branchName = "new-featurex"
 	var base = "master"
 	github.createPullRequest(owner, repo, branchName, base, (value) => {
 		if (value){
-			console.log("Pull Request created")
+			console.log('Bot: Pull Request created');
 			bot.reply(message, responseMsg);
 		} else {
-			console.log("unable to create pull request.")
-			bot.reply(message, "Unable to create pull request.");
+			console.log('Bot: Could not find pull request number ' + number + ' not found in repo: ' + repo + ' branch: ' + branchName);
+			bot.reply(message, 'Could not find pull request number ' + number + ' not found in repo: ' + repo + ' branch: ' + branchName);
 		}
 	});
 });
@@ -202,7 +202,7 @@ controller.hears(/\bissue.*pull.*request.*on.*botcicd\\SampleRepo.*from.*new-fea
 // Get the list of pull requests for a given repository. Alternately the slash command /listprs can also be used.
 controller.hears(/\bget.*pull.*requests.*for.*botcicd\\SampleRepo.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	// user says: Get pull requests for octocat for repo Hello-World
-	var repo = "SampleRepof"
+	var repo = "SampleRepo"
 	var owner = "botcicd"
 	console.log('generating dynamic pr list');
 	var reply_with_attachments = {
@@ -232,11 +232,16 @@ controller.hears(/\bget.*pull.*request.*on.*botcicd\\SampleRepo.*\b/,['mention',
 	var number = 13 // extract this from user message/intent/context?
 	github.getPullRequest(owner, repo, number, (value) => {
 		console.log(value);
-		var headBranch = value.head.label.split(":")[1];
-		var baseBranch = value.base.label.split(":")[1];
-		console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
-		var t ="Id: " + value.number + "\nTitle: " + value.title + "\nDescription: " + value.body + "\nHEAD Branch: " + headBranch;
-    	bot.reply(message, t.toString());
+		if (value) {
+			var headBranch = value.head.label.split(":")[1];
+			var baseBranch = value.base.label.split(":")[1];
+			console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
+			var t ="Id: " + value.number + "\nTitle: " + value.title + "\nDescription: " + value.body + "\nHEAD Branch: " + headBranch;
+			bot.reply(message, t.toString());
+		} else {
+			console.log('Bot: Could not find pull request number ' + number + ' not found in repo: ' + repo);
+			bot.reply(message, 'Could not find pull request number ' + number + ' not found in repo: ' + repo);
+		}
 	});
 });
 
@@ -248,35 +253,40 @@ controller.hears(/\bmerge.*pull.*request.*on.*botcicd\\SampleRepo.*\b/, [ 'menti
 	var owner = "botcicd" // extract this from user message/intent/context?
 	var number = 5; // extract this from user message/intent/context?
 	github.getPullRequest(owner, repo, number, (value) => {
-		console.log(value);
-		var headBranch = value.head.label.split(":")[1];
-		var baseBranch = value.base.label.split(":")[1];		
-		var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
-		var reply_with_attachments = {
-			"text": "Would you like to merge this PR?",
-			"attachments": [{
-				"text": "Choose an option",
-				"fallback": "You are unable to choose an option",
-				"callback_id": "merge_action",
-				"color": "#09aa08",
-				"attachment_type": "default",
-				"actions": [{
-					"name": "merge",
-					"text": "Merge",
-					"style":"primary",
-					"type": "button",
-					"value": val
-				},
-				{
-					"name": "nomerge",
-					"text": "Don't Merge",
-					"style":"danger",
-					"type": "button",
-					"value": "nomerge"
+		console.log('Bot: value from Get Pull Request: ' + value);
+		if (value) {
+			var headBranch = value.head.label.split(":")[1];
+			var baseBranch = value.base.label.split(":")[1];		
+			var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
+			var reply_with_attachments = {
+				"text": "Would you like to merge this PR?",
+				"attachments": [{
+					"text": "Choose an option",
+					"fallback": "You are unable to choose an option",
+					"callback_id": "merge_action",
+					"color": "#09aa08",
+					"attachment_type": "default",
+					"actions": [{
+						"name": "merge",
+						"text": "Merge",
+						"style":"primary",
+						"type": "button",
+						"value": val
+					},
+					{
+						"name": "nomerge",
+						"text": "Don't Merge",
+						"style":"danger",
+						"type": "button",
+						"value": "nomerge"
+					}]
 				}]
-			}]
+			}
+			bot.reply(message, reply_with_attachments);
+		} else {
+			console.log('Bot: Unable to merge pull request number ' + number + ' not found in repo: ' + repo);
+			bot.reply(message, 'Unable to merge pull request number ' + number + ' not found in repo: ' + repo);
 		}
-		bot.reply(message, reply_with_attachments);    	
 	});
 });
 
@@ -295,7 +305,7 @@ function doMergeAction(repo, owner, prnumber, branch, user, callback) {
 					}
 				});
 			} else {
-				console.log('Jenkins Build is not succesful yet! Pull request can be merged once the Jenkins build is successful.');
+				console.log('Bot: Jenkins Build is not succesful yet! Pull request can be merged once the Jenkins build is successful.');
 				reply = "Jenkins Build is not succesful yet! Pull request can be merged once the Jenkins build is successful.";
 				return callback(reply);
 			}
