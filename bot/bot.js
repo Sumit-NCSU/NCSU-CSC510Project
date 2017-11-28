@@ -180,7 +180,7 @@ app.post('/actions', function(req, res) {
 controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	controller.storage.users.get(message.user, function(err, user) {
 		console.log('inside hi');	
-		bot.reply(message, 'Hello!');
+		bot.reply(message, 'Hello! :wave:');
 	});
 });
 
