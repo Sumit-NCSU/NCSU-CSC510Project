@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 const {Wit, log} = require('node-wit');
 
-const client = new Wit({accessToken: process.env.wit});
+const client = new Wit({accessToken: process.env.WIT});
 
 var clientId = process.env.CIBOTCID;
 var clientSecret = process.env.CIBOTCSEC;
@@ -27,7 +27,7 @@ if (!process.env.SLACKTOKEN) {
 	console.log('Error: Specify the Slack bot token in environment variable: SLACKTOKEN');
 	process.exit(1);
 }
-if (!process.env.wit) {
+if (!process.env.WIT) {
     console.log('Error: Specify wit in environment');
     process.exit(1);
 }
