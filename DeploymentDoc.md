@@ -11,12 +11,15 @@
     * GITTOKEN
     * CIBOTCID (this is your slack bot client id)
     * CIBOTCSEC (this is your slack bot cleint secret key) </br>
-5. You also need your _AWS ACCESS ID_ and _AWS SECRET KEY_, with the private key to ssh into AWS EC2 instance. Name the private key file as **se\_slack\_key.pem**, change the permission of the key file to 600 and place it in /home/vagrant/keys/ directory.</br>
+5. You also need your _AWS ACCESS ID_ and _AWS SECRET KEY_, with the private key to ssh into AWS EC2 instance. Name the private key file as **se\_slack\_key.pem**, change the permission of the key file to 600 and place it in /home/vagrant/keys/ directory. </br>
 
 <hr>
 
 #### Instructions to Run our deployment script
 **Step 1:** ssh into the newly created vagrant machine </br>
+```bash
+$ vagrant ssh
+```
 
 **Step 2:** Install ansible into the vagrant machine, you can use below commands for the same </br>
 ```bash

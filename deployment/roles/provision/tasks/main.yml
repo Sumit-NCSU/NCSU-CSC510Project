@@ -1,22 +1,31 @@
-- name: Install npm
-  apt:
-    name: npm
-    state: latest
-    update_cache: yes
+
+# Set the environment variables
+- name: Configure environment variables
+  script: environment_setup.sh
+
+# Get the debian file into tmp/ folder
+- name: Download node v6 
+  get_url:
+    url: https://deb.nodesource.com/setup_6.x
+    dest: /tmp/setup.sh
+    mode: 0777
+
+# Run the script file
+- name: Install node v6  
+  command: /bin/sh /tmp/setup.sh
   become: yes
 
-- name: Install node.js
-  apt:
-    name: nodejs-legacy
-    state: latest
-    update_cache: yes
-    install_recommends: no
+# Run the nodejs installation
+- name: Remove old node js
+  shell: 'apt-get -y install nodejs'
   become: yes
 
+# Install forever
 - name: Installing forever js
   shell: npm install -g forever
   become: yes
 
+# Install Git
 - name: Installing git
   apt:
     name: git
@@ -24,53 +33,25 @@
     update_cache: true
   become: yes
 
-    # - name: Create the Github SSH public key file
-    #   copy: src="/home/vagrant_data/deployment/github_rsa.pub"
-    #         dest="/home/ubuntu/.ssh/id_rsa.pub"
-    #         mode=0644
-    #         owner=ubuntu
-    #         group=ubuntu
-
-    # - name: Create the Github SSH private key file
-    #   copy: src="/home/vagrant_data/deployment/github_rsa"
-    #         dest="/home/ubuntu/.ssh/id_rsa"
-    #         mode=0600
-    #         owner=ubuntu
-    #         group=ubuntu
-
-    # - name: Setup the Git repo
-    #   become: no
-    #   git:  repo=https://github.ncsu.edu/ssrivas8/CSC510Project.git
-    #         version=master
-    #         dest=/home/ubuntu/Project
-    #         accept_hostkey=yes
-    #         key_file="/home/ubuntu/.ssh/id_rsa"
-
+# Clone the git repository
 - name: Cloning Git Repo
-  git: repo=https://{{ git_username }}:{{ git_password }}@github.ncsu.edu/ssrivas8/CSC510Project.git dest=/home/ubuntu/Project version=milestone3
+  git: repo=https://{{ git_username }}:{{ git_password }}@github.ncsu.edu/ssrivas8/CSC510Project.git dest=/home/ubuntu/Project version=sindhu
 
-
+# Run npm install into bot/ folder
 - name: Running NPM install
   shell: npm install
   args:
     chdir: /home/ubuntu/Project/bot
   become: yes
-    
-- name: Configure environment variables
-  script: environment_setup.sh
 
-- name: Change the ip in bot.js
-  lineinfile:
-    path: /home/ubuntu/Project/bot/bot.js
-    regexp: '.*redirectUri.*'
-    line: " redirectUri: 'http://{{ ansible_host }}:4390/oauth',//oauth "
-
+# Run the forever on 4390 port
 - name: Start the forever server 4390
   shell: "forever start bot.js 4390"
   args:
     chdir: /home/ubuntu/Project/bot
   become: yes
     
+# Delete the tmp/ folder 
 - name: Deleting files from temp directory
   file: path=/tmp/* state=absent
   become: yes
