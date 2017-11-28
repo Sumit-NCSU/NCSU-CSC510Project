@@ -13,7 +13,8 @@ A detailed description of how these configuration tools should be set-up and use
 ## Acceptance Testing
 The test cases and the instructions for acceptance testing are present in [AcceptanceTest.md](AcceptanceTest.md)
 
-## Exploratory Testing and Code Inspection
+## Exploratory Testing and Code Inspection  
+We have removed all the hard coding that was present in our code. We are parsing the values from the users by using wit.ai.  
 
 ## Task Tracking
 
