@@ -180,7 +180,7 @@ controller.hears(['hi'], [ 'mention', 'direct_mention', 'direct_message' ], func
 	});
 });
 
-controller.hears(/\bissue.*pull.*request.*on.*botcicd\\SampleRepo.*from.*new-feature.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
+controller.hears(/\bissue.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	// user says: issue pull request on botcicd/SampleRepo from new-feature
 	var text_message = message.text
 	var responseMsg = "Successfully issued " + text_message.toString().split("issue").pop();
@@ -200,7 +200,7 @@ controller.hears(/\bissue.*pull.*request.*on.*botcicd\\SampleRepo.*from.*new-fea
 });
 
 // Get the list of pull requests for a given repository. Alternately the slash command /listprs can also be used.
-controller.hears(/\bget.*pull.*requests.*for.*botcicd\\SampleRepo.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
+controller.hears(/\bget.*pull.*requests.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
 	// user says: Get pull requests for octocat for repo Hello-World
 	var repo = "SampleRepof"
 	var owner = "botcicd"
@@ -242,11 +242,11 @@ controller.hears(/\bget.*pull.*request.*on.*botcicd\\SampleRepo.*\b/,['mention',
 
 // merge a given pull request. Alternately the slash command /mergepr can also be used.
 //@botCiCd merge #1 pull request for aakarshg/serverprovision
-controller.hears(/\bmerge.*pull.*request.*on.*botcicd\\SampleRepo.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
+controller.hears(/\bmerge.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
 	console.log('inside merge method hear');
 	var repo = "SampleRepo"; // extract this from user message/intent/context?
 	var owner = "botcicd" // extract this from user message/intent/context?
-	var number = 5; // extract this from user message/intent/context?
+	var number = 7; // extract this from user message/intent/context?
 	github.getPullRequest(owner, repo, number, (value) => {
 		console.log(value);
 		var headBranch = value.head.label.split(":")[1];
