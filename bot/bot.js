@@ -281,12 +281,12 @@ controller.hears(/\bmerge.*pull.*request.*on.*botcicd\\SampleRepo.*\b/, [ 'menti
 });
 
 function doMergeAction(repo, owner, prnumber, branch, user, callback) {
-	console.log('inside do merge action');
+	console.log('Inside do merge action');
 	var reply = '';
 	//check admin list before actually merging
 	if(adminlist.indexOf(user) > -1) {
-		// github.getStatus(owner, repo, branch, (out) =>{
-		// 	if(out)	{
+		github.getStatus(owner, repo, branch, (out) =>{
+			if(out)	{
 				github.mergePullRequest(owner, repo, prnumber, (msg) => {
 					if (msg) {
 						console.log('msg received in bot: ' + msg)
@@ -294,11 +294,12 @@ function doMergeAction(repo, owner, prnumber, branch, user, callback) {
 						return callback(reply);
 					}
 				});
-			// } else {
-			// 	reply = "Build has been unsuccessful";
-			// 	return callback(reply);
-			// }
-		// });
+			} else {
+				console.log('Jenkins Build is not succesful yet! Pull request can be merged once the Jenkins build is successful.');
+				reply = "Jenkins Build is not succesful yet! Pull request can be merged once the Jenkins build is successful.";
+				return callback(reply);
+			}
+		});
 	} else {
 		reply = "You don't have permission to merge via the bot interface!";
 		console.log(reply);
