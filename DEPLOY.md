@@ -27,4 +27,4 @@ The test cases and the instructions for acceptance testing are present in [Accep
 
 ## Screencast
 
-[Screencast](https://youtu.be/ET9L-gZOGtU)
+[Screencast](https://youtu.be/LolG8v-XZR4)
