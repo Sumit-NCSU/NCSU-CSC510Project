@@ -1,9 +1,9 @@
-- name: Create a sandbox instance
+- name: Create a AWS EC2 instance
   hosts: localhost
   gather_facts: False
   user: ubuntu
   vars:
-    keypair: se_slack_key
+    keypair: se_slack_key             # All the variables that will be used
     instance_type: t2.micro
     security_group: launch-wizard-1
     image: ami-aa2ea6d0
@@ -11,10 +11,12 @@
     group_name: SE_Slack_server
   tasks:
 
+    # Install pip as pre-req to create AWS ec2 instance 
     - name : Install pip
       apt: pkg=python-pip update_cache=yes state=present
       become: true
-      
+    
+    # Install boto and boto3 as pre req for automating ec2 instance
     - name: Install boto and boto3
       pip:
         name: "{{ item }}"
@@ -22,6 +24,7 @@
         - boto
         - boto3
 
+    # Module for launching AWS EC2 instance
     - name: Launch instance
       ec2:
          aws_access_key: #<<AWS_ACCESS_KEY>> goes here
@@ -38,6 +41,7 @@
             Name: "{{ group_name }}"
       register: ec2
 
+    # Adding the instance to host group
     - name: Add new instance to host group
       add_host:
         hostname: "{{ item.public_ip }}"
@@ -46,6 +50,8 @@
         ansible_ssh_private_key_file: "/home/{{ansible_ssh_user}}/keys/{{keypair}}.pem"
       with_items: "{{ ec2.instances }}"
 
+
+    # Waiting to ssh into new instance
     - name: Wait for SSH to come up
       wait_for:
         host: "{{ item.public_dns_name }}"
@@ -55,14 +61,17 @@
         state: started
       with_items: "{{ ec2.instances }}"
 
+    # Adding group name to inventory
     - name: Add group name to inventory file
       local_action: lineinfile dest=/home/vagrant_data/deployment/inventory insertafter=EOF line="[{{ group_name }}]" state=present create=yes
       with_items: "{{ ec2.instances }}"
 
+    # Adding host ip to inventory
     - name: Add vm to group
       local_action: lineinfile dest=/home/vagrant_data/deployment/inventory regexp="{{ item.public_ip }}" insertafter="[{{ group_name }}]" line="{{ item.public_ip }} ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/home/{{ansible_ssh_user}}/keys/{{keypair}}.pem ansible_python_interpreter=/usr/bin/python3 ansible_ssh_common_args='-o StrictHostKeyChecking=no'" state=present
       with_items: "{{ ec2.instances }}"
 
+# Start the role created from provisioning the IP
 - name: Start the role
   hosts: all
   become: true

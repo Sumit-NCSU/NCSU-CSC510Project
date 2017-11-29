@@ -275,7 +275,7 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 					});
 				}
 				else if(intent=="help"){
-					var res_message = 	"Help \nInstructions to perform Use Cases: \n1.issue pull request on SampleRepo/<owner> from <branch_name_1> to <branch_name_2> \n2. list pull requests on SampleRepo/<owner> \n3.  merge pull request <No.> on SampleRepo/<owner> ";
+					var res_message = 	"Help \nInstructions to perform Use Cases: \n1. issue pull request on <owner>/<repository> from <head_branch> onto <base_branch> \n2. list pull requests on <owner>/<repository> \n3. merge pull request <No.> on <owner>/<repository>";
 					bot.reply(message, res_message);
 				}
 				else if(intent == "greetings"){
