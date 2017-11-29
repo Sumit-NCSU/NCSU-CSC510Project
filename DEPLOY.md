@@ -19,7 +19,6 @@ Look into our [deployment script](https://github.ncsu.edu/ssrivas8/CSC510Project
 ## Acceptance Testing
 The test cases and the instructions for acceptance testing are present in [AcceptanceTest.md](AcceptanceTest.md)
 
-## Exploratory Testing and Code Inspection
 
 ## Task Tracking
 
