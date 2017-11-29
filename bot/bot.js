@@ -11,7 +11,7 @@ const client = new Wit({accessToken: process.env.WIT});
 
 var clientId = process.env.CIBOTCID;
 var clientSecret = process.env.CIBOTCSEC;
-var adminlist = ["U6WCFDZL3", "U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q","U6XBCS8UE"];
+var adminlist = ["U6WCFDZL3","U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q","U6XBCS8UE"];
 var app = express();
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
@@ -74,6 +74,7 @@ app.get('/oauth', function(req, res) {
 
 // This method is used to create the dynamic options to load in the list PR request.
 app.post('/proptions', function(req, res) {
+	console.log(req);
 	console.log('Bot: Loading options for the dynamic menu');
 	var repo = "SampleRepo";
 	var owner = "botcicd";
@@ -271,6 +272,14 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 						}
 					});
 				}
+				else if(intent=="help"){
+					var res_message = 	"Help \nInstructions to perform Use Cases: \n1.issue pull request on SampleRepo/<owner> from <branch_name_1> to <branch_name_2> \n2. list pull requests on SampleRepo/<owner> \n3.  merge pull request <No.> on SampleRepo/<owner> ";
+					bot.reply(message, res_message);
+				}
+				else if(intent == "hi"){
+					var res_message = "Hi there :raised_hand_with_fingers_splayed:";
+					bot.reply(message, res_message);
+				}
 			}).catch((err) => {
 				console.error(err);
 				console.log("Came here");
@@ -282,161 +291,6 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 			bot.reply(message, "Couldn't recognize the intent. I can only perform 'list', 'issue' and 'merge' on pull request.");
 		}
 	})
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Greetings to the user
-// controller.hears(['hi', 'hello', 'greetings'], [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
-	// controller.storage.users.get(message.user, function(err, user) {
-		// console.log('Bot: Inside hi');	
-		// bot.reply(message, 'Hello, this: ' + message.user + ' ,will be your unique ID for this App. Please store it somewhere! ');
-	// });
-// });
-
-// controller.hears(/\bissue.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	// //issue pull request on repo aakarshg/Serverprovision from aakarshg-patch-3 onto master
-	// var text_message = message.text;
-	// var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
-	// var extract_base = "onto "
-	// var base = text_message.toString().split(extract_base).pop();
-	// var extract_head = "from "
-	// var branch_head = text_message.toString().split(extract_head).pop();
-	// var branchName = branch_head.split(" ")[0];
-	// var extract_repo = "repo"
-	// var repo_name = text_message.split("repo ")[1].split(" ")[0];
-	// var owner = repo_name.split("/")[0]
-	// var repo = repo_name.split("/")[1]
-	// var statuscheck = 0;
-	// console.log(base);
-	// console.log(branchName);
-	// console.log(owner);
-	// console.log(repo);
-	// if(repolist.indexOf(repo_name)  >    -1 ){
-  	// console.log(repo_name)
-  	// statuscheck = 1;
-	// }
-	// else{
-  	// console.log("The repository isn't in the list of repositories managed by bot")
-  	// bot.reply(message, "Unable to create pull request.");
-	// }
-	// github.createPullRequest(owner, repo, branchName, base, (value) => {
-		// if (value) {
-			// console.log("Pull Request created")
-			// bot.reply(message, responseMsg);
-		// } else {
-			// console.log("unable to create pull request.")
-			// bot.reply(message, "Unable to create pull request.");
-		// }
-	// });
-// });
-
-// // Get the list of pull requests for a given repository. 
-// controller.hears(/\bget.*requests.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	// // Get pull requests for repo ssrivas8/segitapi
-	// var text_message = message.text;
-	// var repo_name = text_message.split("repo ")[1]
-	// var owner = repo_name.split("/")[0]
-	// var repo = repo_name.split("/")[1]
-	// console.log(owner)
-	// console.log(repo)
-	// console.log('Bot: Generating dynamic pull request list');
-	// var reply_with_attachments = {
-		// "text": "Select a Pull Request from the List:",
-		// "attachments": [{
-			// "text": "Pull Requests of repository: " + repo,
-			// "fallback": "Upgrade your Slack client to use message menus.",
-			// "color": "#3AA3E3",
-			// "attachment_type": "default",
-			// "callback_id":"pr_selection",
-			// "actions": [{
-			  // "name": "prnames",
-			  // "text": "Select a pull request",
-			  // "type": "select",
-			  // "data_source": "external",
-			// }]
-		// }]
-	// };
-	// bot.reply(message, reply_with_attachments);
-// });
-
-// // Get the details of a given pull request.
-// controller.hears(/\bget.*request.*\b/,['mention', 'direct_mention','direct_message'], function(bot,message) {
-	// console.log('Bot: Inside Get request details for a specific request.');
-	// // let the bot say: Get pull request 1 for repo ssrivas8/segitapi
-	// var text_message = message.text;
-	// var number = text_message.toString().split(extract_pr).pop().split(" ")[0];
-	// var repo_name = text_message.split("repo ")[1]
-	// var owner = repo_name.split("/")[0]
-	// var repo = repo_name.split("/")[1]
-	// console.log(owner)
-	// console.log(repo)
-	// console.log(number)
-	// github.getPullRequest(owner, repo, number, (value) => {
-		// console.log(value);
-		// var headBranch = value.head.label.split(":")[1];
-		// var baseBranch = value.base.label.split(":")[1];
-		// console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
-		// var t ="Id: " + value.number + "\nTitle: " + value.title + "\nDescription: " + value.body + "\nHEAD Branch: " + headBranch;
-    	// bot.reply(message, t.toString());
-	// });
-// });
-
-// // merge a given pull request. Alternately the slash command /mergepr can also be used.
-// controller.hears(/\bmerge.*\b/, [ 'mention', 'direct_mention', 'direct_message' ], function(bot, message) {
-	// //merge pull request 1 for repo aakarshg/serverprovision
-	// console.log('Bot: Inside merge pull request method.');
-	// var text_message = message.text;
-	// var extract_pr = "request "
-	// var number = text_message.toString().split(extract_pr).pop().split(" ")[0];
-	// var repo_name = text_message.split("repo ")[1]	
-	// var owner = repo_name.split("/")[0]
-	// var repo = repo_name.split("/")[1]
-	// console.log(owner)
-	// console.log(repo)
-	// console.log(repo_name)
-	// console.log(number)
-	// github.getPullRequest(owner, repo, number, (value) => {
-		// console.log(value);
-		// var headBranch = value.head.label.split(":")[1];
-		// var baseBranch = value.base.label.split(":")[1];
-		// var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
-		// var reply_with_attachments = {
-			// "text": "Would you like to merge this PR?",
-			// "attachments": [{
-				// "text": "Choose an option",
-				// "fallback": "You are unable to choose an option",
-				// "callback_id": "merge_action",
-				// "color": "#09aa08",
-				// "attachment_type": "default",
-				// "actions": [{
-					// "name": "merge",
-					// "text": "Merge",
-					// "style":"primary",
-					// "type": "button",
-					// "value": val
-				// },
-				// {
-					// "name": "nomerge",
-					// "text": "Don't Merge",
-					// "style":"danger",
-					// "type": "button",
-					// "value": "nomerge"
-				// }]
-			// }]
-		// }
-		// bot.reply(message, reply_with_attachments);    	
-	// });
-// });
 
 function doMergeAction(repo, owner, prnumber, branch, user, callback) {
 	console.log('Bot: Inside the do merge action');
