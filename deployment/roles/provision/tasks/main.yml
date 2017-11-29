@@ -35,7 +35,7 @@
 
 # Clone the git repository
 - name: Cloning Git Repo
-  git: repo=https://{{ git_username }}:{{ git_password }}@github.ncsu.edu/ssrivas8/CSC510Project.git dest=/home/ubuntu/Project version=sindhu
+  git: repo=https://{{ git_username }}:{{ git_password }}@github.ncsu.edu/ssrivas8/CSC510Project.git dest=/home/ubuntu/Project version=milestone3
 
 # Run npm install into bot/ folder
 - name: Running NPM install
