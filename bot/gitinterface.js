@@ -245,15 +245,16 @@ function createPullRequest(owner, repo, head, base, callback) {
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		try {
-			console.log(body);
-			if (body) {
-				return callback(true);
+			if (body['number']) {
+				console.log(body['number'])
+				callback(true); // do callback here 
 			} else {
-				return callback(false);
+				callback(false)
+				console.log(body['errors'][0]['message']);  // This is the real error 
 			}
 		} catch (err) {
 			console.log('GitInterface: Error: ' + err);
-			return callback(false);
+			console.log(false);
 		}
 	});
 }
