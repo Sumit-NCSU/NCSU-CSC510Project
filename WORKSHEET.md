@@ -35,4 +35,6 @@ We are tracking our daily tasks and progress for milestone 3 using trello which 
 | ------------------------------ | ----------- |  --------------------
 | Deployment                     | Completed    | [#100](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/100), [#102](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/102)
 | Acceptance Testing             | Completed    | [#101](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/101)
-| Screencast                     | Incomplete  | [#104](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/104)
+| Code Inspection                | Completed | [#103](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/103)
+| Avoid uptime penalties         | Completed  | [#105](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/105)
+| Screencast                     | Completed  | [#104](https://github.ncsu.edu/ssrivas8/CSC510Project/issues/104)
