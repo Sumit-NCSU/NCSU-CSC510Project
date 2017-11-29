@@ -189,8 +189,8 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 					var repo1 = (data.entities.repo_name[0].value);
 					var number = (data.entities.number[0].value)
 					console.log(repo1)
-					var owner = repo1.split('/')[1]
-					var repo =  repo1.split('/')[0]
+					var owner = repo1.split('/')[0]
+					var repo =  repo1.split('/')[1]
 					console.log(repo,owner,number)
 					github.getPullRequest(owner, repo, number, (value) => {
 						console.log(value);
@@ -237,7 +237,7 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 				else if(intent=="list_pull_reqs"){
 					console.log(repo1);
 					var repo1 = (data.entities.repo_name[0].value);
-					var repo = repo1.split('/')[0];
+					var repo = repo1.split('/')[1];
 						var reply_with_attachments = {
 						"text": "Select a Pull Request from the List:",
 						"attachments": [{
@@ -260,8 +260,8 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 					// var text_message = message.text
 					// var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
 					var repo1 = (data.entities.repo_name[0].value);
-					var repo = repo1.split('/')[0];
-					var owner = repo1.split('/')[1];
+					var repo = repo1.split('/')[1];
+					var owner = repo1.split('/')[0];
 					var branchName = data.entities.from[0].value;
 					var base = data.entities.to[0].value;
 					github.createPullRequest(owner, repo, branchName, base, (value) => {
