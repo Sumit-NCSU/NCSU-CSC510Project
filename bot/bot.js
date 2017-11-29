@@ -242,6 +242,7 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 					console.log(repo1);
 					var repo1 = (data.entities.repo_name[0].value);
 					var repo = repo1.split('/')[1];
+					var owner = repo1.split('/')[0];
 						var reply_with_attachments = {
 						"text": "Select a Pull Request from the List:",
 						"attachments": [{
