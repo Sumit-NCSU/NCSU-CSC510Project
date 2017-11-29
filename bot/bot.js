@@ -192,43 +192,49 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 					console.log(repo,owner,number)
 					github.getPullRequest(owner, repo, number, (value) => {
 						console.log(value);
-						var headBranch = value.head.label.split(":")[1];
-						var baseBranch = value.base.label.split(":")[1];
-						//console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
-						var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
-						var reply_with_attachments = {
-							"text": "Would you like to merge this PR?",
-							"attachments": [
-								{
-									"text": "Choose an option",
-									"fallback": "You are unable to choose an option",
-									"callback_id": "merge_action",
-									"color": "#09aa08",
-									"attachment_type": "default",
-									"actions": [
+						if(value){
+							var headBranch = value.head.label.split(":")[1];
+							var baseBranch = value.base.label.split(":")[1];
+							//console.log('HEAD: ' + headBranch + ', BASE: ' + baseBranch);
+							var val = value.head.repo.name + "$#" + value.user.login + "$#" + value.number + "$#" + headBranch + "$#" + baseBranch;
+							var reply_with_attachments = {
+								"text": "Would you like to merge this PR?",
+								"attachments": [
 									{
-										"name": "merge",
-										"text": "Merge",
-										"style":"primary",
-										"type": "button",
-										"value": val
-									},
-									{	
-										"name": "nomerge",
-										"text": "Don't Merge",
-										"style":"danger",
-										"type": "button",
-										"value": "nomerge"
+										"text": "Choose an option",
+										"fallback": "You are unable to choose an option",
+										"callback_id": "merge_action",
+										"color": "#09aa08",
+										"attachment_type": "default",
+										"actions": [
+										{
+											"name": "merge",
+											"text": "Merge",
+											"style":"primary",
+											"type": "button",
+											"value": val
+										},
+										{	
+											"name": "nomerge",
+											"text": "Don't Merge",
+											"style":"danger",
+											"type": "button",
+											"value": "nomerge"
+										}]
 									}]
-								}]
-						}
-						bot.reply(message, reply_with_attachments);    	
+							}
+							console.log('Bot: Pull Request Found');
+							bot.reply(message, reply_with_attachments); 
+						}else{
+							console.log('Bot: Could not find pull request number ' + number + ' not found in repo: ' + repo);
+							bot.reply(message, 'Could not find pull request number ' + number + ' not found in repo: ' + repo);
+						}	
 					});
 
    				}
 				else if(intent=="list_pull_reqs"){
-					console.log(repo1)
-					var repo = repo1.split('/')[0]
+					console.log(repo1);
+					var repo = repo1.split('/')[0];
 						var reply_with_attachments = {
 						"text": "Select a Pull Request from the List:",
 						"attachments": [{
@@ -251,10 +257,10 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 					// var text_message = message.text
 					// var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
 
-					var repo = repo1.split('/')[0]
-					var owner = repo1.split('/')[1]
-					var branchName = data.entities.from[0].value
-					var base = data.entities.to[0].value
+					var repo = repo1.split('/')[0];
+					var owner = repo1.split('/')[1];
+					var branchName = data.entities.from[0].value;
+					var base = data.entities.to[0].value;
 					github.createPullRequest(owner, repo, branchName, base, (value) => {
 						if (value){
 							console.log("Pull Request created");
