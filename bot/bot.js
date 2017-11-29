@@ -11,7 +11,7 @@ const client = new Wit({accessToken: process.env.WIT});
 
 var clientId = process.env.CIBOTCID;
 var clientSecret = process.env.CIBOTCSEC;
-var adminlist = ["U6WCFDZL3", "U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q"];
+var adminlist = ["U6WCFDZL3", "U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q","U6XBCS8UE"];
 var app = express();
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
