@@ -28,18 +28,23 @@ function getPullRequests(owner, repo, callback) {
 	var pullRequests = [];
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
-		var obj = JSON.parse(body);
-		if (obj != null) {
-			console.log('GitInterface: Pull Requests found: ');
-			for(var i = 0; i < obj.length; i++) {
-				var title = obj[i].title;
-				console.log("\tPull Request Name: " + title);
-				pullRequests.push(obj[i]);
+		try {
+			var obj = JSON.parse(body);
+			if (obj != null) {
+				console.log('GitInterface: Pull Requests found: ');
+				for(var i = 0; i < obj.length; i++) {
+					var title = obj[i].title;
+					console.log("\tPull Request Name: " + title);
+					pullRequests.push(obj[i]);
+				}
+				console.log('GitInterface: Sending back ' + pullRequests.length + ' pull requests');
+				return callback(pullRequests);
+			} else {
+				console.log('GitInterface: No Pull requests found');
+				return callback(false);
 			}
-			console.log('GitInterface: Sending back ' + pullRequests.length + ' pull requests');
-			return callback(pullRequests);
-		} else {
-			console.log('GitInterface: No Pull requests found');
+		} catch (err) {
+			console.log('GitInterface: Error: ' + err);
 			return callback(false);
 		}
 	});
@@ -73,12 +78,17 @@ function getPullRequest(owner, repo, number, callback) {
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		if (obj != null) {
-			var title = obj.title;
-			console.log('GitInterface: Pull Request Name: ' + title);
-			return callback(obj);
-		} else {
-			console.log('GitInterface: No Pull request found');
+		try {
+			if (obj != null) {
+				var title = obj.title;
+				console.log('GitInterface: Pull Request Name: ' + title);
+				return callback(obj);
+			} else {
+				console.log('GitInterface: No Pull request found');
+				return callback(false);
+			}
+		} catch (err) {
+			console.log('GitInterface: Error: ' + err);
 			return callback(false);
 		}
 	});
@@ -110,13 +120,18 @@ function getRepos(owner, callback) {
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
-		if (obj != null) {
-			console.log('GitInterface: Repositories found.');
-			for(var i = 0; i < obj.length; i++) {
-				repos.push(obj[i]);
+		try {
+			if (obj != null) {
+				console.log('GitInterface: Repositories found.');
+				for(var i = 0; i < obj.length; i++) {
+					repos.push(obj[i]);
+				}
+			} else {
+				console.log('GitInterface: No Repositories found.');
+				return callback(false);
 			}
-		} else {
-			console.log('GitInterface: No Repositories found.');
+		} catch (err) {
+			console.log('GitInterface: Error: ' + err);
 			return callback(false);
 		}
 	});
@@ -185,12 +200,17 @@ function getStatus(owner, repo, ref, callback) {
 	request(options, function (error, response, body) {
 		var obj = JSON.parse(body);
 		console.log('The latest jenkins status is:');
-		console.log(obj[0].state);
-		if (obj[0].state == 'success') {
-			console.log("Success.")
-			return callback(true);
-		} else {
-			console.log("Not Success.")
+		try {
+			console.log(obj[0].state);
+			if (obj[0].state == 'success') {
+				console.log("Success.")
+				return callback(true);
+			} else {
+				console.log("Not Success.")
+				return callback(false);
+			}
+		} catch (err) {
+			console.log('GitInterface: Error: ' + err);
 			return callback(false);
 		}
 	});
@@ -224,10 +244,15 @@ function createPullRequest(owner, repo, head, base, callback) {
 	};
 	// Send a http request to url and specify a callback that will be called upon its return.
 	request(options, function (error, response, body) {
-		console.log(body);
-		if (body) {
-			return callback(true);
-		} else {
+		try {
+			console.log(body);
+			if (body) {
+				return callback(true);
+			} else {
+				return callback(false);
+			}
+		} catch (err) {
+			console.log('GitInterface: Error: ' + err);
 			return callback(false);
 		}
 	});
