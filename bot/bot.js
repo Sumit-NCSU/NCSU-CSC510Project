@@ -274,6 +274,7 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 			})
 		} catch(err){
 			console.error(err);
+			console.log("Came here");
 			bot.reply(message, "Couldn't recognize the intent. I can only perform 'list', 'issue' and 'merge' on pull request.");
 		}
 	})
