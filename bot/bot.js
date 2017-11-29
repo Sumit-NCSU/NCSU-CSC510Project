@@ -182,10 +182,11 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
  		.then((data) => {
    			console.log(JSON.stringify(data));
 				var intent = (data.entities.intent[0].value)
-				var repo1 = (data.entities.repo_name[0].value)
+				
 				
 				if(intent.toString() == "merge_pull_req"){
 					//  console.log("Insiade")
+					var repo1 = (data.entities.repo_name[0].value);
 					var number = (data.entities.number[0].value)
 					console.log(repo1)
 					var owner = repo1.split('/')[1]
@@ -235,6 +236,7 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
    				}
 				else if(intent=="list_pull_reqs"){
 					console.log(repo1);
+					var repo1 = (data.entities.repo_name[0].value);
 					var repo = repo1.split('/')[0];
 						var reply_with_attachments = {
 						"text": "Select a Pull Request from the List:",
@@ -257,7 +259,7 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 				else if(intent=="issue_pull_req"){
 					// var text_message = message.text
 					// var responseMsg = "successfully issued " + text_message.toString().split("issue").pop();
-
+					var repo1 = (data.entities.repo_name[0].value);
 					var repo = repo1.split('/')[0];
 					var owner = repo1.split('/')[1];
 					var branchName = data.entities.from[0].value;
