@@ -276,7 +276,7 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 					var res_message = 	"Help \nInstructions to perform Use Cases: \n1.issue pull request on SampleRepo/<owner> from <branch_name_1> to <branch_name_2> \n2. list pull requests on SampleRepo/<owner> \n3.  merge pull request <No.> on SampleRepo/<owner> ";
 					bot.reply(message, res_message);
 				}
-				else if(intent == "hi"){
+				else if(intent == "greetings"){
 					var res_message = "Hi there :raised_hand_with_fingers_splayed:";
 					bot.reply(message, res_message);
 				}
