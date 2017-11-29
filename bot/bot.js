@@ -11,7 +11,7 @@ const client = new Wit({accessToken: process.env.WIT});
 
 var clientId = process.env.CIBOTCID;
 var clientSecret = process.env.CIBOTCSEC;
-var adminlist = ["U6WCFDZL3","U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q","U6XBCS8UE"];
+var adminlist = ["U6WCFDZL3","U6WGAURSQ","U6VUKPYCR","U7USQD4SY","U7C5SDE5Q","U6XBCS8UE", "U85NKHG8Z"];
 var app = express();
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
@@ -74,10 +74,14 @@ app.get('/oauth', function(req, res) {
 
 // This method is used to create the dynamic options to load in the list PR request.
 app.post('/proptions', function(req, res) {
-	console.log(req);
 	console.log('Bot: Loading options for the dynamic menu');
-	var repo = "SampleRepo";
-	var owner = "botcicd";
+	var payload = req.body.payload;
+	var proptname = JSON.parse(payload).name;
+	console.log('BOT: The value in proptions name is: ' + proptname);
+	var splitValues = proptname.split(" ");
+	var owner = splitValues[1];
+	var repo = splitValues[2];
+	console.log('owner is: ' + owner + ', repo is: ' + repo);
 	github.getPullRequests(owner, repo, (value) => {
 		console.log('Bot: Received ' + value.length + ' Pull requests');
 		var options = {};
@@ -127,7 +131,7 @@ app.post('/actions', function(req, res) {
 		// The Dont't merge button is clicked
 		console.log('The Don\'t Merge button was clicked');		
 		res.send("Thanks for reducing my work. Appreciate it!");
-	} else if (actionName == 'prnames') {
+	} else if (actionName.indexOf('prnames') > -1) {
 		// an option is selected from the dynamic dropdown list.
 		console.log('An option was selected fromt the Dynamic drop down list of List pull requests.');
 		console.log('The request Payload is: ' + reqPayload);
@@ -247,7 +251,7 @@ controller.hears(/\b.*\b/,['mention', 'direct_mention','direct_message'], functi
 							"attachment_type": "default",
 							"callback_id":"pr_selection",
 							"actions": [{
-							"name": "prnames",
+							"name": "prnames " + owner + " " + repo,
 							"text": "Select a pull request",
 							"type": "select",
 							"data_source": "external",
