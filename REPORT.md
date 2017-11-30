@@ -15,10 +15,10 @@ The primary features of our bot are:
 
 Screenshots:
 
-## Usecase0: Getting list of commands that can be used with CiBot
+## Use Case 0: Getting list of commands that can be used with CiBot
 ![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase0.png)
 
-## Usecase1: Issuing a pull request
+## Use Case 1: Issue a pull request
 
 ![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_1.png)
 
