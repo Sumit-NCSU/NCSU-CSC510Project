@@ -22,33 +22,33 @@ Screenshots:
 
 ![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_1.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_2.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_2.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_3.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_3.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_4.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_4.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_5.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_5.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_6.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_6.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_7.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase1_7.png)
 
 ##Use Case 2: List open pull requests
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase2_1.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase2_1.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase2_2.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase2_2.png)
 
 ##Use Case 3: Merge pull request
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase3_1.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase3_1.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase3_2.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase3_2.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase3_3.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase3_3.png)
 
-![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase3_4.png
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone4/images/usecase3_4.png)
 
 
 ## Reflection on the development process and the project
