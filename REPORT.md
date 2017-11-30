@@ -14,6 +14,18 @@ The primary features of our bot are:
 * Merge a given Pull Request
 
 Screenshots:
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone3/media/Architecture%20diagram.png)
+
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone3/media/ArchitectureLLD.png)
+
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone3/media/Architecture_HL.png)
+
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone3/media/SEAPPInteractiveButtons.png)
+
+![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone3/media/SEAPPInteractiveButtons.png)
+
+
+
 
 ## Reflection on the development process and the project
 
