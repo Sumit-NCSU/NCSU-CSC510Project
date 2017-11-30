@@ -1,8 +1,7 @@
 # Report
 
 ## The problem our bot solved
-
-Our `Cibot` solved the following problems:
+Cibot is a Slackbot that facilitates pull request management on Github. It is a one-stop bot for all actions that could be performed on pull requests that makes it very convenient for a user to perform actions like issuing a pull request, getting a list of all open pull requests, getting the details of a particular pull request and merging a pull request. An authorized user can perform all these actions by just typing simple commands on the Slack channel.
 
 ## Primary features and screenshots
 
