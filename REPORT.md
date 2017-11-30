@@ -17,4 +17,14 @@ Screenshots:
 
 ## Reflection on the development process and the project
 
+Throughout the project, we followed agile methedology
+
 ## Limitations and future work
+
+### Limitations
+
+`CiBot` cannot merge the pull requests which are not auto-mergeable.
+
+### Future work
+
+In case of a non-meargeable pull request, we can identifying the specific commits which cause the pull request to be non-meargeable and then display a list of those commits to the users.
