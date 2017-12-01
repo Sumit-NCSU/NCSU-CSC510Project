@@ -60,9 +60,12 @@ Screenshots:
 
 Throughout the project, we followed agile methedology
 
+
 ![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone3/media/Architecture%20diagram.png)
 
+
 ![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone3/media/ArchitectureLLD.png)
+
 
 ![img1](https://github.ncsu.edu/ssrivas8/CSC510Project/blob/milestone3/media/Architecture_HL.png)
 
