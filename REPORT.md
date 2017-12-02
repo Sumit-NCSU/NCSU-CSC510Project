@@ -11,19 +11,19 @@ Cibot helps the developers access various tools from within a conversation with 
 
 ## Primary features and screenshots
 
-The primary features of our bot are:
+### The primary features of our bot are:
 
 * Issue a new Pull Request for a given Repository from a base branch onto a HEAD branch
 * View a list of all the pull requests on a given Repository.
 * View the details of a Specific Pull Request.
 * Merge a given Pull Request
 
-Screenshots:
+### Screenshots:
 
-## Use Case 0: Getting list of commands that can be used with CiBot
+#### Use Case 0: Getting list of commands that can be used with CiBot
 ![Usecase 0](images/usecase0.png)
 
-## Use Case 1: Issue a pull request
+#### Use Case 1: Issue a pull request
 
 ![Usecase 1.1](images/usecase1_1.png)
 
@@ -39,13 +39,13 @@ Screenshots:
 
 ![Usecase 1.7](images/usecase1_7.png)
 
-## Use Case 2: List open pull requests
+#### Use Case 2: List open pull requests
 
 ![Usecase 2.1](images/usecase2_1.png)
 
 ![Usecase 2.2](images/usecase2_2.png)
 
-## Use Case 3: Merge pull request
+#### Use Case 3: Merge pull request
 
 ![Usecase 3.1](images/usecase3_1.png)
 
