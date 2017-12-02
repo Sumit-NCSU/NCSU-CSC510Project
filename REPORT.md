@@ -71,4 +71,4 @@ This is a high level architecture diagram of our project:
 
 ### Future work
 
-In case of a non-meargeable pull request, we can identify the specific commits which cause the pull request to be non-meargeable and then display a list of those commits to the users.
+In case of a non-mergeable pull request, we can identify the specific commits which cause the pull request to be non-mergeable and then display a list of those commits to the users.
