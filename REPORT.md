@@ -67,8 +67,10 @@ This is a high level architecture diagram of our project:
 
 ### Limitations
 
-`CiBot` cannot merge the pull requests which are not auto-mergeable.
+* `CiBot` cannot create a pull request, which has merge-conflicts with the base branch.
+* `CiBot` cannot merge the pull requests which are not auto-mergeable.
 
 ### Future work
 
-In case of a non-mergeable pull request, we can identify the specific commits which cause the pull request to be non-mergeable and then display a list of those commits to the users.
+* In case of a non-mergeable pull request, we can identify the specific commits which cause the pull request to be non-mergeable and then display a list of those commits to the users.
+* By this we can provide recommendations, to create a successful pull request or to provide specific steps to solve the merge conflict.
