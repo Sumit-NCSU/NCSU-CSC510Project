@@ -74,3 +74,4 @@ This is a high level architecture diagram of our project:
 
 * In case of a non-mergeable pull request, we can identify the specific commits which cause the pull request to be non-mergeable and then display a list of those commits to the users.
 * By this we can provide recommendations, to create a successful pull request or to provide specific steps to solve the merge conflict.
+* Currently, the admin list is maintained by admin of the organization. Our ideology is to extend the functionality of maintaining the admin list through `CiBot`, where other members in the admin list can approve the new incoming member. Once approved, he/she will be added to the current admin list.
