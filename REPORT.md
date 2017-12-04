@@ -52,26 +52,38 @@ We can then get more details about the particular pull request by selecting it.
 
 #### Use Case 3: Merge pull request
 
-
+We can ask the bot to merge a pull request by issuing command as follows.
 
 ![Usecase 3.1](images/usecase3_1.png)
 
+Before merging it checks if the user requesting merge is in the list of admins and also if the jenkins build was succesful. 
+It's checking if the checks have passed.
 
 ![Usecase 3.2](images/usecase3_2.png)
 
+It checks if the build has suceeded. 
 
 ![Usecase 3.3](images/usecase3_3.png)
 
+It finally merges the PR request.
 
 ![Usecase 3.4](images/usecase3_4.png)
 
 
 ## Reflection on the development process and the project
 
-Throughout the project development lifecycle, we followed agile methedology to build the Project in iterative milestones.
+We followed an agile development process throughout the project. The process was highly focussed on feature-driven development and we worked towards meeting our goals for each of milestones with the tasks being self-assigned. 
 
-This is a high level architecture diagram of our project:
-![Architecture](media/ArchitectureDiagram.png)
+We used scrum methodology for project management. Short stand-up meetings helped us to have a track of our project development and progress of our tasks which was usually done at least thrice between the milestones. All the team members had different working schedules but these small scrum meetings helped us get visibility of each other's progress and blockers. This basically helped us prioritise our work and effective time management for the tasks involved by considering inputs from all the team members.
+
+* Although the each member was assigned unique tasks the actual development was done together in an extreme programming manner.
+
+* We extensively used GitHub Issues. For a detected bug or new enhancement, GitHub Issue was created. Each issue was assigned to a team member. There is tag associated with each issue to identify if it is Enhancement or Bug. 
+
+* Since our project was on pull request management, we used pull requests to integrate work where the team-mates also had the chance to critique the work. This enabled us to beter our work and ensure that we got the best and did the best.
+
+* Overall it was a very intense but valuable learning expereince. We learnt and practised Agile process that is being extensively used in most of the software based company. Moreover, working in a team helped us in identifying and understanding team dynamics and prepared us well for the real-life endeavors.
+
 
 ## Limitations and future work
 
