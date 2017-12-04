@@ -8,6 +8,11 @@ Cibot helps solve the problem of coordination within the team as all the notific
 
 All the commands for the bot designed in such a way that the users can just tell the bot what to do in simple English sentences and the bot will automatically parse the sentence and trigger the required commands in the back end. This way, the users do not have to remember difficult and specific commands to get the job done.
 
+
+## Final presentation 
+
+[SCREENCAST](https://www.youtube.com/watch?v=I-OMtqsUNO4&feature=youtu.be)
+
 ## Primary features and screenshots
 
 ### The primary features of our bot are:
@@ -99,4 +104,3 @@ We used scrum methodology for project management. Short stand-up meetings helped
 * Currently, the admin list is maintained by admin of the organization. Our ideology is to extend the functionality of maintaining the admin list through `CiBot`, where other members in the admin list can approve the new incoming member. Once approved, he/she will be added to the current admin list.
 
 
-[SCREENCAST](https://www.youtube.com/watch?v=I-OMtqsUNO4&feature=youtu.be)
