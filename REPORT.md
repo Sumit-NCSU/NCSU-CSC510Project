@@ -26,9 +26,9 @@ All the commands for the bot designed in such a way that the users can just tell
 
 ![Usecase 1.1](images/usecase1_1.png)
 
-![Usecase 1.2](images/usecase1_2.png)
+![Usecase 1.2](images/usecase1_3.png)
 
-![Usecase 1.4](images/usecase1_4.png)
+![Usecase 1.4](images/usecase1_5.png)
 
 ![Usecase 1.6](images/usecase1_6.png)
 
