@@ -24,29 +24,44 @@ All the commands for the bot designed in such a way that the users can just tell
 
 #### Use Case 1: Issue a pull request
 
-![Usecase 1.1](images/usecase1_1.png)
+All it takes is a simple command like below to issue a pull request:
 
 ![Usecase 1.2](images/usecase1_3.png)
 
+And as we can see it creates a new pull-request. But doesn't mention anything about checks. 
+
 ![Usecase 1.4](images/usecase1_5.png)
 
+Because we have a cron job associated with Repo that builds whenever a new PR is issued like following.
+
 ![Usecase 1.6](images/usecase1_6.png)
+
+Now we can see that it says all checks have been passed. 
 
 ![Usecase 1.7](images/usecase1_7.png)
 
 #### Use Case 2: List open pull requests
 
+We can get all the open pull requests by using hte following command.
+
 ![Usecase 2.1](images/usecase2_1.png)
+
+We can then get more details about the particular pull request by selecting it. 
 
 ![Usecase 2.2](images/usecase2_2.png)
 
 #### Use Case 3: Merge pull request
 
+
+
 ![Usecase 3.1](images/usecase3_1.png)
+
 
 ![Usecase 3.2](images/usecase3_2.png)
 
+
 ![Usecase 3.3](images/usecase3_3.png)
+
 
 ![Usecase 3.4](images/usecase3_4.png)
 
