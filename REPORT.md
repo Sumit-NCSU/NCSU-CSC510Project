@@ -97,3 +97,6 @@ We used scrum methodology for project management. Short stand-up meetings helped
 * In case of a non-mergeable pull request, we can identify the specific commits which cause the pull request to be non-mergeable and then display a list of those commits to the users.
 * By this we can provide recommendations, to create a successful pull request or to give specific steps to solve the merge conflict.
 * Currently, the admin list is maintained by admin of the organization. Our ideology is to extend the functionality of maintaining the admin list through `CiBot`, where other members in the admin list can approve the new incoming member. Once approved, he/she will be added to the current admin list.
+
+
+[SCREENCAST](https://www.youtube.com/watch?v=I-OMtqsUNO4&feature=youtu.be)
